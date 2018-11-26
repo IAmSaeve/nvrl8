@@ -9,8 +9,9 @@ w = (255, 255, 255)
 g = (218, 165, 32)
 ng = (218, 165, 32)
 
-x = 1
-y = 1
+x_pos = 1
+y_pos = 1
+
 
 maze = [[r, r, r, r, r, r, r, r],
         [r, b, b, b, b, b, b, g],
@@ -69,20 +70,21 @@ def move_marble(pitch, roll, x, y):
 
 
 def game_start():
+    global game_over, x_pos, y_pos, maze, maze2, maze3
     while not game_over:
         pitch = sense.get_orientation()['pitch']
         roll = sense.get_orientation()['roll']
-        x, y = move_marble(pitch, roll, x, y)
-        if maze[y][x] == g:
+        x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
+        if maze[y_pos][x_pos] == g:
             sense.show_message("Level 2")
             maze = maze2
-        if maze[y][x] == g:
+        if maze[y_pos][x_pos] == g:
             sense.show_message("Level 3")
             maze2 = maze3
-        if maze[y][x] == g:
+        if maze[y_pos][x_pos] == g:
             sense.show_message("Win!!")
             game_over = True
-            maze[y][x] = w
+            maze[y_pos][x_pos] = w
         sense.set_pixels(sum(maze, []))
         sleep(0.01)
-        maze[y][x] = b
+        maze[y_pos][x_pos] = b
