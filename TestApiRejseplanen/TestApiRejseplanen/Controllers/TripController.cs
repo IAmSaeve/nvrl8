@@ -10,15 +10,18 @@ namespace TestApiRejseplanen.Controllers
     public class TripController : Controller
     {
         List<Trip> TripList = new List<Trip>(){
-            new Trip(new List<Leg>(new Leg("A202", "BUS"), new Leg("Til fods", "walk")), new Origin("Maglegårdsvej 2", "ADR"))
+
+            new Trip(
+                new List<Leg>{new Leg("A202", "BUS"), new Leg("Til fods", "WALK")},
+                new Origin("Maglegårdsvej 2", "ADR",0,"18:00","26-11-2018"),
+                new Destination("Rampelyset 32","ADR",0,"18:15","26-11-2018"))
+
         };
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IList<Trip> Get()
         {
-            await Task.Run(() => {
-                
-            });
+            return TripList;
         }
     }
 }

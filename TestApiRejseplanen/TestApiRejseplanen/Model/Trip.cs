@@ -7,6 +7,9 @@ namespace TestApiRejseplanen.Model
 {
     public class Trip
     {
+        public bool Alternative { get; set; } = false;
+        public bool Valid { get; set; } = true;
+        public bool Cancelled { get; set; } = true;
         public List<Leg> Legs { get; set; }
         public Origin Origin { get; set; }
         public Destination Destination { get; set; }
