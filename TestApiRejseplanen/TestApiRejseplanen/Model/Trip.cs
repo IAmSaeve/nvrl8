@@ -12,5 +12,12 @@ namespace TestApiRejseplanen.Model
         public Origin Origin { get; set; }
         public Destination Destination { get; set; }
 
+        public Trip(List<Trip> tripList, List<Leg> legs, Origin origin, Destination destination)
+        {
+            TripList = tripList;
+            Legs = legs;
+            Origin = origin;
+            Destination = destination;
+        }
     }
 }
