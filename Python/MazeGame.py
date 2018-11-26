@@ -68,20 +68,21 @@ def move_marble(pitch, roll, x, y):
   new_x, new_y = check_wall(x,y,new_x,new_y)
   return new_x, new_y
 
-while game_over == False:
-	pitch = sense.get_orientation()['pitch']
-	roll = sense.get_orientation()['roll']
-	x,y = move_marble(pitch, roll, x,y)
-	if maze[y][x] == g:
-		sense.show_message("Level 2")
-		maze = maze2
-	if maze[y][x] == g:
-		sense.show_message("Level 3")
-		maze2 = maze3
-	if maze[y][x] == g:
-		sense.show_message("Win!!")
-		game_over = True
-		maze[y][x] = w
-	sense.set_pixels(sum(maze,[]))
-	sleep(0.01)
-	maze[y][x] = b
+def Game_Start():
+	while game_over == False:
+		pitch = sense.get_orientation()['pitch']
+		roll = sense.get_orientation()['roll']
+		x,y = move_marble(pitch, roll, x,y)
+		if maze[y][x] == g:
+			sense.show_message("Level 2")
+			maze = maze2
+		if maze[y][x] == g:
+			sense.show_message("Level 3")
+			maze2 = maze3
+		if maze[y][x] == g:
+			sense.show_message("Win!!")
+			game_over = True
+			maze[y][x] = w
+		sense.set_pixels(sum(maze,[]))
+		sleep(0.01)
+		maze[y][x] = b
