@@ -7,5 +7,12 @@ namespace TestApiRejseplanen.Model
 {
     public class Leg
     {
+        public string Name { get; set; }
+
+        public enum Type { get; set; }
+
+        {
+
+        }
     }
 }
