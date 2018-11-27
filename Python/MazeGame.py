@@ -13,7 +13,8 @@ ng = (218, 165, 32)
 x_pos = 1
 y_pos = 1
 
-
+m1x = 1
+m1y = 1
 maze = [[r, r, r, r, r, r, r, r],
         [r, b, b, b, b, b, b, g],
         [r, r, r, b, r, b, b, r],
@@ -23,6 +24,8 @@ maze = [[r, r, r, r, r, r, r, r],
         [r, b, b, r, b, b, b, r],
         [r, r, r, r, r, g, r, r]]
 
+m2x = 1
+m2y = 1
 maze2 = [[r, r, r, r, r, r, r, r],
          [r, b, r, b, b, b, b, r],
          [r, b, r, b, r, b, r, r],
@@ -32,6 +35,8 @@ maze2 = [[r, r, r, r, r, r, r, r],
          [r, b, r, b, r, r, b, r],
          [r, r, r, r, r, r, g, r]]
 
+m3x = 2
+m3y = 1
 maze3 = [[r, r, r, r, b, r, b, r],
          [r, r, b, b, b, b, b, r],
          [r, g, b, r, r, b, r, r],
@@ -80,9 +85,13 @@ def game_start():
             #subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
             sense.show_message("Level 2")
             maze = maze2
+			x_pos = m2x
+			y_pos = m2y
         if maze[y_pos][x_pos] == g:
             sense.show_message("Level 3")
             maze2 = maze3
+			x_pos = m3x
+			y_pos = m3y
         if maze[y_pos][x_pos] == g:
             sense.show_message("Win!!")
             game_over = True
