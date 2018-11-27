@@ -18,7 +18,7 @@ y_pos = 1
 m1x = 1
 m1y = 1
 maze = [[r, r, r, r, r, r, r, r],
-        [r, b, b, b, b, b, b, g],
+        [r, b, b, b, b, b, b, r],
         [r, r, r, b, r, b, b, r],
         [r, b, r, b, r, r, r, r],
         [r, b, b, b, b, b, b, r],
@@ -31,7 +31,7 @@ m2y = 1
 maze2 = [[r, r, r, r, r, r, r, r],
          [r, b, r, b, b, b, b, r],
          [r, b, r, b, r, b, r, r],
-         [r, b, b, b, r, b, g, r],
+         [r, b, b, b, r, b, r, r],
          [r, b, r, b, r, r, r, r],
          [r, b, r, b, b, b, b, r],
          [r, b, r, b, r, r, b, r],
@@ -41,7 +41,7 @@ m3x = 2
 m3y = 1
 maze3 = [[r, r, r, r, b, r, b, r],
          [r, r, b, b, b, b, b, r],
-         [r, g, b, r, r, b, r, r],
+         [r, r, b, r, r, b, r, r],
          [r, r, r, r, r, b, r, r],
          [r, b, b, b, b, b, b, r],
          [r, r, b, r, r, r, r, r],
