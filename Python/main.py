@@ -1,3 +1,5 @@
 from MazeGame import *
+import subprocess
 
-MazeGame.Game_Start()
+subprocess.Popen(["omgxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
+MazeGame.game_start()
