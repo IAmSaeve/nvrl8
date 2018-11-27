@@ -1,6 +1,7 @@
 from sense_hat import SenseHat
 from time import sleep
-import subprocess
+#import subprocess
+import random
 
 sense = SenseHat()
 
@@ -49,6 +50,10 @@ maze3 = [[r, r, r, r, b, r, b, r],
 
 game_over = False
 
+mazes = [maze,maze2,maze3]
+
+maze = mazes[random.randint(0,len(mazes))]
+
 
 def check_wall(x, y, new_x, new_y):
     if maze[new_y][new_x] != r:
@@ -87,20 +92,20 @@ def game_start():
 		x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
 		if maze[y_pos][x_pos] == g and currentMaze == "maze":
 			#subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
-			sense.show_message("Level 2")
-			maze = maze2
-			currentMaze = "maze2"
-			x_pos = m2x
-			y_pos = m2y
-		if maze[y_pos][x_pos] == g and currentMaze == "maze2":
-			sense.show_message("Level 3")
-			maze2 = maze3
-			currentMaze = "maze3"
-			x_pos = m3x
-			y_pos = m3y
-		if maze[y_pos][x_pos] == g and currentMaze == "maze3":
-			sense.show_message("Win!!")
-			game_over = True
+			sense.show_message("Maze win - alarm stopped")
+		#	maze = maze2
+		#	currentMaze = "maze2"
+		#	x_pos = m2x
+		#	y_pos = m2y
+		#if maze[y_pos][x_pos] == g and currentMaze == "maze2":
+		#	sense.show_message("Level 3")
+		#	maze2 = maze3
+		#	currentMaze = "maze3"
+		#	x_pos = m3x
+		#	y_pos = m3y
+		#if maze[y_pos][x_pos] == g and currentMaze == "maze3":
+		#	sense.show_message("Win!!")
+		#	game_over = True
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
 		sleep(0.01)
