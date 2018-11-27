@@ -72,16 +72,16 @@ def move_marble(pitch, roll, x, y):
     new_y = y
     if 1 < pitch < 179 and x != 0:
         new_x -= 1
-        print("moving -x" + pitch)
+        print("moving -x" + str(pitch))
     if 181 < pitch < 359 and x != 7:
         new_x += 1
-        print("moving +x" + pitch)
+        print("moving +x" + str(pitch))
     if 1 < roll < 179 and y != 7:
         new_y += 1
-        print("moving +y" + roll)
+        print("moving +y" + str(roll))
     if 181 < roll < 359 and y != 0:
         new_y -= 1
-        print("moving -y" + roll)
+        print("moving -y" + str(roll))
     new_x, new_y = check_wall(x, y, new_x, new_y)
     return new_x, new_y
 
