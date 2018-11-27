@@ -86,7 +86,7 @@ def game_start():
         if maze[y_pos][x_pos] == g:
             sense.show_message("Win!!")
             game_over = True
-            maze[y_pos][x_pos] = w
+        maze[y_pos][x_pos] = w
         sense.set_pixels(sum(maze, []))
         sleep(0.01)
         maze[y_pos][x_pos] = b
