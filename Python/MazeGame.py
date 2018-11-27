@@ -113,7 +113,7 @@ def game_start():
 			game_stop()
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
-		sleep(0.3)
+		sleep(0.1)
 		maze[y_pos][x_pos] = b
 		
 def game_stop():
