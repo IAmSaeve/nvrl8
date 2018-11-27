@@ -8,10 +8,10 @@ public Legs: Leg[];
 public Origin: Origin;
 public Destination: Destination;
 
-constructor(legs: Leg[], origin: Origin, desitination: Destination) {
+/* constructor(legs: Leg[], origin: Origin, desitination: Destination) {
     this.Legs = legs;
     this.Origin = origin;
     this.Destination = desitination;
-}
+} */
 
 }
