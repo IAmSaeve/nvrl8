@@ -93,7 +93,7 @@ def game_start():
 		x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
 		if maze[y_pos][x_pos] == g and currentMaze == "maze":
 			#subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
-			sense.show_message("Maze win - alarm stopped", scroll_speed = 0.06)
+			sense.show_message("Maze win - alarm stopped", scroll_speed = 0.03)
 		#	maze = maze2
 		#	currentMaze = "maze2"
 		#	x_pos = m2x
@@ -109,7 +109,7 @@ def game_start():
 		#	game_over = True
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
-		sleep(0.05)
+		sleep(0.1)
 		maze[y_pos][x_pos] = b
 		
 def game_stop():
