@@ -39,13 +39,13 @@ maze2 = [[r, r, r, r, r, r, r, r],
 
 m3x = 2
 m3y = 1
-maze3 = [[r, r, r, r, b, r, b, r],
+maze3 = [[r, r, r, r, r, r, r, r],
          [r, r, b, b, b, b, b, r],
          [r, r, b, r, r, b, r, r],
          [r, r, r, r, r, b, r, r],
          [r, b, b, b, b, b, b, r],
          [r, r, b, r, r, r, r, r],
-         [r, r, b, b, b, b, b, b],
+         [r, r, b, b, b, b, b, r],
          [r, r, r, r, r, r, g, r]]
 
 game_over = False
@@ -72,12 +72,16 @@ def move_marble(pitch, roll, x, y):
     new_y = y
     if 1 < pitch < 179 and x != 0:
         new_x -= 1
+		print("moving -x" + pitch)
     if 181 < pitch < 359 and x != 7:
         new_x += 1
+		print("moving +x" + pitch)
     if 1 < roll < 179 and y != 7:
         new_y += 1
+		print("moving +y" + roll)
     if 181 < roll < 359 and y != 0:
         new_y -= 1
+		print("moving -y" + roll)
     new_x, new_y = check_wall(x, y, new_x, new_y)
     return new_x, new_y
 
@@ -106,7 +110,7 @@ def game_start():
 		#	y_pos = m3y
 		#if maze[y_pos][x_pos] == g and currentMaze == "maze3":
 		#	sense.show_message("Win!!")
-			game_over = True
+			game_stop()
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
 		sleep(0.1)
