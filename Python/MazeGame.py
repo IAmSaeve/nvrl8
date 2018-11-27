@@ -52,7 +52,8 @@ game_over = False
 
 mazes = [maze,maze2,maze3]
 
-maze = mazes[random.randint(0,len(mazes))]
+mazeCount = len(mazes)-1
+maze = mazes[random.randint(0,mazeCount)]
 
 
 def check_wall(x, y, new_x, new_y):
@@ -92,7 +93,7 @@ def game_start():
 		x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
 		if maze[y_pos][x_pos] == g and currentMaze == "maze":
 			#subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
-			sense.show_message("Maze win - alarm stopped")
+			sense.show_message("Maze win - alarm stopped", scroll_speed = 0.06)
 		#	maze = maze2
 		#	currentMaze = "maze2"
 		#	x_pos = m2x
@@ -108,11 +109,11 @@ def game_start():
 		#	game_over = True
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
-		sleep(0.01)
+		sleep(0.05)
 		maze[y_pos][x_pos] = b
 		
 def game_stop():
-	sense.show_message("Game stopped")
 	global game_over
-	game_over = True
+	sense.show_message("Game stopped")
+	game_over = true
 	maze[y_pos][x_pos] = b
