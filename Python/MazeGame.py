@@ -85,13 +85,13 @@ def game_start():
             #subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
             sense.show_message("Level 2")
             maze = maze2
-			x_pos = m2x
-			y_pos = m2y
+            x_pos = m2x
+            y_pos = m2y
         if maze[y_pos][x_pos] == g:
             sense.show_message("Level 3")
             maze2 = maze3
-			x_pos = m3x
-			y_pos = m3y
+            x_pos = m3x
+            y_pos = m3y
         if maze[y_pos][x_pos] == g:
             sense.show_message("Win!!")
             game_over = True
