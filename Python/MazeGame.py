@@ -92,4 +92,6 @@ def game_start():
         maze[y_pos][x_pos] = b
 		
 def game_stop():
+	sense.show_message("Game stopped")
 	game_over = false
+	maze[y_pos][x_pos] = b
