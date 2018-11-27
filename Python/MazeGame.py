@@ -106,7 +106,7 @@ def game_start():
 		#	y_pos = m3y
 		#if maze[y_pos][x_pos] == g and currentMaze == "maze3":
 		#	sense.show_message("Win!!")
-		#	game_over = True
+			game_over = True
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
 		sleep(0.1)
@@ -114,6 +114,6 @@ def game_start():
 		
 def game_stop():
 	global game_over
-	sense.show_message("Game stopped")
+	sense.show_message("Game stopped", scroll_speed = 0.03)
 	game_over = True
 	maze[y_pos][x_pos] = b
