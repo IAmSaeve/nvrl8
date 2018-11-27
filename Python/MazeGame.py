@@ -79,6 +79,9 @@ def move_marble(pitch, roll, x, y):
 def game_start():
     global game_over, x_pos, y_pos, maze, maze2, maze3, currentMaze
     while not game_over:
+        for event in sense.stick.get_events():
+			if event.action == "released":
+				game_stop()
         pitch = sense.get_orientation()['pitch']
         roll = sense.get_orientation()['roll']
         x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)

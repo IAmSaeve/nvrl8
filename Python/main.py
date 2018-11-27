@@ -7,6 +7,3 @@ sense = SenseHat()
 #subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 game_start()
 
-for event in sense.stick.get_events():
-	if event.action == "released":
-		game_stop()
