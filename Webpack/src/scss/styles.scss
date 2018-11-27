@@ -21,13 +21,21 @@ button a {
 #navbackground {
     background-color:grey;
     height: 873px;
+   
+    
 }
 
 .navitemcolor {
     color: white;
-    margin-left: 12px;
+    
 }
 
 .navitemcolor:hover {
     color: rgb(23, 179, 226);
 }
+
+body{
+    display: block;
+}
+
+

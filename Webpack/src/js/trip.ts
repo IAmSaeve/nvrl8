@@ -1,11 +1,17 @@
-import { Destination } from "/Source/nvrl8/Webpack/src/js/destination";
-import { Leg } from "/Source/nvrl8/Webpack/src/js/leg";
-import { Origin } from "/Source/nvrl8/Webpack/src/js/origin";
+import { Destination } from "../js/destination";
+import { Leg } from "../js/leg";
+import { Origin } from "../js/origin";
 
 export class Trip {
 
 public Legs: Leg[];
 public Origin: Origin;
 public Destination: Destination;
+
+constructor(legs: Leg[], origin: Origin, desitination: Destination) {
+    this.Legs = legs;
+    this.Origin = origin;
+    this.Destination = desitination;
+}
 
 }
