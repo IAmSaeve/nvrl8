@@ -81,18 +81,18 @@ def game_start():
         pitch = sense.get_orientation()['pitch']
         roll = sense.get_orientation()['roll']
         x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
-        if maze[y_pos][x_pos] == g:
+        if maze[y_pos][x_pos] == g and maze == maze:
             #subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
             sense.show_message("Level 2")
             maze = maze2
             x_pos = m2x
             y_pos = m2y
-        if maze[y_pos][x_pos] == g:
+        if maze[y_pos][x_pos] == g and maze == maze2:
             sense.show_message("Level 3")
             maze2 = maze3
             x_pos = m3x
             y_pos = m3y
-        if maze[y_pos][x_pos] == g:
+        if maze[y_pos][x_pos] == g and maze == maze3:
             sense.show_message("Win!!")
             game_over = True
         maze[y_pos][x_pos] = w
