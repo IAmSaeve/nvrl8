@@ -77,7 +77,7 @@ def game_start():
         roll = sense.get_orientation()['roll']
         x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
         if maze[y_pos][x_pos] == g:
-            subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
+            #subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
             sense.show_message("Level 2")
             maze = maze2
         if maze[y_pos][x_pos] == g:
@@ -90,3 +90,6 @@ def game_start():
         sense.set_pixels(sum(maze, []))
         sleep(0.01)
         maze[y_pos][x_pos] = b
+		
+def game_stop():
+	game_over = false
