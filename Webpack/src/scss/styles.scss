@@ -3,6 +3,8 @@
 }
 
 header{
+    height: 65px;
+    padding-top: 5px;
     background-color: black;
     color: rgb(228, 29, 69);
     .forsent{
@@ -11,3 +13,21 @@ header{
 }
 
 
+button a {
+    color: white;
+}
+
+
+#navbackground {
+    background-color:grey;
+    height: 873px;
+}
+
+.navitemcolor {
+    color: white;
+    margin-left: 12px;
+}
+
+.navitemcolor:hover {
+    color: rgb(23, 179, 226);
+}
