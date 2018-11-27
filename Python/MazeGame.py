@@ -115,5 +115,5 @@ def game_start():
 def game_stop():
 	global game_over
 	sense.show_message("Game stopped")
-	game_over = true
+	game_over = True
 	maze[y_pos][x_pos] = b
