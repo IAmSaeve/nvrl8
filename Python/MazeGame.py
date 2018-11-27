@@ -77,34 +77,34 @@ def move_marble(pitch, roll, x, y):
 
 
 def game_start():
-    global game_over, x_pos, y_pos, maze, maze2, maze3, currentMaze
-    while not game_over:
-        for event in sense.stick.get_events():
+	global game_over, x_pos, y_pos, maze, maze2, maze3, currentMaze
+	while not game_over:
+		for event in sense.stick.get_events():
 			if event.action == "released":
 				game_stop()
-        pitch = sense.get_orientation()['pitch']
-        roll = sense.get_orientation()['roll']
-        x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
-        if maze[y_pos][x_pos] == g and currentMaze == "maze":
-            #subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
-            sense.show_message("Level 2")
-            maze = maze2
-            currentMaze = "maze2"
-            x_pos = m2x
-            y_pos = m2y
-        if maze[y_pos][x_pos] == g and currentMaze == "maze2":
-            sense.show_message("Level 3")
-            maze2 = maze3
-            currentMaze = "maze3"
-            x_pos = m3x
-            y_pos = m3y
-        if maze[y_pos][x_pos] == g and currentMaze == "maze3":
-            sense.show_message("Win!!")
-            game_over = True
-        maze[y_pos][x_pos] = w
-        sense.set_pixels(sum(maze, []))
-        sleep(0.01)
-        maze[y_pos][x_pos] = b
+		pitch = sense.get_orientation()['pitch']
+		roll = sense.get_orientation()['roll']
+		x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
+		if maze[y_pos][x_pos] == g and currentMaze == "maze":
+			#subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
+			sense.show_message("Level 2")
+			maze = maze2
+			currentMaze = "maze2"
+			x_pos = m2x
+			y_pos = m2y
+		if maze[y_pos][x_pos] == g and currentMaze == "maze2":
+			sense.show_message("Level 3")
+			maze2 = maze3
+			currentMaze = "maze3"
+			x_pos = m3x
+			y_pos = m3y
+		if maze[y_pos][x_pos] == g and currentMaze == "maze3":
+			sense.show_message("Win!!")
+			game_over = True
+		maze[y_pos][x_pos] = w
+		sense.set_pixels(sum(maze, []))
+		sleep(0.01)
+		maze[y_pos][x_pos] = b
 		
 def game_stop():
 	sense.show_message("Game stopped")
