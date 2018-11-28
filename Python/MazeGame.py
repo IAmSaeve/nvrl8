@@ -123,6 +123,6 @@ async def game_start():
 		
 def game_stop():
 	global game_over
-	sense.show_message("Game stopped", scroll_speed = 0.03)
+	#sense.show_message("Game stopped", scroll_speed = 0.03)
 	game_over = True
 	maze[y_pos][x_pos] = b
