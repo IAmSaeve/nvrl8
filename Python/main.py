@@ -24,7 +24,7 @@ sense = SenseHat()
 # format 2018-07-29 09:17:13.812189 for klokken
 currentTime = datetime.datetime.now()  # Nuværende tid
 
-alarmTime = datetime.time(14, 9, 0, 0)
+alarmTime = datetime.time(14, 10, 0, 0)
 
 
 async def update_time():
