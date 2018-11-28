@@ -24,7 +24,7 @@ sense = SenseHat()
 # format 2018-07-29 09:17:13.812189 for klokken
 currentTime = datetime.datetime.now()  # Nuværende tid
 
-alarmTime = datetime.time(14, 10, 0, 0)
+alarmTime = datetime.time(14, 11, 0, 0)
 
 
 async def update_time():
@@ -46,5 +46,5 @@ async def alarm_start():
 
 
 loop = asyncio.get_event_loop()  # Async loop
-cors = asyncio.wait([update_time()])  # Tilføj flere funktioner med komma
+cors = asyncio.wait([update_time(),alarm_start()])  # Tilføj flere funktioner med komma
 loop.run_until_complete(cors)
