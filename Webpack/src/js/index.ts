@@ -10,8 +10,8 @@ const GetAButton: HTMLButtonElement = document.getElementById("GetAButton") as H
 
 // Import stop locations.
 import * as data from "../Data/stops.json";
-const bro: IStop[] = data.default as IStop[];
-console.log(bro);
+const stopArray: IStop[] = data.default as IStop[];
+console.log(stopArray);
 
 function onSignIn(googleUser: any) {
     const profile = googleUser.getBasicProfile();
