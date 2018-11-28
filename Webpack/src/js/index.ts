@@ -23,10 +23,13 @@ function GetAllTrips(): void {
                 trip.Legs.forEach((leg: Leg) => {
                     span.appendChild(document.createTextNode(`${leg.Name} ${leg.Type}`));
                 });
-                span.append(node);
+                node.appendChild(span);
                 node.appendChild(document.createTextNode(`${trip.Origin.Name} ${trip.Destination.Name}`));
-                node.append(ulist);
+                ulist.appendChild(node);
             }
         });
+    }).catch((error: AxiosError): void => {
+        ulist.innerHTML = error.message;
+        console.log(error.message);
     });
 }
