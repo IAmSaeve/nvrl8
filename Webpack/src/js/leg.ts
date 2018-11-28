@@ -6,8 +6,10 @@ export class Leg {
     public Origin: Origin;
     public Destination: Destination;
 
-    constructor(name: string, type: string) {
+    constructor(name: string, type: string, origin: Origin, destination: Destination) {
         this.Name = name;
         this.Type = type;
+        this.Origin = origin;
+        this.Destination = destination;
     }
 }

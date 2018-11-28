@@ -9,26 +9,45 @@ from sense_hat import SenseHat
 
 sense = SenseHat()
 
-#https://www.pythonforbeginners.com/requests/using-requests-in-python
-#response = requests.get("https://jsonplaceholder.typicode.com/todos") # fetch json fra api
-#todos = json.loads(response.text) # json object
+# https://www.pythonforbeginners.com/requests/using-requests-in-python
+# response = requests.get("https://jsonplaceholder.typicode.com/todos") # fetch json fra api
+# todos = json.loads(response.text) # json object
 
-#subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
+# Data der skal læses fra databasen
+# : alarmTime, tripTime, tripDelay, canceledBool
+# Data der skal sendes til databasen
+# : currentDate, timeToCompleteMaze (mm:ss:ms)
 
-#format 2018-07-29 09:17:13.812189 for klokken
-currentTime = datetime.datetime.now() #Nuværende tid
 
-async def updateTime():
-	while True:
-		global currentTime
-		currentTime = datetime.datetime.now()
-		await asyncio.sleep(1)
-		if MazeGame.GetGameState() == True:
-			print(localtime())
-			print(currentTime)
-			sense.show_message(strftime("%H:%M",localtime()), scroll_speed = 0.06)
+# subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 
-loop = asyncio.get_event_loop() #Async loop
-cors = asyncio.wait([updateTime(),MazeGame.game_start()]) #Tilføj flere funktioner med komma
+# format 2018-07-29 09:17:13.812189 for klokken
+currentTime = datetime.datetime.now()  # Nuværende tid
+
+alarmTime = datetime.time(14, 34, 0, 0)
+
+
+async def update_time():
+    while True:
+        global currentTime
+        currentTime = datetime.datetime.now()
+        await asyncio.sleep(1)
+        if MazeGame.GetGameState() == True:  # Returnerer game_over
+            print(localtime())
+            print(currentTime)
+            sense.show_message(strftime("%H:%M", localtime()), scroll_speed=0.06)
+
+
+async def alarm_start():
+    while True:
+        #print(currentTime.hour)
+        #print(alarmTime.hour)
+        if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute:
+            loop = asyncio.get_event_loop()  # Async loop
+            cors = asyncio.wait([MazeGame.game_start()])  # Tilføj flere funktioner med komma
+            loop.run_until_complete(cors)
+
+
+loop = asyncio.get_event_loop()  # Async loop
+cors = asyncio.wait([update_time(),alarm_start()])  # Tilføj flere funktioner med komma
 loop.run_until_complete(cors)
-
