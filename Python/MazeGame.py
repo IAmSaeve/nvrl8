@@ -41,13 +41,22 @@ maze2 = [[r, r, r, r, r, r, r, r],
 m3x = 2
 m3y = 1
 maze3 = [[r, r, r, r, r, r, r, r],
-         [r, r, b, b, b, b, b, r],
+         [r, b, b, b, b, b, b, r],
          [r, r, b, r, r, b, r, r],
          [r, r, r, r, r, b, r, r],
          [r, b, b, b, b, b, b, r],
          [r, r, b, r, r, r, r, r],
          [r, r, b, b, b, b, b, r],
          [r, r, r, r, r, r, g, r]]
+		 
+maze4 = [[b, r, b, b, r, r, r, r],
+         [b, b, b, r, r, r, b, r],
+         [r, r, b, b, b, b, b, b],
+         [b, b, b, r, r, b, r, b],
+         [r, r, r, r, r, b, r, b],
+         [b, b, b, b, b, b, b, b],
+         [b, r, r, r, b, r, b, r],
+         [b, g, r, r, b, r, r, r]]
 
 game_over = False
 
@@ -55,7 +64,7 @@ def GetGameState():
 	global game_over
 	return game_over
 
-mazes = [maze,maze2,maze3]
+mazes = [maze,maze2,maze3,maze4]
 
 mazeCount = len(mazes)-1
 maze = mazes[random.randint(0,mazeCount)]
