@@ -1,4 +1,4 @@
-from MazeGame import game_start, game_stop
+import MazeGame
 import subprocess
 import datetime
 import json
@@ -15,16 +15,17 @@ sense = SenseHat()
 
 #subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 
-
 #format 2018-07-29 09:17:13.812189 for klokken
 currentTime = datetime.datetime.now() #Nuværende tid
 
 async def updateTime():
-	global currentTime
+	global currentTime, MazeGame.game_over
 	currentTime = datetime.datetime.now()
 	await asyncio.sleep(1)
+	if MazeGame.game_over == True:
+		sense.show_message(str(currentTime), scroll_speed = 0.03)
 
 loop = asyncio.get_event_loop() #Async loop
-cors = asyncio.wait([updateTime(),game_start()]) #Tilføj flere funktioner med komma
+cors = asyncio.wait([updateTime(),MazeGame.game_start()]) #Tilføj flere funktioner med komma
 loop.run_until_complete(cors)
 
