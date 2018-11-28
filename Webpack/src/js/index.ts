@@ -10,7 +10,11 @@ const GetAButton: HTMLButtonElement = document.getElementById("GetAButton") as H
 
 // Import stop locations.
 import * as data from "../Data/stops.json";
+const bro: IStop[] = data.default as IStop[];
+bro.forEach((element) => {
+  console.log(element.stop_name);
 
+});
 // const word = (data as any)[0].stop_id;
 // console.log(word); // output 'testing'
 
