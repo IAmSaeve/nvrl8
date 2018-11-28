@@ -43,9 +43,9 @@ async def alarm_start():
     # print(alarmTime.hour)
     while True:
         if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute:
-            loop = asyncio.get_event_loop()  # Async loop
-            cors = asyncio.wait([MazeGame.game_start()])  # Tilføj flere funktioner med komma
-            loop.run_until_complete(cors)
+            eloop = asyncio.get_event_loop()  # Async loop
+            corss = asyncio.wait([MazeGame.game_start()])  # Tilføj flere funktioner med komma
+            loop.run_until_complete(corss)
 
 
 loop = asyncio.get_event_loop()  # Async loop
