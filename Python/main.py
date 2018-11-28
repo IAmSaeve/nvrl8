@@ -19,10 +19,10 @@ sense = SenseHat()
 currentTime = datetime.datetime.now() #Nuværende tid
 
 async def updateTime():
-	global currentTime, MazeGame.game_over
+	global currentTime
 	currentTime = datetime.datetime.now()
 	await asyncio.sleep(1)
-	if MazeGame.game_over == True:
+	if MazeGame.GetGameState() == True:
 		sense.show_message(str(currentTime), scroll_speed = 0.03)
 
 loop = asyncio.get_event_loop() #Async loop
