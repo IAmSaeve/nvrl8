@@ -22,3 +22,14 @@ function onSignIn(googleUser: any) {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     window.location.href = "http://localhost:3000/profil.htm";
   }
+
+interface IStop {
+  stop_id: string;
+  stop_code: string;
+  stop_name: string;
+  stop_desc: string;
+  stop_lat: string;
+  stop_lon: string;
+  location_type: string;
+  parent_station: string;
+}
