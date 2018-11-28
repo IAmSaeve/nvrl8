@@ -42,7 +42,7 @@ async def alarm_start():
     while True:
         #print(currentTime.hour)
         #print(alarmTime.hour)
-        if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute and MazeGame.GetGameState() == False:
+        if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute:
             eloop = asyncio.get_event_loop()  # Async loop
             corss = asyncio.wait([MazeGame.game_start()])  # Tilføj flere funktioner med komma
             loop.run_until_complete(corss)
