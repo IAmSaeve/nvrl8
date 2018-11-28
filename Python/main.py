@@ -13,6 +13,12 @@ sense = SenseHat()
 #response = requests.get("https://jsonplaceholder.typicode.com/todos") # fetch json fra api
 #todos = json.loads(response.text) # json object
 
+# Data der skal læses fra databasen
+# : alarmTime, tripTime, tripDelay, canceledBool
+# Data der skal sendes til databasen
+# : currentDate, timeToCompleteMaze (mm:ss:ms)
+
+
 #subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 
 #format 2018-07-29 09:17:13.812189 for klokken
@@ -23,7 +29,7 @@ async def updateTime():
 		global currentTime
 		currentTime = datetime.datetime.now()
 		await asyncio.sleep(1)
-		if MazeGame.GetGameState() == True:
+		if MazeGame.GetGameState() == True: #Returnerer game_over
 			print(localtime())
 			print(currentTime)
 			sense.show_message(strftime("%H:%M",localtime()), scroll_speed = 0.06)
