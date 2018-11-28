@@ -24,7 +24,7 @@ sense = SenseHat()
 # format 2018-07-29 09:17:13.812189 for klokken
 currentTime = datetime.datetime.now()  # Nuværende tid
 
-alarmTime = datetime.time(14, 28, 0, 0)
+alarmTime = datetime.time(14, 30, 0, 0)
 
 
 async def update_time():
@@ -46,7 +46,6 @@ async def alarm_start():
             eloop = asyncio.get_event_loop()  # Async loop
             corss = asyncio.wait([MazeGame.game_start()])  # Tilføj flere funktioner med komma
             loop.run_until_complete(corss)
-            loop.close()
 
 
 loop = asyncio.get_event_loop()  # Async loop
