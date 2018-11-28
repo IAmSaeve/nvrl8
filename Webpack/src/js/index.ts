@@ -8,6 +8,12 @@ const node = document.createElement("li") as HTMLLIElement;
 const span = document.createElement("span") as HTMLSpanElement;
 const GetAButton: HTMLButtonElement = document.getElementById("GetAButton") as HTMLButtonElement;
 
+// Import stop locations.
+import * as data from "../Data/stops.json";
+
+// const word = (data as any)[0].stop_id;
+// console.log(word); // output 'testing'
+
 function onSignIn(googleUser: any) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
