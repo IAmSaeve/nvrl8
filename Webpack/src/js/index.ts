@@ -1,6 +1,7 @@
+import axios, {AxiosError, AxiosResponse } from "../../node_modules/axios/index";
 import { Leg } from "../js/leg";
 import { Trip } from "../js/trip";
-import axios, {AxiosError, AxiosResponse } from "/Source/nvrl8/Webpack/node_modules/axios/index";
+
 
 const ulist: HTMLUListElement = document.getElementById("ulist") as HTMLUListElement;
 const node = document.createElement("li") as HTMLLIElement;
