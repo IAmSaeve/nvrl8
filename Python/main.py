@@ -40,7 +40,7 @@ async def update_time():
 
 async def alarm_start():
     while True:
-	    print(currentTime.hour)
+        print(currentTime.hour)
         print(alarmTime.hour)
         if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute:
             eloop = asyncio.get_event_loop()  # Async loop
