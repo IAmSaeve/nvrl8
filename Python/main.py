@@ -24,7 +24,9 @@ async def updateTime():
 		currentTime = datetime.datetime.now()
 		await asyncio.sleep(1)
 		if MazeGame.GetGameState() == True:
-			sense.show_message(strftime("%H:%M",localtime()), scroll_speed = 0.01)
+			print(localtime())
+			print(currentTime)
+			sense.show_message(strftime("%H:%M",localtime()), scroll_speed = 0.06)
 
 loop = asyncio.get_event_loop() #Async loop
 cors = asyncio.wait([updateTime(),MazeGame.game_start()]) #Tilføj flere funktioner med komma
