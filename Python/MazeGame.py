@@ -2,6 +2,7 @@ from sense_hat import SenseHat
 from time import sleep
 #import subprocess
 import random
+import asyncio
 
 sense = SenseHat()
 
@@ -50,6 +51,10 @@ maze3 = [[r, r, r, r, r, r, r, r],
 
 game_over = False
 
+def GetGameState():
+	global game_over
+	return game_over
+
 mazes = [maze,maze2,maze3]
 
 mazeCount = len(mazes)-1
@@ -86,7 +91,7 @@ def move_marble(pitch, roll, x, y):
     return new_x, new_y
 
 
-def game_start():
+async def game_start():
 	global game_over, x_pos, y_pos, maze, maze2, maze3, currentMaze
 	while not game_over:
 		for event in sense.stick.get_events():

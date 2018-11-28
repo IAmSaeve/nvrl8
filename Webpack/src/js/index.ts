@@ -16,7 +16,6 @@ function GetAllTrips(): void {
 
     axios.get<Trip[]>(uri)
     .then( (response: AxiosResponse <Trip[]>): void => {
-
         response.data.forEach((trip: Trip) => {
 
             if (trip == null) {} else {
