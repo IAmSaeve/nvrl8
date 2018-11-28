@@ -51,7 +51,7 @@ maze3 = [[r, r, r, r, r, r, r, r],
 
 game_over = False
 
-def GetGameState:
+def GetGameState():
 	global game_over
 	return game_over
 
