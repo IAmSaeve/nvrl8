@@ -4,7 +4,7 @@ import datetime
 import json
 import requests
 import asyncio
-from time import sleep
+from time import sleep, strftime
 from sense_hat import SenseHat
 
 sense = SenseHat()
@@ -24,7 +24,7 @@ async def updateTime():
 		currentTime = datetime.datetime.now()
 		await asyncio.sleep(1)
 		if MazeGame.GetGameState() == True:
-			sense.show_message(str(currentTime.time), scroll_speed = 0.03)
+			sense.show_message(strftime(%H:%M:,currentTime), scroll_speed = 0.03)
 
 loop = asyncio.get_event_loop() #Async loop
 cors = asyncio.wait([updateTime(),MazeGame.game_start()]) #Tilføj flere funktioner med komma
