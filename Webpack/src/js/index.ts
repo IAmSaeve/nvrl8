@@ -85,22 +85,20 @@ function GetTripsAxios(): void {
         });
 }
 
-let content:HTMLDivElement =<HTMLDivElement>document.getElementById("content");
-let profilNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("profilNav");
-let afgangNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("afgangNav");
-let alarmNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("alarmNav");
-let logNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("logNav");
-let signOutA:HTMLAnchorElement = <HTMLAnchorElement>document.getElementById("signOutA");
-let logInDiv:HTMLDivElement = <HTMLDivElement>document.getElementById("logInDiv");
+const content: HTMLDivElement = document.getElementById("content") as HTMLDivElement;
+const profilNav: HTMLButtonElement = document.getElementById("profilNav") as HTMLButtonElement;
+const afgangNav: HTMLButtonElement = document.getElementById("afgangNav") as HTMLButtonElement;
+const alarmNav: HTMLButtonElement = document.getElementById("alarmNav") as HTMLButtonElement;
+const logNav: HTMLButtonElement = document.getElementById("logNav") as HTMLButtonElement;
+const signOutA: HTMLAnchorElement = document.getElementById("signOutA") as HTMLAnchorElement;
+const logInDiv: HTMLDivElement = document.getElementById("logInDiv") as HTMLDivElement;
 
 if (!onSignIn) {
   GetLoginPage();
 } else if (onSignIn) {
   GetProfilePage();
 }
-let content = document.getElementById("profilbody");
-let profilNav:HTMLButtonElement = <HTMLButtonElement>document.getElementById("profilNav");
-profilNav.addEventListener('click', GetProfilePage);
+profilNav.addEventListener("click", GetProfilePage);
 
 function GetLoginPage(): void {
     // OPRETTER HTML TIL LOGIN
@@ -150,15 +148,15 @@ function GetProfilePage(): void {
       const afgangNavItemA = document.createElement("a");
       afgangNavItemA.className = "nav-link navitemcolor";
       afgangNavItemA.innerHTML = "<b>Afgang & Ankomst</b>";
-      afgangNavItemA.addEventListener('click', GetAfgangPage);
+      afgangNavItemA.addEventListener("click", GetAfgangPage);
       const alarmNavItemA = document.createElement("a");
       alarmNavItemA.className = "nav-link navitemcolor";
       alarmNavItemA.innerHTML = "<b>Alarmtider</b>";
-      alarmNavItemA.addEventListener('click', GetAlarmPage);
+      alarmNavItemA.addEventListener("click", GetAlarmPage);
       const logNavItemA = document.createElement("a");
       logNavItemA.className = "nav-link navitemcolor";
       logNavItemA.innerHTML = "<b>Rejse Dagbog</b>";
-      logNavItemA.addEventListener('click', GetLogPage);
+      logNavItemA.addEventListener("click", GetLogPage);
 
       // LOG UD A-TAG
       // const signOutA = document.getElementById("signOutA");
@@ -177,7 +175,7 @@ function GetProfilePage(): void {
       afgangNavItemLi.appendChild(afgangNavItemA);
       alarmNavItemLi.appendChild(alarmNavItemA);
       logNavItemLi.appendChild(logNavItemA);
-      
+
   }
 
 function GetAfgangPage(): void {
