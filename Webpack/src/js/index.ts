@@ -93,11 +93,11 @@ const logNav: HTMLButtonElement = document.getElementById("logNav") as HTMLButto
 const signOutA: HTMLAnchorElement = document.getElementById("signOutA") as HTMLAnchorElement;
 const logInDiv: HTMLDivElement = document.getElementById("logInDiv") as HTMLDivElement;
 
-if (!onSignIn) {
-  GetLoginPage();
-} else if (onSignIn) {
-  GetProfilePage();
-}
+// if (!onSignIn) {
+//   GetLoginPage();
+// } else if (onSignIn) {
+//   GetProfilePage();
+// }
 profilNav.addEventListener("click", GetProfilePage);
 
 function GetLoginPage(): void {
