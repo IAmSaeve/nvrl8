@@ -16,7 +16,6 @@ function onSignIn(googleUser: any) {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     window.location.href = "http://localhost:3000/profil.htm";
   }
-<<<<<<< HEAD
 
 if(onSignIn)
 {
@@ -24,6 +23,7 @@ if(onSignIn)
 }
 
 function GetLoginPage():void {
+    //OPRETTER ELEMENTER
     const loginBody = document.getElementById("profilbody");
     const loginHeader = document.createElement("header");
     loginHeader.className = "container fluid col-lg-12";
@@ -37,7 +37,9 @@ function GetLoginPage():void {
     loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
     const loginFormDiv = document.createElement("div");
     loginFormDiv.className = "g-signin2";
-    loginFormDiv.
+    loginFormDiv.addEventListener('click', onSignIn);
+
+
 }
 
   function GetProfilePage():void {
@@ -308,5 +310,3 @@ function GetLogPage():void {
     //LOG UD A-TAG
     logBody.appendChild(signOutA);
 }
-=======
->>>>>>> 07a420361153a136051d9a88aefa05186cf967f4
