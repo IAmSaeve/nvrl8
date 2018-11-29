@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
 import { autocomplete } from "./autocomplete";
 import { IStop } from "./Interface/IStop";
+import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/leg";
 import { Trip } from "./Model/trip";
 
@@ -13,9 +14,6 @@ stopArray.forEach((e) => {
 
 });
 console.log(stringArray.length);
-interface ITripList {
-    TripList: Trip[];
-}
 
 const date: Date = new Date();
 const today: string = date.getDate() + "." +
@@ -27,8 +25,8 @@ const time: string = date.getHours() + ":" + date.getMinutes();
 //           "&destCoordX=12565562&destCoordY=55673063&destCoordName=K%C3%B8benhavn%20H&date=" + today +
 //          "&time=10:58&useBus=0&format=json";
 
-const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk" +
-    "/bin/rest.exe/trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
+const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
+    "trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
 
 document.getElementById("TripButton").addEventListener("click", GetTripsAxios);
 
