@@ -1,4 +1,4 @@
-import { Leg } from "./leg";
+import { Leg } from "./Leg";
 
 export class Trip {
     public alternative: boolean;

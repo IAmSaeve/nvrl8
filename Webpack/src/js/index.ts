@@ -3,8 +3,8 @@ import * as data from "../Data/stops.json";
 import { autocomplete } from "./autocomplete";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
-import { Leg } from "./Model/leg";
-import { Trip } from "./Model/trip";
+import { Leg } from "./Model/Leg";
+import { Trip } from "./Model/Trip";
 
 const stopArray: IStop[] = data.default as IStop[];
 const stringArray: string[] = new Array();
