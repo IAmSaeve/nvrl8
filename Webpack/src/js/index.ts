@@ -94,47 +94,29 @@ function onSignIn(googleUser: any) {
   }
 
 if (!onSignIn) {
-    GetLoginPage();
+  GetLoginPage();
 } else if (onSignIn) {
-    GetProfilePage();
+  GetProfilePage();
 }
+let content = document.getElementById("profilbody");
+let profilNav:HTMLButtonElement = <HTMLButtonElement>document.getElementById("profilNav");
+profilNav.addEventListener('click', GetProfilePage);
 
 function GetLoginPage(): void {
-    // OPRETTER ELEMENTER
-    const loginBody = document.getElementById("profilbody");
-    const loginHeader = document.createElement("header");
-    loginHeader.className = "container fluid col-lg-12";
-    const loginHeaderDiv = document.createElement("div");
-    loginHeaderDiv.className = "col-lg-6";
-    const loginHeaderH1 = document.createElement("h1");
-    loginHeaderH1.className = "color";
-    const loginHeaderH1Span = document.createElement("span");
-    loginHeaderH1Span.className = "forsent";
-    const loginFormContainer = document.createElement("form");
-    loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
-    const loginFormDiv = document.createElement("div");
-    loginFormDiv.className = "g-signin2";
-    loginFormDiv.addEventListener("click", onSignIn);
-
-    // TILFØJE ELEMENTER TIL INNERHTML
-    loginBody.appendChild(loginHeader);
-    loginHeader.appendChild(loginHeaderDiv);
-    loginHeader.className = "container fluid col-lg-12";
-    loginHeaderDiv.appendChild(loginHeaderH1);
-    loginHeaderDiv.className = "col-lg-6";
-    loginHeaderH1.appendChild(loginHeaderH1Span);
-    loginHeaderH1.className = "color";
-    loginHeaderH1.innerText = "Nvr";
-    loginHeaderH1Span.className = "forsent";
-    loginHeaderH1Span.innerText = "L8";
-    loginBody.appendChild(loginFormContainer);
-    loginFormContainer.appendChild(loginFormDiv);
-    loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
-    loginFormDiv.className = "g-signin2";
+    // OPRETTER HTML TIL LOGIN
+    let html = "";
+    html = "<header class='container fluid col-lg-12'>";
+    html += "<div class='col-lg-6'>";
+    html += "<h1 class='color'>Nvr<span class='forsent'>L8</span></h1>";
+    html += "</div></header>";
+    html += "<form class='col-lg-4 offset-lg-5 formcontainer'>";
+    html += "<div class='g-signin2' data-onsuccess='onSignIn'></div>";
+    
+    content.innerHTML = html;
 }
 
 function GetProfilePage(): void {
-
+    
       // OPRETTER ALLE ELEMENTER
       // BODY
       const profilBody = document.getElementById("profilbody");
@@ -145,7 +127,7 @@ function GetProfilePage(): void {
       const profilDivHeader = document.createElement("div");
       profilDivHeader.className = "col-lg-6";
       const profilHeaderH1 = document.createElement("h1");
-      profilHeaderH1.className = "color";
+      profilHeaderH1.className = "color headerh1";
       profilHeaderH1.innerHTML = "NvrL8";
       const profilHeaderH1Span = document.createElement("span");
 
@@ -161,22 +143,22 @@ function GetProfilePage(): void {
       alarmNavItemLi.className = "nav-item";
       const logNavItemLi = document.createElement("li");
       logNavItemLi.className = "nav-item";
-      const profilNavItemA = document.createElement("a");
+      const profilNavItemA = document.createElement("button");
       profilNavItemA.className = "nav-link navitemcolor";
-      profilNavItemA.href = "profil.htm";
       profilNavItemA.innerHTML = "<b>Profil</b>";
+      profilNavItemA.id = "profilNav";
       const afgangNavItemA = document.createElement("a");
       afgangNavItemA.className = "nav-link navitemcolor";
-      afgangNavItemA.href = "afgang.htm";
       afgangNavItemA.innerHTML = "<b>Afgang & Ankomst</b>";
+      afgangNavItemA.addEventListener('click', GetAfgangPage);
       const alarmNavItemA = document.createElement("a");
       alarmNavItemA.className = "nav-link navitemcolor";
-      alarmNavItemA.href = "alarm.htm";
       alarmNavItemA.innerHTML = "<b>Alarmtider</b>";
+      alarmNavItemA.addEventListener('click', GetAlarmPage);
       const logNavItemA = document.createElement("a");
       logNavItemA.className = "nav-link navitemcolor";
-      logNavItemA.href = "log.htm";
       logNavItemA.innerHTML = "<b>Rejse Dagbog</b>";
+      logNavItemA.addEventListener('click', GetLogPage);
 
       // LOG UD A-TAG
       // const signOutA = document.getElementById("signOutA");
@@ -195,7 +177,7 @@ function GetProfilePage(): void {
       afgangNavItemLi.appendChild(afgangNavItemA);
       alarmNavItemLi.appendChild(alarmNavItemA);
       logNavItemLi.appendChild(logNavItemA);
-
+      
   }
 
 function GetAfgangPage(): void {
@@ -210,7 +192,7 @@ function GetAfgangPage(): void {
     const afgangDivHeader = document.createElement("div");
     afgangDivHeader.className = "col-lg-6";
     const afgangHeaderH1 = document.createElement("h1");
-    afgangHeaderH1.className = "color";
+    afgangHeaderH1.className = "color headerh1";
     const afgangHeaderH1Span = document.createElement("span");
 
     // NAVIGATION
@@ -274,7 +256,7 @@ function GetAlarmPage(): void {
     const alarmDivHeader = document.createElement("div");
     alarmDivHeader.className = "col-lg-6";
     const alarmHeaderH1 = document.createElement("h1");
-    alarmHeaderH1.className = "color";
+    alarmHeaderH1.className = "color headerh1";
     const alarmHeaderH1Span = document.createElement("span");
 
     // NAVIGATION
@@ -337,7 +319,7 @@ function GetLogPage(): void {
     const logDivHeader = document.createElement("div");
     logDivHeader.className = "col-lg-6";
     const logHeaderH1 = document.createElement("h1");
-    logHeaderH1.className = "color";
+    logHeaderH1.className = "color headerh1";
     const logHeaderH1Span = document.createElement("span");
 
     // NAVIGATION
