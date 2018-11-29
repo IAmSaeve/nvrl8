@@ -21,7 +21,7 @@ const date: Date = new Date();
 const today: string = date.getDate() + "." +
     (date.getMonth() + 1) + "." +
     (date.getFullYear().toString().split("20")[1]);
-console.log(today);
+const time: string = date.getHours() + ":" + date.getMinutes();
 
 // const uri  = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=8600617" +
 //           "&destCoordX=12565562&destCoordY=55673063&destCoordName=K%C3%B8benhavn%20H&date=" + today +
