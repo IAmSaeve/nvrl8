@@ -43,7 +43,7 @@ export function GetAlarmPage(): void {
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
     // LOG UD A-TAG
-   // const signOutA = document.getElementById("signOutA");
+    // const signOutA = document.getElementById("signOutA");
 
     // INDSÆTTER ALLE ELEMENTER I INNERHTML
     // HEADER
