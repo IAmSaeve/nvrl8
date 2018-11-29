@@ -1,13 +1,17 @@
-
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
+import {autocomplete } from "../js/autocomplete";
 import { Leg } from "../js/leg";
 import { Trip } from "../js/trip";
 
 // Import stop locations.
 import * as data from "../Data/stops.json";
 const stopArray: IStop[] = data.default as IStop[];
-console.log(stopArray);
+const stringArray: string[] = new Array();
+stopArray.forEach((e) => {
+  stringArray.push(e.stop_name);
 
+});
+console.log(stringArray.length);
 interface ITripList {
   TripList: Trip[];
 }
