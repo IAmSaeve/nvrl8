@@ -1,17 +1,17 @@
 import { Leg } from "../js/leg";
 
 export class Trip {
-    public Alternative: boolean;
-    public Cancelled: boolean;
-    public Valid: boolean;
-    public Legs: Leg[];
+    public alternative: boolean;
+    public cancelled: boolean;
+    public valid: boolean;
+    public Leg: Leg[];
 
  constructor(legs: Leg[], alternative?: boolean, valid?: boolean, cancelled?: boolean) {
-    this.Legs = legs;
+    this.Leg = legs;
 
-    this.Alternative = alternative;
-    this.Valid = valid;
-    this.Cancelled = cancelled;
+    this.alternative = alternative && alternative || false;
+    this.valid = valid && valid || true;
+    this.cancelled = cancelled && cancelled || false;
 }
 
 }
