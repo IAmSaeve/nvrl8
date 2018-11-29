@@ -9,17 +9,17 @@ const stopArray: IStop[] = data.default as IStop[];
 console.log(stopArray);
 
 interface ITripList {
-  TripList: Trip[];
+    TripList: Trip[];
 }
 
 interface IITripList {
-  TripList: ITripList;
+    TripList: ITripList;
 }
 
 const date: Date = new Date();
 const today: string = date.getDate() + "." +
-  (date.getMonth() + 1) + "." +
-  (date.getFullYear().toString().split("20")[1]);
+    (date.getMonth() + 1) + "." +
+    (date.getFullYear().toString().split("20")[1]);
 console.log(today);
 
 // const uri  = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=8600617" +
@@ -27,76 +27,70 @@ console.log(today);
 //          "&time=10:58&useBus=0&format=json";
 
 const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk" +
-  "/bin/rest.exe/trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
+    "/bin/rest.exe/trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
 
 document.getElementById("TripButton").addEventListener("click", GetTripsAxios);
 
 function GetTripsAxios(): void {
-  document.getElementById("TripList").innerHTML = "";
-  axios.get<ITripList[]>(uri, {
-    headers: {
-      "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Origin": "*",
-      "X-Requested-With": "XMLHttpRequest",
-    },
-  })
-    .then((response: AxiosResponse<any>) => {
-      const tlist: any = response.data;
-      const array: Trip[] = tlist.TripList.Trip as Trip[];
-      console.log(array);
-      array.forEach((element: Trip) => {
-        const node = document.createElement("li");
-        const legArray: Leg[] = element.Leg as Leg[];
-        console.log(legArray);
-        element.Leg.forEach((e) => {
-          const legNode = document.createElement("li");
-          legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
+    document.getElementById("TripList").innerHTML = "";
+    axios.get<ITripList[]>(uri, {
+        headers: {
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Origin": "*",
+            "X-Requested-With": "XMLHttpRequest",
+        },
+    })
+        .then((response: AxiosResponse<any>) => {
+            const tlist: any = response.data;
+            const array: Trip[] = tlist.TripList.Trip as Trip[];
+            console.log(array);
+            array.forEach((element: Trip) => {
+                const node = document.createElement("li");
+                const legArray: Leg[] = element.Leg as Leg[];
+                console.log(legArray);
+                element.Leg.forEach((e) => {
+                    const legNode = document.createElement("li");
+                    legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
                                   Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
                                    Destination : ${e.Destination.name},
                                   Kl : ${e.Destination.time}`));
-          node.appendChild(legNode);
+                    node.appendChild(legNode);
+                });
+                let txt: string = ``;
+                if (element.cancelled !== undefined) {
+                    txt += ` Cancelled : ${element.cancelled}`;
+                }
+                if (element.alternative !== undefined) {
+                    txt += ` Alternative : ${element.alternative}`;
+                }
+                if (element.valid !== undefined) {
+                    txt += ` Valid : ${element.valid}`;
+                }
+                const txtNode = document.createTextNode(txt);
+                node.appendChild(txtNode);
+                document.getElementById("TripList").append(node);
+                console.log(element);
+            });
+        })
+        .catch((error) => {
+            // handle error
+            console.log(error);
+        })
+        .then(() => {
+            // always executed
         });
-        let txt: string = ``;
-        if (element.cancelled !== undefined) {
-          txt += ` Cancelled : ${element.cancelled}`;
-        }
-        if (element.alternative !== undefined) {
-          txt += ` Alternative : ${element.alternative}`;
-        }
-        if (element.valid !== undefined) {
-          txt += ` Valid : ${element.valid}`;
-        }
-        const txtNode = document.createTextNode(txt);
-        node.appendChild(txtNode);
-        document.getElementById("TripList").append(node);
-        console.log(element);
-      });
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-    })
-    .then(() => {
-      // always executed
-    });
 }
 
-function onSignIn(googleUser: any) {
-    const profile = googleUser.getBasicProfile();
-    console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log("Name: " + profile.getName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
+let content:HTMLDivElement =<HTMLDivElement>document.getElementById("content");
+let profilNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("profilNav");
+let afgangNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("afgangNav");
+let alarmNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("alarmNav");
+let logNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("logNav");
 
-if (!onSignIn) {
-  GetLoginPage();
-} else if (onSignIn) {
-  GetProfilePage();
-}
-let content = document.getElementById("profilbody");
-let profilNav:HTMLButtonElement = <HTMLButtonElement>document.getElementById("profilNav");
 profilNav.addEventListener('click', GetProfilePage);
+afgangNav.addEventListener('click', GetAfgangPage);
+alarmNav.addEventListener('click', GetAlarmPage);
+logNav.addEventListener('click', GetLogPage);
 
 function GetLoginPage(): void {
     // OPRETTER HTML TIL LOGIN
@@ -107,272 +101,84 @@ function GetLoginPage(): void {
     html += "</div></header>";
     html += "<form class='col-lg-4 offset-lg-5 formcontainer'>";
     html += "<div class='g-signin2' data-onsuccess='onSignIn'></div>";
-    
+
     content.innerHTML = html;
 }
 
 function GetProfilePage(): void {
-    
-      // OPRETTER ALLE ELEMENTER
-      // BODY
-      const profilBody = document.getElementById("profilbody");
+    // OPRETTER HTML TIL PROFILE
+    let html = "";
+    html = "<header class='container fluid col-lg-12'>";
+    html += "<div class='col-lg-6'>";
+    html += "<h1 class='color'>Profil</span></h1>";
+    html += "</div></header>";
+    html += "<ul class='nav flex-column col-lg-1' id='navbackground'>";
+    html += "<li class='nav-item'><button class='nav-link navitemcolor' id='profilNav'><b>Profil</b></button></li>";
+    html += "<li class='nav-item'><button class='nav-link navitemcolor' id='afgangNav'><b>Afgang & Ankomst</b></button></li>";
+    html += "<li class='nav-item'><button class='nav-link navitemcolor' id='alarmNav'><b>Alarmtider</b></button></li>";
+    html += "<li class='nav-item'><button class='nav-link navitemcolor' id='logNav'><b>Rejse Dagbog</b></button></li>";
+    html += "</ul>";
 
-      // HEADER
-      const profilHeader = document.createElement("header");
-      profilHeader.className = "container fluid col-lg-12";
-      const profilDivHeader = document.createElement("div");
-      profilDivHeader.className = "col-lg-6";
-      const profilHeaderH1 = document.createElement("h1");
-      profilHeaderH1.className = "color headerh1";
-      profilHeaderH1.innerHTML = "NvrL8";
-      const profilHeaderH1Span = document.createElement("span");
-
-      // NAVIGATION
-      const profilUl = document.createElement("ul");
-      profilUl.className = "nav flex-column col-lg-1";
-      profilUl.id = "navbackground";
-      const profilNavItemLi = document.createElement("li");
-      profilNavItemLi.className = "nav-item";
-      const afgangNavItemLi = document.createElement("li");
-      afgangNavItemLi.className = "nav-item";
-      const alarmNavItemLi = document.createElement("li");
-      alarmNavItemLi.className = "nav-item";
-      const logNavItemLi = document.createElement("li");
-      logNavItemLi.className = "nav-item";
-      const profilNavItemA = document.createElement("button");
-      profilNavItemA.className = "nav-link navitemcolor";
-      profilNavItemA.innerHTML = "<b>Profil</b>";
-      profilNavItemA.id = "profilNav";
-      const afgangNavItemA = document.createElement("a");
-      afgangNavItemA.className = "nav-link navitemcolor";
-      afgangNavItemA.innerHTML = "<b>Afgang & Ankomst</b>";
-      afgangNavItemA.addEventListener('click', GetAfgangPage);
-      const alarmNavItemA = document.createElement("a");
-      alarmNavItemA.className = "nav-link navitemcolor";
-      alarmNavItemA.innerHTML = "<b>Alarmtider</b>";
-      alarmNavItemA.addEventListener('click', GetAlarmPage);
-      const logNavItemA = document.createElement("a");
-      logNavItemA.className = "nav-link navitemcolor";
-      logNavItemA.innerHTML = "<b>Rejse Dagbog</b>";
-      logNavItemA.addEventListener('click', GetLogPage);
-
-      // LOG UD A-TAG
-      // const signOutA = document.getElementById("signOutA");
-
-      // INDSÆTTER ALLE ELEMENTER I INNERHTML
-      // HEADER
-      profilBody.appendChild(profilHeader);
-      profilHeader.appendChild(profilDivHeader);
-      profilDivHeader.appendChild(profilHeaderH1);
-      profilHeaderH1.appendChild(profilHeaderH1Span);
-
-      // NAVIGATION
-      profilBody.appendChild(profilUl);
-      profilUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
-      profilNavItemLi.appendChild(profilNavItemA);
-      afgangNavItemLi.appendChild(afgangNavItemA);
-      alarmNavItemLi.appendChild(alarmNavItemA);
-      logNavItemLi.appendChild(logNavItemA);
-      
-  }
+    content.innerHTML = html;
+}
 
 function GetAfgangPage(): void {
+// OPRETTER HTML TIL AFGANG
+let html = "";
+html = "<header class='container fluid col-lg-12'>";
+html += "<div class='col-lg-6'>";
+html += "<h1 class='color'>Profil</span></h1>";
+html += "</div></header>";
+html += "<ul class='nav flex-column col-lg-1' id='navbackground'>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='profilNav'><b>Profil</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='afgangNav'><b>Afgang & Ankomst</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='alarmNav'><b>Alarmtider</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='logNav'><b>Rejse Dagbog</b></button></li>";
+html += "</ul>";
 
-    // OPRETTER ALLE ELEMENTER
-    // BODY
-    const afgangBody = document.getElementById("profilbody");
-
-    // HEADER
-    const afgangHeader = document.createElement("header");
-    afgangHeader.className = "container fluid col-lg-12";
-    const afgangDivHeader = document.createElement("div");
-    afgangDivHeader.className = "col-lg-6";
-    const afgangHeaderH1 = document.createElement("h1");
-    afgangHeaderH1.className = "color headerh1";
-    const afgangHeaderH1Span = document.createElement("span");
-
-    // NAVIGATION
-    const afgangUl = document.createElement("ul");
-    afgangUl.className = "nav flex-column col-lg-1";
-    afgangUl.id = "navbackground";
-    const profilNavItemLi = document.createElement("li");
-    profilNavItemLi.className = "nav-item";
-    const afgangNavItemLi = document.createElement("li");
-    afgangNavItemLi.className = "nav-item";
-    const alarmNavItemLi = document.createElement("li");
-    alarmNavItemLi.className = "nav-item";
-    const logNavItemLi = document.createElement("li");
-    logNavItemLi.className = "nav-item";
-    const profilNavItemA = document.createElement("a");
-    profilNavItemA.className = "nav-link navitemcolor";
-    profilNavItemA.href = "profil.htm";
-    profilNavItemA.text = "<b>Profil</b>";
-    const afgangNavItemA = document.createElement("a");
-    afgangNavItemA.className = "nav-link navitemcolor";
-    afgangNavItemA.href = "afgang.htm";
-    afgangNavItemA.text = "<b>Afgang & Ankomst</b>";
-    const alarmNavItemA = document.createElement("a");
-    alarmNavItemA.className = "nav-link navitemcolor";
-    alarmNavItemA.href = "alarm.htm";
-    alarmNavItemA.text = "<b>Alarmtider</b>";
-    const logNavItemA = document.createElement("a");
-    logNavItemA.className = "nav-link navitemcolor";
-    logNavItemA.href = "log.htm";
-    logNavItemA.text = "<b>Rejse Dagbog</b>";
-
-    // LOG UD A-TAG
-    // const signOutA = document.getElementById("signOutA");
-
-    // INDSÆTTER ALLE ELEMENTER I INNERHTML
-    // HEADER
-    afgangBody.appendChild(afgangHeader);
-    afgangHeader.appendChild(afgangDivHeader);
-    afgangDivHeader.appendChild(afgangHeaderH1);
-    afgangHeaderH1.appendChild(afgangHeaderH1Span);
-
-    // NAVIGATION
-    afgangBody.appendChild(afgangUl);
-    afgangUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
-    profilNavItemLi.appendChild(profilNavItemA);
-    afgangNavItemLi.appendChild(afgangNavItemA);
-    alarmNavItemLi.appendChild(alarmNavItemA);
-    logNavItemLi.appendChild(logNavItemA);
+content.innerHTML = html;
 
 }
 
 function GetAlarmPage(): void {
+// OPRETTER HTML TIL ALARM
+let html = "";
+html = "<header class='container fluid col-lg-12'>";
+html += "<div class='col-lg-6'>";
+html += "<h1 class='color'>Profil</span></h1>";
+html += "</div></header>";
+html += "<ul class='nav flex-column col-lg-1' id='navbackground'>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='profilNav'><b>Profil</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='afgangNav'><b>Afgang & Ankomst</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='alarmNav'><b>Alarmtider</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='logNav'><b>Rejse Dagbog</b></button></li>";
+html += "</ul>";
 
-    // OPRETTER ALLE ELEMENTER
-    // BODY
-    const alarmBody = document.getElementById("profilbody");
-
-    // HEADER
-    const alarmHeader = document.createElement("header");
-    alarmHeader.className = "container fluid col-lg-12";
-    const alarmDivHeader = document.createElement("div");
-    alarmDivHeader.className = "col-lg-6";
-    const alarmHeaderH1 = document.createElement("h1");
-    alarmHeaderH1.className = "color headerh1";
-    const alarmHeaderH1Span = document.createElement("span");
-
-    // NAVIGATION
-    const alarmUl = document.createElement("ul");
-    alarmUl.className = "nav flex-column col-lg-1";
-    alarmUl.id = "navbackground";
-    const profilNavItemLi = document.createElement("li");
-    profilNavItemLi.className = "nav-item";
-    const afgangNavItemLi = document.createElement("li");
-    afgangNavItemLi.className = "nav-item";
-    const alarmNavItemLi = document.createElement("li");
-    alarmNavItemLi.className = "nav-item";
-    const logNavItemLi = document.createElement("li");
-    logNavItemLi.className = "nav-item";
-    const profilNavItemA = document.createElement("a");
-    profilNavItemA.className = "nav-link navitemcolor";
-    profilNavItemA.href = "profil.htm";
-    profilNavItemA.text = "<b>Profil</b>";
-    const afgangNavItemA = document.createElement("a");
-    afgangNavItemA.className = "nav-link navitemcolor";
-    afgangNavItemA.href = "afgang.htm";
-    afgangNavItemA.text = "<b>Afgang & Ankomst</b>";
-    const alarmNavItemA = document.createElement("a");
-    alarmNavItemA.className = "nav-link navitemcolor";
-    alarmNavItemA.href = "alarm.htm";
-    alarmNavItemA.text = "<b>Alarmtider</b>";
-    const logNavItemA = document.createElement("a");
-    logNavItemA.className = "nav-link navitemcolor";
-    logNavItemA.href = "log.htm";
-    logNavItemA.text = "<b>Rejse Dagbog</b>";
-
-    // LOG UD A-TAG
-   // const signOutA = document.getElementById("signOutA");
-
-    // INDSÆTTER ALLE ELEMENTER I INNERHTML
-    // HEADER
-    alarmBody.appendChild(alarmHeader);
-    alarmHeader.appendChild(alarmDivHeader);
-    alarmDivHeader.appendChild(alarmHeaderH1);
-    alarmHeaderH1.appendChild(alarmHeaderH1Span);
-
-    // NAVIGATION
-    alarmBody.appendChild(alarmUl);
-    alarmUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
-    profilNavItemLi.appendChild(profilNavItemA);
-    afgangNavItemLi.appendChild(afgangNavItemA);
-    alarmNavItemLi.appendChild(alarmNavItemA);
-    logNavItemLi.appendChild(logNavItemA);
+content.innerHTML = html;
+    
 }
 
 function GetLogPage(): void {
-
-    // OPRETTER ALLE ELEMENTER
-    // BODY
-    const logBody = document.getElementById("profilbody");
-
-    // HEADER
-    const logHeader = document.createElement("header");
-    logHeader.className = "container fluid col-lg-12";
-    const logDivHeader = document.createElement("div");
-    logDivHeader.className = "col-lg-6";
-    const logHeaderH1 = document.createElement("h1");
-    logHeaderH1.className = "color headerh1";
-    const logHeaderH1Span = document.createElement("span");
-
-    // NAVIGATION
-    const logUl = document.createElement("ul");
-    logUl.className = "nav flex-column col-lg-1";
-    logUl.id = "navbackground";
-    const profilNavItemLi = document.createElement("li");
-    profilNavItemLi.className = "nav-item";
-    const afgangNavItemLi = document.createElement("li");
-    afgangNavItemLi.className = "nav-item";
-    const alarmNavItemLi = document.createElement("li");
-    alarmNavItemLi.className = "nav-item";
-    const logNavItemLi = document.createElement("li");
-    logNavItemLi.className = "nav-item";
-    const profilNavItemA = document.createElement("a");
-    profilNavItemA.className = "nav-link navitemcolor";
-    profilNavItemA.href = "profil.htm";
-    profilNavItemA.text = "<b>Profil</b>";
-    const afgangNavItemA = document.createElement("a");
-    afgangNavItemA.className = "nav-link navitemcolor";
-    afgangNavItemA.href = "afgang.htm";
-    afgangNavItemA.text = "<b>Afgang & Ankomst</b>";
-    const alarmNavItemA = document.createElement("a");
-    alarmNavItemA.className = "nav-link navitemcolor";
-    alarmNavItemA.href = "alarm.htm";
-    alarmNavItemA.text = "<b>Alarmtider</b>";
-    const logNavItemA = document.createElement("a");
-    logNavItemA.className = "nav-link navitemcolor";
-    logNavItemA.href = "log.htm";
-    logNavItemA.text = "<b>Rejse Dagbog</b>";
-
-    // LOG UD A-TAG
-    // const signOutA = document.getElementById("signOutA");
-
-    // INDSÆTTER ALLE ELEMENTER I INNERHTML
-    // HEADER
-    logBody.appendChild(logHeader);
-    logHeader.appendChild(logDivHeader);
-    logDivHeader.appendChild(logHeaderH1);
-    logHeaderH1.appendChild(logHeaderH1Span);
-
-    // NAVIGATION
-    logBody.appendChild(logUl);
-    logUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
-    profilNavItemLi.appendChild(profilNavItemA);
-    afgangNavItemLi.appendChild(afgangNavItemA);
-    alarmNavItemLi.appendChild(alarmNavItemA);
-    logNavItemLi.appendChild(logNavItemA);
-
+// OPRETTER HTML TIL LOG
+let html = "";
+html = "<header class='container fluid col-lg-12'>";
+html += "<div class='col-lg-6'>";
+html += "<h1 class='color'>Profil</span></h1>";
+html += "</div></header>";
+html += "<ul class='nav flex-column col-lg-1' id='navbackground'>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='profilNav'><b>Profil</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='afgangNav'><b>Afgang & Ankomst</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='alarmNav'><b>Alarmtider</b></button></li>";
+html += "<li class='nav-item'><button class='nav-link navitemcolor' id='logNav'><b>Rejse Dagbog</b></button></li>";
+html += "</ul>";
 }
 interface IStop {
-  stop_id: string;
-  stop_code: string;
-  stop_name: string;
-  stop_desc: string;
-  stop_lat: string;
-  stop_lon: string;
-  location_type: string;
-  parent_station: string;
+    stop_id: string;
+    stop_code: string;
+    stop_name: string;
+    stop_desc: string;
+    stop_lat: string;
+    stop_lon: string;
+    location_type: string;
+    parent_station: string;
 }
