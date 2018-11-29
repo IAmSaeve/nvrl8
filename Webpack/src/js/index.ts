@@ -22,7 +22,11 @@ function onSignIn(googleUser: any) {
     window.location.href = "http://localhost:3000/profil.htm";
   }
 
-if(onSignIn)
+if(!onSignIn)
+{
+    GetLoginPage();
+}
+else if(onSignIn)
 {
     GetProfilePage();
 }
