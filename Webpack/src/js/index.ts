@@ -16,10 +16,6 @@ interface ITripList {
     TripList: Trip[];
 }
 
-interface IITripList {
-    TripList: ITripList;
-}
-
 const date: Date = new Date();
 const today: string = date.getDate() + "." +
     (date.getMonth() + 1) + "." +
