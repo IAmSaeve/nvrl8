@@ -9,7 +9,7 @@
     "watch": "node_modules\\.bin\\webpack --mode=development --watch",
     "serve": "node_modules\\.bin\\http-server dist/ -g -o"
   },
-  "author": "Ebbe Vang, evang.dk",
+  "author": "Michael steinmejer",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.24.6",
@@ -23,6 +23,7 @@
     "source-map": "^0.7.3",
     "style-loader": "^0.22.1",
     "ts-loader": "^4.4.2",
+    "types": "^0.1.1",
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0"

@@ -41,13 +41,14 @@ maze2 = [[r, r, r, r, r, r, r, r],
 m3x = 2
 m3y = 1
 maze3 = [[r, r, r, r, r, r, r, r],
-         [r, r, b, b, b, b, b, r],
+         [r, b, b, b, b, b, b, r],
          [r, r, b, r, r, b, r, r],
          [r, r, r, r, r, b, r, r],
          [r, b, b, b, b, b, b, r],
          [r, r, b, r, r, r, r, r],
          [r, r, b, b, b, b, b, r],
          [r, r, r, r, r, r, g, r]]
+		 
 
 game_over = False
 
