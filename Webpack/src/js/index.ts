@@ -91,10 +91,6 @@ let logInDiv:HTMLDivElement = <HTMLDivElement>document.getElementById("logInDiv"
 
 if(signOutA.click)
 {
-    GetLoginPage();
-}
-else if(logInDiv.click)
-{
     GetProfilePage();
 }
 
@@ -110,8 +106,8 @@ function GetLoginPage(): void {
     html += "<div class='col-lg-6'>";
     html += "<h1 class='color'>Nvr<span class='forsent'>L8</span></h1>";
     html += "</div></header>";
-    html += "<form class='col-lg-4 offset-lg-5 formcontainer' id='logInDiv'>";
-    html += "<div class='g-signin2' data-onsuccess='onSignIn'></div>";
+    html += "<form class='col-lg-4 offset-lg-5 formcontainer'>";
+    html += "<div class='g-signin2' data-onsuccess='onSignIn' id='logInDiv'></div>";
 
     content.innerHTML = html;
 }
