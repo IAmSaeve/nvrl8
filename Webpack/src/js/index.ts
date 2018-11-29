@@ -1,12 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
+import * as data from "../Data/stops.json";
 import { autocomplete } from "./autocomplete";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/leg";
 import { Trip } from "./Model/trip";
 
-// Import stop locations.
-import * as data from "../Data/stops.json";
 const stopArray: IStop[] = data.default as IStop[];
 const stringArray: string[] = new Array();
 stopArray.forEach((e) => {
@@ -20,10 +19,6 @@ const today: string = date.getDate() + "." +
     (date.getMonth() + 1) + "." +
     (date.getFullYear().toString().split("20")[1]);
 const time: string = date.getHours() + ":" + date.getMinutes();
-
-// const uri  = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=8600617" +
-//           "&destCoordX=12565562&destCoordY=55673063&destCoordName=K%C3%B8benhavn%20H&date=" + today +
-//          "&time=10:58&useBus=0&format=json";
 
 const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
     "trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
