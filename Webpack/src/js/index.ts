@@ -63,8 +63,6 @@ function GetLoginPage():void {
     loginFormContainer.appendChild(loginFormDiv);
     loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
     loginFormDiv.className = "g-signin2";
-
-
 }
 
   function GetProfilePage():void {
