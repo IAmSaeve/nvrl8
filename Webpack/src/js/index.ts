@@ -44,6 +44,14 @@ function GetLoginPage():void {
     loginFormDiv.className = "g-signin2";
     loginFormDiv.addEventListener('click', onSignIn);
 
+    //TILFØJE ELEMENTER TIL INNERHTML
+
+    loginBody.appendChild(loginHeader);
+    loginHeader.appendChild(loginHeaderDiv);
+    loginHeaderDiv.appendChild(loginHeaderH1);
+    loginHeaderH1.appendChild(loginHeaderH1Span);
+    loginBody.appendChild(loginFormContainer);
+    loginFormContainer.appendChild(loginFormDiv);
 
 }
 
