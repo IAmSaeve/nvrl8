@@ -21,18 +21,14 @@ function onSignIn(googleUser: any) {
     console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
 
-
-if(!onSignIn)
-{
+if (!onSignIn) {
     GetLoginPage();
-}
-else if(onSignIn)
-{
+} else if (onSignIn) {
     GetProfilePage();
 }
 
-function GetLoginPage():void {
-    //OPRETTER ELEMENTER
+function GetLoginPage(): void {
+    // OPRETTER ELEMENTER
     const loginBody = document.getElementById("profilbody");
     const loginHeader = document.createElement("header");
     loginHeader.className = "container fluid col-lg-12";
@@ -46,9 +42,9 @@ function GetLoginPage():void {
     loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
     const loginFormDiv = document.createElement("div");
     loginFormDiv.className = "g-signin2";
-    loginFormDiv.addEventListener('click', onSignIn);
+    loginFormDiv.addEventListener("click", onSignIn);
 
-    //TILFØJE ELEMENTER TIL INNERHTML
+    // TILFØJE ELEMENTER TIL INNERHTML
     loginBody.appendChild(loginHeader);
     loginHeader.appendChild(loginHeaderDiv);
     loginHeader.className = "container fluid col-lg-12";
@@ -56,7 +52,7 @@ function GetLoginPage():void {
     loginHeaderDiv.className = "col-lg-6";
     loginHeaderH1.appendChild(loginHeaderH1Span);
     loginHeaderH1.className = "color";
-    loginHeaderH1.innerText = "Nvr"
+    loginHeaderH1.innerText = "Nvr";
     loginHeaderH1Span.className = "forsent";
     loginHeaderH1Span.innerText = "L8";
     loginBody.appendChild(loginFormContainer);
@@ -65,13 +61,13 @@ function GetLoginPage():void {
     loginFormDiv.className = "g-signin2";
 }
 
-  function GetProfilePage():void {
-      
-      //OPRETTER ALLE ELEMENTER
-      //BODY
+function GetProfilePage(): void {
+
+      // OPRETTER ALLE ELEMENTER
+      // BODY
       const profilBody = document.getElementById("profilbody");
 
-      //HEADER
+      // HEADER
       const profilHeader = document.createElement("header");
       profilHeader.className = "container fluid col-lg-12";
       const profilDivHeader = document.createElement("div");
@@ -81,8 +77,8 @@ function GetLoginPage():void {
       profilHeaderH1.innerHTML = "NvrL8";
       const profilHeaderH1Span = document.createElement("span");
 
-      //NAVIGATION
-      const profilUl = document.createElement("ul")
+      // NAVIGATION
+      const profilUl = document.createElement("ul");
       profilUl.className = "nav flex-column col-lg-1";
       profilUl.id = "navbackground";
       const profilNavItemLi = document.createElement("li");
@@ -110,17 +106,17 @@ function GetLoginPage():void {
       logNavItemA.href = "log.htm";
       logNavItemA.innerHTML = "<b>Rejse Dagbog</b>";
 
-      //LOG UD A-TAG
-      //const signOutA = document.getElementById("signOutA");
-      
-      //INDSÆTTER ALLE ELEMENTER I INNERHTML 
-      //HEADER
+      // LOG UD A-TAG
+      // const signOutA = document.getElementById("signOutA");
+
+      // INDSÆTTER ALLE ELEMENTER I INNERHTML
+      // HEADER
       profilBody.appendChild(profilHeader);
       profilHeader.appendChild(profilDivHeader);
       profilDivHeader.appendChild(profilHeaderH1);
       profilHeaderH1.appendChild(profilHeaderH1Span);
 
-      //NAVIGATION
+      // NAVIGATION
       profilBody.appendChild(profilUl);
       profilUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
       profilNavItemLi.appendChild(profilNavItemA);
@@ -128,16 +124,15 @@ function GetLoginPage():void {
       alarmNavItemLi.appendChild(alarmNavItemA);
       logNavItemLi.appendChild(logNavItemA);
 
-    
   }
 
-  function GetAfgangPage():void {
-    
-    //OPRETTER ALLE ELEMENTER
-    //BODY
+function GetAfgangPage(): void {
+
+    // OPRETTER ALLE ELEMENTER
+    // BODY
     const afgangBody = document.getElementById("profilbody");
 
-    //HEADER
+    // HEADER
     const afgangHeader = document.createElement("header");
     afgangHeader.className = "container fluid col-lg-12";
     const afgangDivHeader = document.createElement("div");
@@ -146,8 +141,8 @@ function GetLoginPage():void {
     afgangHeaderH1.className = "color";
     const afgangHeaderH1Span = document.createElement("span");
 
-    //NAVIGATION
-    const afgangUl = document.createElement("ul")
+    // NAVIGATION
+    const afgangUl = document.createElement("ul");
     afgangUl.className = "nav flex-column col-lg-1";
     afgangUl.id = "navbackground";
     const profilNavItemLi = document.createElement("li");
@@ -175,17 +170,17 @@ function GetLoginPage():void {
     logNavItemA.href = "log.htm";
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
-    //LOG UD A-TAG
-    //const signOutA = document.getElementById("signOutA");
-    
-    //INDSÆTTER ALLE ELEMENTER I INNERHTML 
-    //HEADER
+    // LOG UD A-TAG
+    // const signOutA = document.getElementById("signOutA");
+
+    // INDSÆTTER ALLE ELEMENTER I INNERHTML
+    // HEADER
     afgangBody.appendChild(afgangHeader);
     afgangHeader.appendChild(afgangDivHeader);
     afgangDivHeader.appendChild(afgangHeaderH1);
     afgangHeaderH1.appendChild(afgangHeaderH1Span);
 
-    //NAVIGATION
+    // NAVIGATION
     afgangBody.appendChild(afgangUl);
     afgangUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
     profilNavItemLi.appendChild(profilNavItemA);
@@ -195,13 +190,13 @@ function GetLoginPage():void {
 
 }
 
-function GetAlarmPage():void {
-    
-    //OPRETTER ALLE ELEMENTER
-    //BODY
+function GetAlarmPage(): void {
+
+    // OPRETTER ALLE ELEMENTER
+    // BODY
     const alarmBody = document.getElementById("profilbody");
 
-    //HEADER
+    // HEADER
     const alarmHeader = document.createElement("header");
     alarmHeader.className = "container fluid col-lg-12";
     const alarmDivHeader = document.createElement("div");
@@ -210,8 +205,8 @@ function GetAlarmPage():void {
     alarmHeaderH1.className = "color";
     const alarmHeaderH1Span = document.createElement("span");
 
-    //NAVIGATION
-    const alarmUl = document.createElement("ul")
+    // NAVIGATION
+    const alarmUl = document.createElement("ul");
     alarmUl.className = "nav flex-column col-lg-1";
     alarmUl.id = "navbackground";
     const profilNavItemLi = document.createElement("li");
@@ -239,17 +234,17 @@ function GetAlarmPage():void {
     logNavItemA.href = "log.htm";
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
-    //LOG UD A-TAG
+    // LOG UD A-TAG
    // const signOutA = document.getElementById("signOutA");
-    
-    //INDSÆTTER ALLE ELEMENTER I INNERHTML 
-    //HEADER
+
+    // INDSÆTTER ALLE ELEMENTER I INNERHTML
+    // HEADER
     alarmBody.appendChild(alarmHeader);
     alarmHeader.appendChild(alarmDivHeader);
     alarmDivHeader.appendChild(alarmHeaderH1);
     alarmHeaderH1.appendChild(alarmHeaderH1Span);
 
-    //NAVIGATION
+    // NAVIGATION
     alarmBody.appendChild(alarmUl);
     alarmUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
     profilNavItemLi.appendChild(profilNavItemA);
@@ -258,13 +253,13 @@ function GetAlarmPage():void {
     logNavItemLi.appendChild(logNavItemA);
 }
 
-function GetLogPage():void {
-    
-    //OPRETTER ALLE ELEMENTER
-    //BODY
+function GetLogPage(): void {
+
+    // OPRETTER ALLE ELEMENTER
+    // BODY
     const logBody = document.getElementById("profilbody");
 
-    //HEADER
+    // HEADER
     const logHeader = document.createElement("header");
     logHeader.className = "container fluid col-lg-12";
     const logDivHeader = document.createElement("div");
@@ -273,8 +268,8 @@ function GetLogPage():void {
     logHeaderH1.className = "color";
     const logHeaderH1Span = document.createElement("span");
 
-    //NAVIGATION
-    const logUl = document.createElement("ul")
+    // NAVIGATION
+    const logUl = document.createElement("ul");
     logUl.className = "nav flex-column col-lg-1";
     logUl.id = "navbackground";
     const profilNavItemLi = document.createElement("li");
@@ -302,17 +297,17 @@ function GetLogPage():void {
     logNavItemA.href = "log.htm";
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
-    //LOG UD A-TAG
-    //const signOutA = document.getElementById("signOutA");
-    
-    //INDSÆTTER ALLE ELEMENTER I INNERHTML 
-    //HEADER
+    // LOG UD A-TAG
+    // const signOutA = document.getElementById("signOutA");
+
+    // INDSÆTTER ALLE ELEMENTER I INNERHTML
+    // HEADER
     logBody.appendChild(logHeader);
     logHeader.appendChild(logDivHeader);
     logDivHeader.appendChild(logHeaderH1);
     logHeaderH1.appendChild(logHeaderH1Span);
 
-    //NAVIGATION
+    // NAVIGATION
     logBody.appendChild(logUl);
     logUl.append(profilNavItemLi, afgangNavItemLi, alarmNavItemLi, logNavItemLi);
     profilNavItemLi.appendChild(profilNavItemA);
