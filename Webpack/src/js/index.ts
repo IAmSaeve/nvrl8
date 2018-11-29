@@ -45,13 +45,21 @@ function GetLoginPage():void {
     loginFormDiv.addEventListener('click', onSignIn);
 
     //TILFØJE ELEMENTER TIL INNERHTML
-
     loginBody.appendChild(loginHeader);
     loginHeader.appendChild(loginHeaderDiv);
+    loginHeader.className = "container fluid col-lg-12";
     loginHeaderDiv.appendChild(loginHeaderH1);
+    loginHeaderDiv.className = "col-lg-6";
     loginHeaderH1.appendChild(loginHeaderH1Span);
+    loginHeaderH1.className = "color";
+    loginHeaderH1.innerText = "Nvr"
+    loginHeaderH1Span.className = "forsent";
+    loginHeaderH1Span.innerText = "L8";
     loginBody.appendChild(loginFormContainer);
     loginFormContainer.appendChild(loginFormDiv);
+    loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
+    loginFormDiv.className = "g-signin2";
+
 
 }
 
