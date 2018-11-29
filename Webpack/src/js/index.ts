@@ -86,6 +86,17 @@ let profilNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("p
 let afgangNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("afgangNav");
 let alarmNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("alarmNav");
 let logNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("logNav");
+let signOutA:HTMLAnchorElement = <HTMLAnchorElement>document.getElementById("signOutA");
+let logInDiv:HTMLDivElement = <HTMLDivElement>document.getElementById("logInDiv");
+
+if(signOutA.click)
+{
+    GetLoginPage();
+}
+else if(logInDiv.click)
+{
+    GetProfilePage();
+}
 
 profilNav.addEventListener('click', GetProfilePage);
 afgangNav.addEventListener('click', GetAfgangPage);
@@ -99,7 +110,7 @@ function GetLoginPage(): void {
     html += "<div class='col-lg-6'>";
     html += "<h1 class='color'>Nvr<span class='forsent'>L8</span></h1>";
     html += "</div></header>";
-    html += "<form class='col-lg-4 offset-lg-5 formcontainer'>";
+    html += "<form class='col-lg-4 offset-lg-5 formcontainer' id='logInDiv'>";
     html += "<div class='g-signin2' data-onsuccess='onSignIn'></div>";
 
     content.innerHTML = html;
