@@ -1,5 +1,5 @@
-import { Destination } from "../js/destination";
-import { Origin } from "../js/origin";
+import { Destination } from "./destination";
+import { Origin } from "./origin";
 export class Leg {
     public name: string;
     public type: string;
