@@ -51,10 +51,10 @@ function GetLoginPage(): void {
     loginHeaderDiv.appendChild(loginHeaderH1);
     loginHeaderDiv.className = "col-lg-6";
     loginHeaderH1.appendChild(loginHeaderH1Span);
-    loginHeaderH1.className = "color";
-    loginHeaderH1.innerText = "Nvr";
+    loginHeaderH1.className = "color headerh1";
+    loginHeaderH1.innerHTML = "Nvr";
     loginHeaderH1Span.className = "forsent";
-    loginHeaderH1Span.innerText = "L8";
+    loginHeaderH1Span.innerHTML = "L8";
     loginBody.appendChild(loginFormContainer);
     loginFormContainer.appendChild(loginFormDiv);
     loginFormContainer.className = "col-lg-4 offset-lg-5 formcontainer";
@@ -73,7 +73,7 @@ function GetProfilePage(): void {
       const profilDivHeader = document.createElement("div");
       profilDivHeader.className = "col-lg-6";
       const profilHeaderH1 = document.createElement("h1");
-      profilHeaderH1.className = "color";
+      profilHeaderH1.className = "color headerh1";
       profilHeaderH1.innerHTML = "NvrL8";
       const profilHeaderH1Span = document.createElement("span");
 
@@ -123,7 +123,12 @@ function GetProfilePage(): void {
       afgangNavItemLi.appendChild(afgangNavItemA);
       alarmNavItemLi.appendChild(alarmNavItemA);
       logNavItemLi.appendChild(logNavItemA);
-
+      
+      //A-TAG
+      const logOutA = document.createElement("a");
+      logOutA.href = "#";
+      logOutA.addEventListener('click', signOut);
+      logOutA.innerHTML = "Log ud";
   }
 
 function GetAfgangPage(): void {
@@ -138,7 +143,7 @@ function GetAfgangPage(): void {
     const afgangDivHeader = document.createElement("div");
     afgangDivHeader.className = "col-lg-6";
     const afgangHeaderH1 = document.createElement("h1");
-    afgangHeaderH1.className = "color";
+    afgangHeaderH1.className = "color headerh1";
     const afgangHeaderH1Span = document.createElement("span");
 
     // NAVIGATION
@@ -202,7 +207,7 @@ function GetAlarmPage(): void {
     const alarmDivHeader = document.createElement("div");
     alarmDivHeader.className = "col-lg-6";
     const alarmHeaderH1 = document.createElement("h1");
-    alarmHeaderH1.className = "color";
+    alarmHeaderH1.className = "color headerh1";
     const alarmHeaderH1Span = document.createElement("span");
 
     // NAVIGATION
@@ -265,7 +270,7 @@ function GetLogPage(): void {
     const logDivHeader = document.createElement("div");
     logDivHeader.className = "col-lg-6";
     const logHeaderH1 = document.createElement("h1");
-    logHeaderH1.className = "color";
+    logHeaderH1.className = "color headerh1";
     const logHeaderH1Span = document.createElement("span");
 
     // NAVIGATION
