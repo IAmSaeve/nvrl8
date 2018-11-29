@@ -19,8 +19,8 @@ function onSignIn(googleUser: any) {
     console.log("Name: " + profile.getName());
     console.log("Image URL: " + profile.getImageUrl());
     console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-    window.location.href = "http://localhost:3000/profil.htm";
   }
+
 
 if(!onSignIn)
 {
@@ -80,6 +80,7 @@ function GetLoginPage():void {
       profilDivHeader.className = "col-lg-6";
       const profilHeaderH1 = document.createElement("h1");
       profilHeaderH1.className = "color";
+      profilHeaderH1.innerHTML = "NvrL8";
       const profilHeaderH1Span = document.createElement("span");
 
       //NAVIGATION
@@ -97,23 +98,22 @@ function GetLoginPage():void {
       const profilNavItemA = document.createElement("a");
       profilNavItemA.className = "nav-link navitemcolor";
       profilNavItemA.href = "profil.htm";
-      profilNavItemA.text = "<b>Profil</b>";
+      profilNavItemA.innerHTML = "<b>Profil</b>";
       const afgangNavItemA = document.createElement("a");
       afgangNavItemA.className = "nav-link navitemcolor";
       afgangNavItemA.href = "afgang.htm";
-      afgangNavItemA.text = "<b>Afgang & Ankomst</b>";
+      afgangNavItemA.innerHTML = "<b>Afgang & Ankomst</b>";
       const alarmNavItemA = document.createElement("a");
       alarmNavItemA.className = "nav-link navitemcolor";
       alarmNavItemA.href = "alarm.htm";
-      alarmNavItemA.text = "<b>Alarmtider</b>";
+      alarmNavItemA.innerHTML = "<b>Alarmtider</b>";
       const logNavItemA = document.createElement("a");
       logNavItemA.className = "nav-link navitemcolor";
       logNavItemA.href = "log.htm";
-      logNavItemA.text = "<b>Rejse Dagbog</b>";
+      logNavItemA.innerHTML = "<b>Rejse Dagbog</b>";
 
       //LOG UD A-TAG
-      const signOutA = document.getElementById("signOutA");
-      signOutA.style.display = "block";
+      //const signOutA = document.getElementById("signOutA");
       
       //INDSÆTTER ALLE ELEMENTER I INNERHTML 
       //HEADER
@@ -130,8 +130,6 @@ function GetLoginPage():void {
       alarmNavItemLi.appendChild(alarmNavItemA);
       logNavItemLi.appendChild(logNavItemA);
 
-      //LOG UD A-TAG
-      profilBody.appendChild(signOutA);
     
   }
 
@@ -180,8 +178,7 @@ function GetLoginPage():void {
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
     //LOG UD A-TAG
-    const signOutA = document.getElementById("signOutA");
-    signOutA.hidden = false;
+    //const signOutA = document.getElementById("signOutA");
     
     //INDSÆTTER ALLE ELEMENTER I INNERHTML 
     //HEADER
@@ -198,8 +195,6 @@ function GetLoginPage():void {
     alarmNavItemLi.appendChild(alarmNavItemA);
     logNavItemLi.appendChild(logNavItemA);
 
-    //LOG UD A-TAG
-    afgangBody.appendChild(signOutA);
 }
 
 function GetAlarmPage():void {
@@ -247,8 +242,7 @@ function GetAlarmPage():void {
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
     //LOG UD A-TAG
-    const signOutA = document.getElementById("signOutA");
-    signOutA.hidden = false;
+   // const signOutA = document.getElementById("signOutA");
     
     //INDSÆTTER ALLE ELEMENTER I INNERHTML 
     //HEADER
@@ -264,9 +258,6 @@ function GetAlarmPage():void {
     afgangNavItemLi.appendChild(afgangNavItemA);
     alarmNavItemLi.appendChild(alarmNavItemA);
     logNavItemLi.appendChild(logNavItemA);
-
-    //LOG UD A-TAG
-    alarmBody.appendChild(signOutA);
 }
 
 function GetLogPage():void {
@@ -314,8 +305,7 @@ function GetLogPage():void {
     logNavItemA.text = "<b>Rejse Dagbog</b>";
 
     //LOG UD A-TAG
-    const signOutA = document.getElementById("signOutA");
-    signOutA.hidden = false;
+    //const signOutA = document.getElementById("signOutA");
     
     //INDSÆTTER ALLE ELEMENTER I INNERHTML 
     //HEADER
@@ -332,8 +322,6 @@ function GetLogPage():void {
     alarmNavItemLi.appendChild(alarmNavItemA);
     logNavItemLi.appendChild(logNavItemA);
 
-    //LOG UD A-TAG
-    logBody.appendChild(signOutA);
 }
 interface IStop {
   stop_id: string;
