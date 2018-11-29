@@ -1,5 +1,5 @@
 import { GetAlarmPage } from "./AlarmPage";
-import { GetAfgangPage } from "./Departures";
+import { GetAfgangPage } from "./DeparturesPage";
 import { GetLogPage } from "./LogPage";
 
 const profilNav: HTMLButtonElement = document.getElementById("profilNav") as HTMLButtonElement;
