@@ -1,33 +1,30 @@
 
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
-import { Leg } from "../js/leg";
-import { Trip } from "../js/trip";
-
-// Import stop locations.
 import * as data from "../Data/stops.json";
+import { autocomplete } from "./autocomplete";
+import { IStop } from "./Interface/IStop";
+import { ITripList } from "./Interface/ITripList";
+import { Leg } from "./Model/Leg";
+import { Trip } from "./Model/Trip";
+
 const stopArray: IStop[] = data.default as IStop[];
 console.log(stopArray);
 
-interface ITripList {
-    TripList: Trip[];
-}
+const stringArray: string[] = new Array();
+stopArray.forEach((e) => {
+    stringArray.push(e.stop_name);
 
-interface IITripList {
-    TripList: ITripList;
-}
+});
+console.log(stringArray.length);
 
 const date: Date = new Date();
 const today: string = date.getDate() + "." +
     (date.getMonth() + 1) + "." +
     (date.getFullYear().toString().split("20")[1]);
-console.log(today);
+const time: string = date.getHours() + ":" + date.getMinutes();
 
-// const uri  = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=8600617" +
-//           "&destCoordX=12565562&destCoordY=55673063&destCoordName=K%C3%B8benhavn%20H&date=" + today +
-//          "&time=10:58&useBus=0&format=json";
-
-const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk" +
-    "/bin/rest.exe/trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
+const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
+    "trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
 
 document.getElementById("TripButton").addEventListener("click", GetTripsAxios);
 
@@ -73,21 +70,6 @@ function GetTripsAxios(): void {
             });
         })
         .catch((error) => {
-            // handle error
             console.log(error);
-        })
-        .then(() => {
-            // always executed
         });
-}
-
-interface IStop {
-    stop_id: string;
-    stop_code: string;
-    stop_name: string;
-    stop_desc: string;
-    stop_lat: string;
-    stop_lon: string;
-    location_type: string;
-    parent_station: string;
 }
