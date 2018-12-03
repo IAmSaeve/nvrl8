@@ -18,7 +18,7 @@ const date: Date = new Date();
 const today: string = date.getDate() + "." +
     (date.getMonth() + 1) + "." +
     (date.getFullYear().toString().split("20")[1]);
-const time: string = date.getHours() + ":" + date.getMinutes();
+let time: string = date.getHours() + ":" + date.getMinutes();
 
 const originInput = document.getElementById("OriginInput") as HTMLInputElement;
 const destInput = document.getElementById("DestinationInput") as HTMLInputElement;
@@ -28,6 +28,8 @@ let destArray: string[] = new Array();
 
 let originId: string;
 let destId: string;
+
+(document.getElementById("ankomstTime") as HTMLInputElement).value = time;
 
 let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
     "trip?originId=" + originId + "&destId=" + destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
@@ -77,9 +79,10 @@ destInput.addEventListener("keyup", () => {
 });
 
 function GetTripsAxios(): void {
+    time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
     uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
         "trip?originId=" + originId + "&destId=" +
-         destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
+         destId + "&date=" + today + "&time=" + time + "&useBus=1&searchForArrival=1&format=json";
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
