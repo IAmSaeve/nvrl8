@@ -13,7 +13,8 @@
             <h1 class="color">Afgang</span></h1>
         </div>
     </header>
-    <ul class="nav flex-column col-lg-1" id="navbackground">
+    <div class="container-fluid col-lg-12 float_left padding_none">
+        <ul class="nav flex-column col-lg-1 float_left" id="navbackground">
             <li class="nav-item">
                 <a href="profile.htm" class="nav-link navitemcolor"><b>Profil</b></a>
             </li>
@@ -27,30 +28,33 @@
                 <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
             </li>
         </ul>
-    <ul id="TripList"></ul>
-    <button id="TripButton">Button</button>
-    <form autocomplete="off">
-        <div class="autocomplete" style="widows: 300px;">
-            <input id="myInput" type="text" name="myCountry" placeholder="Country">
-            <!-- <input type="text" id="toPlaceInput" placeholder="Destination"> -->
+        <div class="col-lg-10 offset-lg-2" id="content">
+            <button id="TripButton">Button</button>
+            <form autocomplete="off">
+                <div class="autocomplete" style="widows: 300px;">
+                    <input id="myInput" type="text" name="myCountry" placeholder="Country">
+                    <!-- <input type="text" id="toPlaceInput" placeholder="Destination"> -->
+                </div>
+                <input type="submit">
+            </form>
+            <a onclick="signOut()">Sign out</a>
         </div>
-        <input type="submit">
-    </form>
-    <a onclick="signOut()">Sign out</a>
+    </div>
+    </div>
     <script>
         function signOut() {
             gapi.auth2.init();
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log('User signed out.');
-                location.href="index.htm";
+                location.href = "index.htm";
             });
         }
-            function onLoad() {
-              gapi.load('auth2', function () {
+        function onLoad() {
+            gapi.load('auth2', function () {
                 gapi.auth2.init();
-              });
-            }
+            });
+        }
     </script>
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <meta name="google-signin-client_id" content="280043263121-cnpj4knrjbr2h3vgochfcd5l73u7gqmv.apps.googleusercontent.com">
