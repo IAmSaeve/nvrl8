@@ -81,23 +81,6 @@ function GetTripsAxios(): void {
         });
 }
 
-let content:HTMLDivElement =<HTMLDivElement>document.getElementById("content");
-let profilNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("profilNav");
-let afgangNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("afgangNav");
-let alarmNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("alarmNav");
-let logNav: HTMLButtonElement = <HTMLButtonElement>document.getElementById("logNav");
-let signOutA:HTMLAnchorElement = <HTMLAnchorElement>document.getElementById("signOutA");
-let logInDiv:HTMLDivElement = <HTMLDivElement>document.getElementById("logInDiv");
-
-if(signOutA.click)
-{
-    GetProfilePage();
-}
-
-profilNav.addEventListener('click', GetProfilePage);
-afgangNav.addEventListener('click', GetAfgangPage);
-alarmNav.addEventListener('click', GetAlarmPage);
-logNav.addEventListener('click', GetLogPage);
 
 function GetLoginPage(): void {
     // OPRETTER HTML TIL LOGIN

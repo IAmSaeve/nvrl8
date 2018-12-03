@@ -14,7 +14,14 @@
     -->
       <ul id="TripList"></ul>
       <button id ="TripButton">Button</button>
-<!--
+      <form autocomplete="off">
+        <div class="autocomplete" style="widows: 300px;">
+          <input id="myInput" type="text" name="myCountry" placeholder="Country">
+       <!-- <input type="text" id="toPlaceInput" placeholder="Destination"> -->
+      </div>
+      <input type="submit">
+      </form>
+
     <form class="col-lg-4 offset-lg-5 formcontainer">
         <div class="g-signin2" data-onsuccess="onSignIn"></div>-->
         <!--<div class="form-group">
@@ -30,7 +37,6 @@
         <input type="checkbox" class="form-check-input" id="exampleCheck1">  
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div> 
-        <button type="submit" class="btn btn-primary"><a href="profil.htm">Submit</a></button>
       </form>-->
   <script>
     function signOut() {
@@ -46,6 +52,9 @@
       });
     }
   </script>
+  <script>autocomplete(document.getElementById("myInput"), stringArray);
+    // autocomplete(document.getElementById("toPlaceInput"), stringArray)
+     </script>
   <a onclick="signOut();">Sign out</a>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   <meta name="google-signin-client_id" content="280043263121-cnpj4knrjbr2h3vgochfcd5l73u7gqmv.apps.googleusercontent.com">
