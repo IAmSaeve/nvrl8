@@ -39,7 +39,7 @@ console.log(time);
 
 let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
     "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
-    "&destId=" + destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
+    "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=1&format=json";
 (document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
 
 originInput.addEventListener("change", () => {
@@ -93,7 +93,7 @@ function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
     uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
         "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
-        "&destId=" + destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
+        "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=1&format=json";
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
