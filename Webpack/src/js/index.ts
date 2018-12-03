@@ -37,44 +37,49 @@ let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/
 originInput.addEventListener("keyup", () => {
     originsArray = new Array();
     document.getElementById("OriginStations").innerHTML = "";
-    stringArray.filter((item: string) => {
-        if (item.toLowerCase().match(originInput.value.toLowerCase()) && originsArray.length < 3) {
-            originsArray.push(item);
+    if (originInput.value.length > 3) {
+        stringArray.filter((item: string) => {
+            if (item.toLowerCase().match(originInput.value.toLowerCase()) && originsArray.length < 3) {
+                originsArray.push(item);
+            }
+        });
+        originsArray.forEach((e) => {
+            const node = document.createElement("li");
+            const txt = document.createTextNode(e);
+            node.appendChild(txt);
+            document.getElementById("OriginStations").appendChild(node);
+        });
+        if (originsArray !== undefined) {
+            originId = originsArray[0].split(",")[1];
         }
-    });
-    originsArray.forEach((e) => {
-        const node = document.createElement("li");
-        const txt = document.createTextNode(e);
-        node.appendChild(txt);
-        document.getElementById("OriginStations").appendChild(node);
-    });
-    originId = originsArray[0].split(",")[1];
-    uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-        "trip?originId=" + originId + "&destId=" +
-        destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
+    }
 });
 
 destInput.addEventListener("keyup", () => {
     destArray = new Array();
     document.getElementById("DestinationStations").innerHTML = "";
-    stringArray.filter((item: string) => {
-        if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
-            destArray.push(item);
+    if (destInput.value.length > 3) {
+        stringArray.filter((item: string) => {
+            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
+                destArray.push(item);
+            }
+        });
+        destArray.forEach((e) => {
+            const node = document.createElement("li");
+            const txt = document.createTextNode(e);
+            node.appendChild(txt);
+            document.getElementById("DestinationStations").appendChild(node);
+        });
+        if (destArray !== undefined) {
+            destId = destArray[0].split(",")[1];
         }
-    });
-    destArray.forEach((e) => {
-        const node = document.createElement("li");
-        const txt = document.createTextNode(e);
-        node.appendChild(txt);
-        document.getElementById("DestinationStations").appendChild(node);
-    });
-    destId = destArray[0].split(",")[1];
-    uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-        "trip?originId=" + originId + "&destId=" +
-         destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
+    }
 });
 
 function GetTripsAxios(): void {
+    uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
+        "trip?originId=" + originId + "&destId=" +
+         destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
