@@ -19,6 +19,9 @@ const today: string = date.getDate() + "." +
     (date.getMonth() + 1) + "." +
     (date.getFullYear().toString().split("20")[1]);
 let time: string = date.getHours() + ":" + date.getMinutes();
+if (date.getMinutes() < 10) {
+    time = date.getHours() + ":" + "0" + date.getMinutes();
+}
 
 const originInput = document.getElementById("OriginInput") as HTMLInputElement;
 const destInput = document.getElementById("DestinationInput") as HTMLInputElement;
@@ -30,6 +33,7 @@ let originX: string;
 let originY: string;
 let destId: string;
 
+console.log(time);
 (document.getElementById("ankomstTime") as HTMLInputElement).value = time; // Sætter et starttidspunkt på inputfielded
 
 let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
