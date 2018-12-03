@@ -23,20 +23,67 @@ let time: string = date.getHours() + ":" + date.getMinutes();
 const originInput = document.getElementById("OriginInput") as HTMLInputElement;
 const destInput = document.getElementById("DestinationInput") as HTMLInputElement;
 
-let originsArray: string[] = new Array();
 let destArray: string[] = new Array();
 
-let originId: string;
+let address: string;
+let originX: string;
+let originY: string;
 let destId: string;
 
-(document.getElementById("ankomstTime") as HTMLInputElement).value = time;
+(document.getElementById("ankomstTime") as HTMLInputElement).value = time; // Sætter et starttidspunkt på inputfielded
 
 let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-    "trip?originId=" + originId + "&destId=" + destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
-
+"trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
+ "&destId=" + destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
 (document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
 
 originInput.addEventListener("keyup", () => {
+    address = (document.getElementById("OriginInput") as HTMLInputElement).value.toLowerCase();
+    GetLatLongAxios();
+    // "https://nominatim.openstreetmap.org/search?q=Rampelyset 32&format=json&polygon=1&addressdetails=1"
+});
+
+interface ILatLong {
+    lat: number;
+    long: number;
+}
+
+interface IMapsResponse {
+    place_id: string;
+    licence: string;
+    osm_type: string;
+    boundingbox: string[];
+    polygonpoints: ILatLong[];
+    lat: string;
+    lon: string;
+    display_name: string;
+    class: string;
+    type: string;
+    importance: number;
+    address: string[];
+
+}
+
+function GetLatLongAxios(): void {
+    const addressUri = "https://nominatim.openstreetmap.org/search?q="
+    + address + "&format=json&polygon=1&addressdetails=1";
+    axios.get<IMapsResponse[]>(addressUri, {
+        headers: {
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Origin": "*",
+            "X-Requested-With": "XMLHttpRequest",
+        },
+    })
+        .then((response: AxiosResponse<any>) => {
+            const mapData: IMapsResponse[] = response.data as IMapsResponse[];
+            mapData.forEach((e: IMapsResponse) => {
+                originX = e.lat;
+                originY = e.lon;
+            });
+        });
+}
+
+/*originInput.addEventListener("keyup", () => {
     originsArray = new Array();
     document.getElementById("OriginStations").innerHTML = "";
     if (originInput.value.length > 3) {
@@ -55,7 +102,7 @@ originInput.addEventListener("keyup", () => {
             originId = originsArray[0].split(",")[1];
         }
     }
-});
+});*/
 
 destInput.addEventListener("keyup", () => {
     destArray = new Array();
@@ -81,8 +128,11 @@ destInput.addEventListener("keyup", () => {
 function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
     uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-        "trip?originId=" + originId + "&destId=" +
-         destId + "&date=" + today + "&time=" + time + "&useBus=1&searchForArrival=1&format=json";
+    "trip?originCoordX=" + originX + "&originCoordY=" + originY +
+     "&destId=" + destId + "&date=" + today + "&time=" + time + "&useBus=1&format=json";
+     console.log(address);
+     console.log(originX);
+     console.log(originY);
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
