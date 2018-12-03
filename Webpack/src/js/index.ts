@@ -32,7 +32,7 @@ originInput.addEventListener("keyup", () => {
     originsArray = new Array();
     document.getElementById("OriginStations").innerHTML = "";
     stringArray.filter((item: string) => {
-        if (item.toLowerCase().match(originInput.value.toLowerCase())) {
+        if (item.toLowerCase().match(originInput.value.toLowerCase()) && originsArray.length < 10) {
             originsArray.push(item);
         }
     });
