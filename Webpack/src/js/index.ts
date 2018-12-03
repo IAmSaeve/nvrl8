@@ -161,10 +161,11 @@ function GetTripsAxios(): void {
                     const newLine = document.createElement("li");
                     newLine.appendChild(document.createTextNode("---------------------"));
                     node.appendChild(newLine);
-                    legNode.appendChild(document.createTextNode(`Name : ${element.Leg.name}, Type : ${element.Leg.type},
-                                  Origin : ${element.Leg.Origin.name}, Kl : ${element.Leg.Origin.time},
-                                   Destination : ${element.Leg.Destination.name},
-                                  Kl : ${element.Leg.Destination.time}`));
+                    const newLeg: Leg = element.Leg as Leg;
+                    legNode.appendChild(document.createTextNode(`Name : ${newLeg.name}, Type : ${newLeg.type},
+                                  Origin : ${newLeg.Origin.name}, Kl : ${newLeg.Origin.time},
+                                   Destination : ${newLeg.Destination.name},
+                                  Kl : ${newLeg.Destination.time}`));
                     node.appendChild(legNode);
                 }
                 let txt: string = ``;
