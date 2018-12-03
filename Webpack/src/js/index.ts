@@ -1,19 +1,16 @@
 
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
 import * as data from "../Data/stops.json";
-import { autocomplete } from "./autocomplete";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
 const stopArray: IStop[] = data.default as IStop[];
-console.log(stopArray);
 
 const stringArray: string[] = new Array();
 stopArray.forEach((e) => {
-    stringArray.push(e.stop_name);
-
+    stringArray.push(e.stop_name + ", " + e.stop_id);
 });
 console.log(stringArray.length);
 
@@ -26,7 +23,27 @@ const time: string = date.getHours() + ":" + date.getMinutes();
 const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
     "trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
 
-document.getElementById("TripButton").addEventListener("click", GetTripsAxios);
+(document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
+
+const originInput = document.getElementById("OriginInput") as HTMLInputElement;
+
+let originsArray: string[] = new Array();
+originInput.addEventListener("keyup", () => {
+    originsArray = new Array();
+    document.getElementById("OriginStations").innerHTML = "";
+    stringArray.filter((item: string) => {
+        if (item.match(originInput.value)) {
+            originsArray.push(item);
+        }
+    });
+    originsArray.forEach((e) => {
+        const node = document.createElement("li");
+        const txt = document.createTextNode(e);
+        const id = document.createTextNode(e.i)
+        node.appendChild(txt);
+        document.getElementById("OriginStations").appendChild(node);
+    });
+});
 
 function GetTripsAxios(): void {
     document.getElementById("TripList").innerHTML = "";
@@ -47,6 +64,7 @@ function GetTripsAxios(): void {
                 console.log(legArray);
                 element.Leg.forEach((e) => {
                     const legNode = document.createElement("li");
+                    console.log("creating li element from " + element.Leg);
                     legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
                                   Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
                                    Destination : ${e.Destination.name},
