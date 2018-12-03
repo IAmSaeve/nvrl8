@@ -26,7 +26,26 @@ const time: string = date.getHours() + ":" + date.getMinutes();
 const uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
     "trip?originId=8600617&destId=8600696&date=29.11.18&time=12:30&useBus=0&format=json";
 
-document.getElementById("TripButton").addEventListener("click", GetTripsAxios);
+(document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
+
+const originInput = document.getElementById("OriginInput") as HTMLInputElement;
+
+let originsArray: string[] = new Array();
+originInput.addEventListener("keyup", () => {
+    originsArray = new Array();
+    document.getElementById("OriginStations").innerHTML = "";
+    stringArray.filter((item: string) => {
+        if (item.toLowerCase().match(originInput.value.toLowerCase()) && originsArray.length < 10) {
+            originsArray.push(item);
+        }
+    });
+    originsArray.forEach((e) => {
+        const node = document.createElement("li");
+        const txt = document.createTextNode(e);
+        node.appendChild(txt);
+        document.getElementById("OriginStations").appendChild(node);
+    });
+});
 
 function GetTripsAxios(): void {
     document.getElementById("TripList").innerHTML = "";
