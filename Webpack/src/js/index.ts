@@ -110,6 +110,9 @@ function GetTripsAxios(): void {
                     });
                 } else {
                     const legNode = document.createElement("li");
+                    const newLine = document.createElement("li");
+                    newLine.appendChild(document.createTextNode("---------------------"));
+                    node.appendChild(newLine);
                     legNode.appendChild(document.createTextNode(`Name : ${element.Leg.name}, Type : ${element.Leg.type},
                                   Origin : ${element.Leg.Origin.name}, Kl : ${element.Leg.Origin.time},
                                    Destination : ${element.Leg.Destination.name},
