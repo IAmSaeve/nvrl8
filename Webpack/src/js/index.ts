@@ -82,24 +82,6 @@ function GetTripsAxios(): void {
 }
 
 
-function GetAfgangPage(): void {
-// OPRETTER HTML TIL AFGANG
-let html = "";
-html = "<header class='container fluid col-lg-12'>";
-html += "<div class='col-lg-6'>";
-html += "<h1 class='color'>Profil</span></h1>";
-html += "</div></header>";
-html += "<ul class='nav flex-column col-lg-1' id='navbackground'>";
-html += "<li class='nav-item'><button class='nav-link navitemcolor' id='profilNav'><b>Profil</b></button></li>";
-html += "<li class='nav-item'><button class='nav-link navitemcolor' id='afgangNav'><b>Afgang & Ankomst</b></button></li>";
-html += "<li class='nav-item'><button class='nav-link navitemcolor' id='alarmNav'><b>Alarmtider</b></button></li>";
-html += "<li class='nav-item'><button class='nav-link navitemcolor' id='logNav'><b>Rejse Dagbog</b></button></li>";
-html += "</ul>";
-
-content.innerHTML = html;
-
-}
-
 function GetAlarmPage(): void {
 // OPRETTER HTML TIL ALARM
 let html = "";
