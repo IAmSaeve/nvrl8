@@ -28,11 +28,13 @@
                 <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
             </li>
         </ul>
+        <div class="col-lg-10 offset-lg-2">
         <ul id="TripList"></ul>
-    <button id="TripButton">Button</button>
-    <input id="OriginInput" type="text">
+    <button id="TripButton" class="btn btn-primary">Vis alle destinationer</button>
+    <input id="OriginInput" class="col-lg-4" type="text">
     <ul id="OriginStations"></ul>
-    
+    </div>
+</div>
     <a onclick="signOut()">Sign out</a>
     <script>
         function signOut() {
