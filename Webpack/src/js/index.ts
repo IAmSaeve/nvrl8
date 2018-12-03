@@ -39,7 +39,6 @@ originInput.addEventListener("keyup", () => {
     originsArray.forEach((e) => {
         const node = document.createElement("li");
         const txt = document.createTextNode(e);
-        const id = document.createTextNode(e.i)
         node.appendChild(txt);
         document.getElementById("OriginStations").appendChild(node);
     });
