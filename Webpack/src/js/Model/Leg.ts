@@ -10,7 +10,7 @@ export class Leg {
     name: string,
     type: string,
     origin: Origin,
-    destination: Destination
+    destination: Destination,
   ) {
     this.name = name;
     this.type = type;
