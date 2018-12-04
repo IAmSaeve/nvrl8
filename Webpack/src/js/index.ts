@@ -8,18 +8,17 @@ import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
-let loginBtn:HTMLAnchorElement = <HTMLAnchorElement> document.getElementById("loginBtn");
-loginBtn.setAttribute("data-onsuccess", onSignIn.toString())
+let nameStr = document.getElementById("nameDiv");
+let imageStr = document.getElementById("imageDiv");
+let emailStr = document.getElementById("emailDiv");
+let nameP = document.getElementById("name");
+let imageP = document.getElementById("image");
+let emailP = document.getElementById("email");
 
-function onSignIn(googleUser:any) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    location.href="profile.htm";
-}
-    
+
+nameStr.innerText = nameP.textContent;
+imageStr.textContent = imageP.textContent;
+emailStr.textContent = emailP.textContent;
 
 const stopArray: IStop[] = data.default as IStop[];
 

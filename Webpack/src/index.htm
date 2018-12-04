@@ -6,7 +6,28 @@
   <title>NvrL8</title>
   <link rel="stylesheet" type="text/css" href="bundle.css">
 </head>
+<script>
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    
+    var nameDiv = document.createElement("p");
+    nameDiv.id = "name";
+    nameDiv.innerText = profile.getName();
+    console.log(nameDiv.innerText);
+    console.log('Name: ' + profile.getName());
 
+    var imageDiv = document.createElement("p");
+    imageDiv.id= "image";
+    imageDiv.innerText = profile.getImageUrl();    
+    console.log('Image URL: ' + profile.getImageUrl());
+
+    var emailDiv = document.createElement("p");
+    emailDiv.id = "email";
+    emailDiv.innerText = profile.getEmail();
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    location.href="profile.htm";
+}
+</script>
 <body>
   <header class="container fluid col-lg-12">
     <div class="col-lg-6">
@@ -14,9 +35,9 @@
     </div>
   </header>
   <form class="col-lg-4 offset-lg-5 formcontainer">
-    <div class="g-signin2" id="loginBtn"></div>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
-    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="280043263121-cnpj4knrjbr2h3vgochfcd5l73u7gqmv.apps.googleusercontent.com">
     <script src="bundle.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
