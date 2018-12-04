@@ -71,7 +71,7 @@ function GetLatLongAxios(): void {
     const addressUri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/location?input="
         + address + "&format=json";
     origArray = new Array();
-    document.getElementById("OriginStations").innerHTML = "";
+    document.getElementById("OriginStations").innerHTML = "Indlæser...";
     axios.get<ILocationList[]>(addressUri, {
         headers: {
             "Access-Control-Allow-Methods": "*",
@@ -80,6 +80,7 @@ function GetLatLongAxios(): void {
         },
     })
         .then((response: AxiosResponse<any>) => {
+            document.getElementById("OriginStations").innerHTML = "";
             let listCount = 0;
             const mList: any = response.data;
             const mapData: ILocationList = mList.LocationList as ILocationList;
@@ -131,6 +132,11 @@ destInput.addEventListener("keyup", () => {
     }
 });
 
+let tripCount = 0;
+
+let tripArray: Trip[] = new Array();
+let selectedTrip: Trip;
+
 function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
     const useBus = (document.getElementById("useBus") as HTMLSelectElement).value;
@@ -149,17 +155,26 @@ function GetTripsAxios(): void {
     })
         .then((response: AxiosResponse<any>) => {
             const tlist: any = response.data;
-            const array: Trip[] = tlist.TripList.Trip as Trip[];
-            array.forEach((element: Trip) => {
+            tripArray = tlist.TripList.Trip as Trip[];
+            tripCount = 0;
+            tripArray.forEach((element: Trip) => {
                 const node = document.createElement("li");
                 const legArray: Leg[] = element.Leg as Leg[];
+                console.log(tripCount);
                 if (Array.isArray(element.Leg)) {
                     element.Leg.forEach((e) => {
                         const legNode = document.createElement("li");
                         if (e === element.Leg[0]) { // Viser linjeskift ved ny rejse
                             const newLine = document.createElement("li");
                             newLine.appendChild(document.createTextNode("---------------------"));
+                            const selectTrip = document.createElement("input");
+                            selectTrip.type = "checkbox";
+                            selectTrip.id = "trip";
+                            selectTrip.id += tripCount; // trip1, trip2 etc
+                            console.log(selectTrip.id);
                             node.appendChild(newLine);
+                            node.appendChild(selectTrip);
+                            node.appendChild(document.createTextNode(" Vælg rejse"));
                         }
                         legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
                                       Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
@@ -192,7 +207,31 @@ function GetTripsAxios(): void {
                 const txtNode = document.createTextNode(txt);
                 node.appendChild(txtNode);
                 document.getElementById("TripList").append(node);
+                tripCount++;
             });
+            // Logik der sørger for man kun kan vælge 1 rejse
+            // Gemmer rejsen i selectedTrip.
+            let amountChecked = 0;
+            for (let i = 0; i < tripCount; i++) {
+                const id = "trip" + i;
+                const checkbox = (document.getElementById(id) as HTMLInputElement);
+                checkbox.addEventListener("change", () => {
+                    if (checkbox.checked) {
+                        amountChecked++;
+                        if (amountChecked === 1) {
+                            console.log(id);
+                            selectedTrip = tripArray[i];
+                            console.log(selectedTrip);
+                        }
+                    } else {
+                        amountChecked--;
+                    }
+                    if (amountChecked > 1) {
+                        checkbox.checked = false;
+                        amountChecked--;
+                    }
+                });
+            }
         })
         .catch((error) => {
             console.log(error);
