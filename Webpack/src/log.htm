@@ -8,11 +8,14 @@
 </head>
 
 <body>
-    <header class="container fluid col-lg-12">
-        <div class="col-lg-6">
-            <h1 class="color">Rejse Dagbog</span></h1>
-        </div>
-    </header>
+        <header class="container fluid col-lg-12">
+                <div class="col-lg-12">
+                    <h1 class="color float_left">Rejse Dagbog</span></h1>
+                    <div class="col-lg-1 offset-lg-8 float_left topmargin">
+                        <a onclick="signOut()" id="logOutBtn" class="btn btn-primary">Sign out</a>
+                    </div>
+                </div>
+            </header>
     <ul class="nav flex-column col-lg-1" id="navbackground">
         <li class="nav-item">
             <a href="profile.htm" class="nav-link navitemcolor"><b>Profil</b></a>
@@ -27,7 +30,6 @@
             <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
         </li>
     </ul>
-    <a onclick="signOut()">Sign out</a>
     <script>
         function signOut() {
             gapi.auth2.init();
