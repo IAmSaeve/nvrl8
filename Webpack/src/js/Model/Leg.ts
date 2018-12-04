@@ -1,5 +1,12 @@
 import { Destination } from "./Destination";
 import { Origin } from "./Origin";
+
+/**
+ *
+ *
+ * @export
+ * @class Leg
+ */
 export class Leg {
   public name: string;
   public type: string;

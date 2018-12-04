@@ -14,10 +14,10 @@ namespace nvrl8_ws.Controllers
     public class SettingController : ControllerBase
     {
         private static string conn =
-            "Server=tcp:nvrl8.database.windows.net,1433;InitialCatalog=nvrl8;Persist SecurityInfo=False;UserID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;";
+            "Server=tcp:nvrl8.database.windows.net,1433;InitialCataLog=nvrl8;Persist SecurityInfo=False;UserID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;";
         // GET: api/Setting
         [HttpGet]
-        public Settings GetACustomer(int id)
+        public Settings GetALog(int id)
         {
             using (SqlConnection dbConnection = new SqlConnection(conn))
             {
