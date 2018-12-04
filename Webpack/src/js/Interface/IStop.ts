@@ -1,3 +1,9 @@
+/**
+ *
+ *
+ * @export
+ * @interface IStop
+ */
 export interface IStop {
     stop_id: string;
     stop_code: string;

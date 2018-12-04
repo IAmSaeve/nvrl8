@@ -1,6 +1,11 @@
-export interface ICoordLocation {
-    name: string;
-    x: string;
-    y: string;
-    type: string;
+import { ICoordLocation } from "./ICoordLocation";
+
+/**
+ *
+ *
+ * @export
+ * @interface ILocationList
+ */
+export interface ILocationList {
+    CoordLocation: ICoordLocation;
 }

@@ -1,5 +1,11 @@
 import { Leg } from "./Leg";
 
+/**
+ *
+ *
+ * @export
+ * @class Trip
+ */
 export class Trip {
   public alternative: boolean;
   public cancelled: boolean;
@@ -10,7 +16,7 @@ export class Trip {
     legs: Leg[],
     alternative?: boolean,
     valid?: boolean,
-    cancelled?: boolean
+    cancelled?: boolean,
   ) {
     this.Leg = legs;
 
