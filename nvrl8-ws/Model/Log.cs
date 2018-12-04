@@ -10,10 +10,10 @@ namespace nvrl8_ws.Model
         public int ID { get; set; }
         public string LogString { get; set; }
 
-        public Log(int id, string logString)
+        public Log(int id, string LogString)
         {
             ID = id;
-            LogString = logString;
+            LogString = LogString;
         }
 
         public Log()
