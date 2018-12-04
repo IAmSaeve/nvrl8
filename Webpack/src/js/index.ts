@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
 import * as data from "../Data/stops.json";
 import { autocomplete } from "./autocomplete";
-import { ILocationList } from "./Interface/ICoordLocation";
-import { ICoordLocation } from "./Interface/ILocationList";
+import { ICoordLocation } from "./Interface/ICoordLocation";
+import { ILocationList } from "./Interface/ILocationList";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
