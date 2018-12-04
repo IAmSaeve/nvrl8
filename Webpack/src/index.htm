@@ -25,8 +25,7 @@
     emailDiv.id = "email";
     emailDiv.innerText = profile.getEmail();
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
+    
     location.href="profile.htm";
 }
 </script>
