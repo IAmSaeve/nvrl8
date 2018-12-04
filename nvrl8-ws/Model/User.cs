@@ -10,14 +10,15 @@ namespace nvrl8_ws.Model
         public string Email { get; set; }
         public string Name { get; set; }
         public string ImageURL { get; set; }
-        public int SettingsId { get; set; }
-
-        public User(string email, string name, string imageUrl, int settingsId)
+        public int SettingsID { get; set; }
+        public int LogID { get; set; }
+        public User(string email, string name, string imageUrl, int settingsId, int LogId)
         {
             Email = email;
             Name = name;
             ImageURL = imageUrl;
-            SettingsId = settingsId;
+            SettingsID = settingsId;
+            LogID = LogId;
         }
        
 

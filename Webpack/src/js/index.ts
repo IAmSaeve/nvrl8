@@ -1,8 +1,8 @@
-
 import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
 import * as data from "../Data/stops.json";
 import { autocomplete } from "./autocomplete";
 import { ILocationList } from "./Interface/ICoordLocation";
+import { ICoordLocation } from "./Interface/ILocationList";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
@@ -23,11 +23,18 @@ let time: string = date.getHours() + ":" + date.getMinutes();
 if (date.getMinutes() < 10) {
     time = date.getHours() + ":" + "0" + date.getMinutes();
 }
+if (date.getHours() < 10) {
+    time = "0" + time;
+}
 
 const originInput = document.getElementById("OriginInput") as HTMLInputElement;
 const destInput = document.getElementById("DestinationInput") as HTMLInputElement;
 
+const departureTime = document.getElementById("beforeDepartureTime") as HTMLInputElement;
+departureTime.value = "01:00";
+
 let destArray: string[] = new Array();
+let origArray: string[] = new Array();
 
 let address: string;
 let originX: string;
@@ -52,6 +59,8 @@ originInput.addEventListener("change", () => {
 function GetLatLongAxios(): void {
     const addressUri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/location?input="
         + address + "&format=json";
+    origArray = new Array();
+    document.getElementById("OriginStations").innerHTML = "";
     axios.get<ILocationList[]>(addressUri, {
         headers: {
             "Access-Control-Allow-Methods": "*",
@@ -60,8 +69,28 @@ function GetLatLongAxios(): void {
         },
     })
         .then((response: AxiosResponse<any>) => {
+            let listCount = 0;
             const mList: any = response.data;
             const mapData: ILocationList = mList.LocationList as ILocationList;
+            console.log(mapData);
+            if (Array.isArray(mapData.CoordLocation)) {
+                mapData.CoordLocation.forEach((e) => {
+                    if (listCount < 10) {
+                        const item: ICoordLocation = e as ICoordLocation;
+                        const node = document.createElement("li");
+                        const txt = document.createTextNode(item.name);
+                        node.appendChild(txt);
+                        document.getElementById("OriginStations").appendChild(node);
+                        listCount++;
+                    }
+                });
+            } else {
+                const item: ICoordLocation = mapData.CoordLocation as ICoordLocation;
+                const node = document.createElement("li");
+                const txt = document.createTextNode(item.name);
+                node.appendChild(txt);
+                document.getElementById("OriginStations").appendChild(node);
+            }
             originX = mapData.CoordLocation.x;
             originY = mapData.CoordLocation.y;
             console.log(originX + " " + originY);
@@ -73,7 +102,7 @@ destInput.addEventListener("keyup", () => {
     document.getElementById("DestinationStations").innerHTML = "";
     if (destInput.value.length > 3) {
         stringArray.filter((item: string) => {
-            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
+            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 10) {
                 destArray.push(item);
             }
         });
@@ -91,9 +120,12 @@ destInput.addEventListener("keyup", () => {
 
 function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
+    const useBus = (document.getElementById("useBus") as HTMLSelectElement).value;
     uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
         "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
-        "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=1&format=json";
+        "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=" +
+        useBus + "&format=json";
+    console.log(useBus);
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
