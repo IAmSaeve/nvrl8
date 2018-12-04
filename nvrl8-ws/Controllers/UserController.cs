@@ -22,16 +22,16 @@ namespace nvrl8_ws.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{email}")]
         public User GetUserData(string email)
         {
             User user = new User();
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
 
-                string sqlQuery = "SELECT * FROM Users WHERE Email=" + email;
+                string sqlQuery = "SELECT * FROM Users WHERE Email=@FirstName";
                 SqlCommand cmd = new SqlCommand(sqlQuery, con);
-
+                cmd.Parameters.AddWithValue("@FirstName", email);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -39,7 +39,7 @@ namespace nvrl8_ws.Controllers
                 {
                     user = new User(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
                 }
-                reader.Close();
+               
             }
             return user;
         }
