@@ -39,6 +39,7 @@ namespace nvrl8_ws.Controllers
                 {
                     user = new User(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
                 }
+                reader.Close();
             }
             return user;
         }
