@@ -8,6 +8,19 @@ import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
+let loginBtn:HTMLAnchorElement = <HTMLAnchorElement> document.getElementById("loginBtn");
+loginBtn.setAttribute("data-onsuccess", onSignIn.toString())
+
+function onSignIn(googleUser:any) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    location.href="profile.htm";
+}
+    
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
@@ -185,3 +198,4 @@ function GetTripsAxios(): void {
             console.log(error);
         });
 }
+
