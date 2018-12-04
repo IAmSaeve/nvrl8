@@ -11,5 +11,18 @@ namespace nvrl8_ws.Model
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string Time { get; set; }
+
+        public Settings(int id, string origin, string destination, string time)
+        {
+            Id = id;
+            Origin = origin;
+            Destination = destination;
+            Time = time;
+        }
+
+        public Settings()
+        {
+            
+        }
     }
 }
