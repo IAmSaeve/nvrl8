@@ -8,22 +8,13 @@
 </head>
 
 <body>
-  <script>
-    function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-      location.href="profile.htm";}
-      </script>
   <header class="container fluid col-lg-12">
     <div class="col-lg-6">
       <h1 class="color">Nvr<span class="forsent">L8</span></h1>
     </div>
   </header>
   <form class="col-lg-4 offset-lg-5 formcontainer">
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div class="g-signin2" id="loginBtn"></div>
 
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <meta name="google-signin-client_id" content="280043263121-cnpj4knrjbr2h3vgochfcd5l73u7gqmv.apps.googleusercontent.com">
