@@ -1,3 +1,9 @@
+/**
+ *
+ *
+ * @export
+ * @class Destination
+ */
 export class Destination {
     public name: string;
     public type: string;
