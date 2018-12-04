@@ -13,7 +13,7 @@ namespace nvrl8_ws.Controllers
     public class UserController : ControllerBase
     {
         private static string ConnectionString =
-            "Server=tcp:nvrl8.database.windows.net,1433;InitialCatalog=nvrl8;Persist SecurityInfo=False;UserID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;";
+            "Server=tcp:nvrl8.database.windows.net,1433;Initial Catalog=nvrl8;Persist Security Info=False;User ID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
     // GET api/values
     [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -23,7 +23,7 @@ namespace nvrl8_ws.Controllers
 
         // GET api/values/5
         [HttpGet("{email}")]
-        public User GetUserData(string email)
+        public IActionResult GetUserData(string email)
         {
             User user = new User();
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -39,9 +39,8 @@ namespace nvrl8_ws.Controllers
                 {
                     user = new User(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
                 }
-               
             }
-            return user;
+            return Ok(user);
         }
 
         // POST api/values
