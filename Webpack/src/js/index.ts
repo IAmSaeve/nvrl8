@@ -8,17 +8,16 @@ import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
-let nameStr = document.getElementById("nameDiv");
+/*let nameStr = document.getElementById("nameDiv");
 let imageStr = document.getElementById("imageDiv");
 let emailStr = document.getElementById("emailDiv");
 let nameP = document.getElementById("name");
 let imageP = document.getElementById("image");
 let emailP = document.getElementById("email");
 
-
 nameStr.innerText = nameP.textContent;
 imageStr.textContent = imageP.textContent;
-emailStr.textContent = emailP.textContent;
+emailStr.textContent = emailP.textContent;*/ // bugs out on afgang.htm
 
 const stopArray: IStop[] = data.default as IStop[];
 
@@ -86,7 +85,7 @@ function GetLatLongAxios(): void {
             const mapData: ILocationList = mList.LocationList as ILocationList;
             console.log(mapData);
             if (Array.isArray(mapData.CoordLocation)) {
-                mapData.CoordLocation.forEach((e) => {
+                mapData.CoordLocation.forEach((e: ICoordLocation) => {
                     if (listCount < 10) {
                         const item: ICoordLocation = e as ICoordLocation;
                         const node = document.createElement("li");
@@ -96,15 +95,17 @@ function GetLatLongAxios(): void {
                         listCount++;
                     }
                 });
+                originX = mapData.CoordLocation[0].x;
+                originY = mapData.CoordLocation[0].y;
             } else {
                 const item: ICoordLocation = mapData.CoordLocation as ICoordLocation;
                 const node = document.createElement("li");
                 const txt = document.createTextNode(item.name);
                 node.appendChild(txt);
                 document.getElementById("OriginStations").appendChild(node);
+                originX = mapData.CoordLocation.x;
+                originY = mapData.CoordLocation.y;
             }
-            originX = mapData.CoordLocation.x;
-            originY = mapData.CoordLocation.y;
             console.log(originX + " " + originY);
         });
 }
