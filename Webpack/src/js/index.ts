@@ -87,7 +87,7 @@ function GetLatLongAxios(): void {
             console.log(mapData);
             if (Array.isArray(mapData.CoordLocation)) {
                 mapData.CoordLocation.forEach((e: ICoordLocation) => {
-                    if (listCount < 10) {
+                    if (listCount < 3) {
                         const item: ICoordLocation = e as ICoordLocation;
                         const node = document.createElement("li");
                         const txt = document.createTextNode(item.name);
@@ -116,7 +116,7 @@ destInput.addEventListener("keyup", () => {
     document.getElementById("DestinationStations").innerHTML = "";
     if (destInput.value.length > 3) {
         stringArray.filter((item: string) => {
-            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 10) {
+            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
                 destArray.push(item);
             }
         });
@@ -144,7 +144,7 @@ function GetTripsAxios(): void {
         "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
         "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=" +
         useBus + "&format=json";
-    console.log(useBus);
+    // console.log(uri);
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
@@ -222,6 +222,43 @@ function GetTripsAxios(): void {
                             console.log(id);
                             selectedTrip = tripArray[i];
                             console.log(selectedTrip);
+                            const beforeGoTime = document.getElementById("beforeDepartureTime") as HTMLInputElement;
+
+                            const beforeGoHr = beforeGoTime.value.split(":")[0];
+                            const beforeGoMin = beforeGoTime.value.split(":")[1];
+                            const goTimeHr = selectedTrip.Leg[0].Origin.time.split(":")[0];
+                            const goTimeMin = selectedTrip.Leg[0].Origin.time.split(":")[1];
+                            let alarmHour = +goTimeHr;
+                            let alarmMinute = +goTimeMin;
+                            let alarmString: string = "";
+                            // Logik til at regne alarmtid ud...
+                            for (let hour = 0; hour < +beforeGoHr; hour++) {
+                                if (+alarmHour === 0) {
+                                    alarmHour = 24;
+                                }
+                                alarmHour--;
+                            }
+                            for (let minute = 0; minute < +beforeGoMin; minute++) {
+                                if (+alarmMinute === 0) {
+                                    if (alarmHour === 0) {
+                                        alarmHour = 23;
+                                    } else {
+                                        alarmHour -= 1;
+                                    }
+                                    alarmMinute = 60;
+                                }
+                                alarmMinute--;
+                            }
+                            if (alarmHour < 10) {
+                                alarmString += "0";
+                            }
+                            alarmString += alarmHour + ":";
+                            if (alarmMinute < 10) {
+                                alarmString += "0";
+                            }
+                            alarmString += alarmMinute;
+                            const displayAlarmStr = "Alarmen ringer kl : " + alarmString;
+                            document.getElementById("alarmTime").innerHTML = displayAlarmStr;
                         }
                     } else {
                         amountChecked--;
