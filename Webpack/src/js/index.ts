@@ -146,7 +146,7 @@ if (destInput !== null) {
 }
 
 function GetUserAxios(): void {
-    const UserUri = "https://nvrl8-ws.azurewebsites.net/api/user/sebastian@gmail.com";
+    const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
     axios.get<IUser>(UserUri)
     .then((response:AxiosResponse<IUser>) => {
         const users = response.data as IUser;
@@ -160,7 +160,7 @@ function GetUserAxios(): void {
     })
 }
 
-if (document.getElementById("UsersList") == null) {
+if (document.getElementById("UsersList") !== null) {
     GetUserAxios();
 }
 
@@ -181,7 +181,7 @@ function PutSettingsAxios(): void {
     const sAwakeTime: string = (document.getElementById("beforeDepartureTime") as HTMLInputElement).value;
     const settingsData = { ID: sId, Origin: sOrigin, Destination: sDestination,
         OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime, AwakeTime: sAwakeTime };
-    const settingsUri: string = "https://nvrl8-ws.azurewebsites.net/api/setting/1";
+    const settingsUri: string = "https://nvrl8.azurewebsites.net/api/setting/1";
     axios.put(settingsUri, settingsData).then(() => { // uses .then to update list after post is done
             // document.getElementById("CustomerList").innerHTML = "";
             // GetAllCustomers();
@@ -198,7 +198,7 @@ function PutSettingsAxios(): void {
 }
 
 function GetSettingsAxios(): void {
-    const SettingsUri = "https://nvrl8-ws.azurewebsites.net/api/setting"; // WS Get all
+    const SettingsUri = "https://nvrl8.azurewebsites.net/api/setting"; // WS Get all
     axios.get<ISettings>(SettingsUri)
         .then((response: AxiosResponse<ISettings>) => {
             // handle success
