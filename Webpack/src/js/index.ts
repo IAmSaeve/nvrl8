@@ -153,9 +153,9 @@ function GetUserAxios(): void {
         const nodeName = document.createElement("li");
         const nodeMail = document.createElement("li");
         const nodeImg = document.createElement("IMG");
-        const nodeStr:string = `${(users.imageurl as string)}`;
+        const nodeStr: string = users.imageURL;
         console.log(nodeStr);
-        nodeImg.setAttribute("src", users.imageurl);
+        nodeImg.setAttribute("src", users.imageURL);
         console.log(users.imageurl);
         nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`)); 
         nodeMail.appendChild(document.createTextNode(`Email: ${users.email}`));

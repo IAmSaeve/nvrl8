@@ -1,7 +1,7 @@
 export interface IUser {
     email:string;
     name:string;
-    imageurl:string;
+    imageURL:string;
     settingsid:number;
     logid:number;
 }
