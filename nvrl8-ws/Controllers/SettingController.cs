@@ -13,19 +13,19 @@ namespace nvrl8_ws.Controllers
     [ApiController]
     public class SettingController : ControllerBase
     {
-        private static string conn =
-            "Server=tcp:nvrl8.database.windows.net,1433;InitialCataLog=nvrl8;Persist SecurityInfo=False;UserID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;";
+        private static string ConnectionString =
+            "Server=tcp:nvrl8.database.windows.net,1433;Initial CataLog=nvrl8;Persist Security Info=False;User ID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         // GET: api/Setting
         [HttpGet]
-        public Settings GetALog(int id)
+        public Settings GetAllSettings()
         {
-            using (SqlConnection dbConnection = new SqlConnection(conn))
+            using (SqlConnection dbConnection = new SqlConnection(ConnectionString))
             {
                 dbConnection.Open();
 
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Settings INNER JOIN Users ON Settings.ID=Users.LogID WHERE ID = @id", dbConnection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Settings", dbConnection))
                 {
-                    command.Parameters.Add(new SqlParameter("id", id));
+                    
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -50,8 +50,26 @@ namespace nvrl8_ws.Controllers
 
         // POST: api/Setting
         [HttpPost]
-        public void Post([FromBody] string value)
+        public int AddSettings([FromBody] Settings set)
         {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                string SqlQuery = "INSERT INTO Settings(Origin, Destination, GoTime) VALUES (@Origin, @Destination, @GoTime)";
+                using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@Origin", set.Origin);
+                    cmd.Parameters.AddWithValue("@Destination", set.Destination);
+                    cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
+
+                    int RowsAffected = cmd.ExecuteNonQuery();
+
+
+
+                    return RowsAffected;
+
+                }
+            }
         }
 
         // PUT: api/Setting/5
