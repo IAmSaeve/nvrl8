@@ -17,28 +17,27 @@
         </div>
     </header>
     <div class="container-fluid col-lg-12 float_left padding_none">
-    <ul class="nav flex-column col-lg-1 float_left" id="navbackground">
-        <li class="nav-item">
-            <a href="profile.htm" class="nav-link navitemcolor"><b>Profil</b></a>
-        </li>
-        <li class="nav-item">
-            <a href="afgang.htm" class="nav-link navitemcolor"><b>Afgang & Ankomst</b></a>
-        </li>
-        <li class="nav-item">
-            <a href="alarm.htm" class="nav-link navitemcolor"><b>Alarmtider</b></a>
-        </li>
-        <li class="nav-item">
-            <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
-        </li>
-    </ul>
-    <div class="col-lg-10 offset-lg-1 float_left">
-        <h2>Din profil</h2>
-        <p id="name"></p>
-    <p id="image"></p>
-    <p id="email"></p>
+        <ul class="nav flex-column col-lg-1 float_left" id="navbackground">
+            <li class="nav-item">
+                <a href="profile.htm" class="nav-link navitemcolor"><b>Profil</b></a>
+            </li>
+            <li class="nav-item">
+                <a href="afgang.htm" class="nav-link navitemcolor"><b>Afgang & Ankomst</b></a>
+            </li>
+            <li class="nav-item">
+                <a href="alarm.htm" class="nav-link navitemcolor"><b>Alarmtider</b></a>
+            </li>
+            <li class="nav-item">
+                <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
+            </li>
+        </ul>
+        <div class="col-lg-10 offset-lg-1 float_left">
+            <h2>Din profil</h2>
+            <ul id="UsersList"></ul>
+        </div>
     </div>
-    
-</div>
+
+    </div>
     <script>
         function signOut() {
             gapi.auth2.init();
