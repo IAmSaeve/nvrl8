@@ -29,9 +29,9 @@ namespace nvrl8_ws.Controllers
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
 
-                string sqlQuery = "SELECT * FROM Users WHERE Email=@FirstName";
+                string sqlQuery = "SELECT * FROM Users WHERE Email=@Origin";
                 SqlCommand cmd = new SqlCommand(sqlQuery, con);
-                cmd.Parameters.AddWithValue("@FirstName", email);
+                cmd.Parameters.AddWithValue("@Origin", email);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 

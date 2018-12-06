@@ -74,8 +74,30 @@ namespace nvrl8_ws.Controllers
 
         // PUT: api/Setting/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public int UpdateSettings(int id, [FromBody]Settings set)
         {
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                string SqlQuery = "UPDATE Settings SET Origin=@Origin, Destination=@Destination, GoTime=@GoTime WHERE ID=@Id;";
+                using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@Origin", set.Origin);
+                    cmd.Parameters.AddWithValue("@Destination", set.Destination);
+                    cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
+
+                    int RowsAffected = cmd.ExecuteNonQuery();
+
+
+
+                    return RowsAffected;
+
+
+                }
+            }
+
         }
 
         // DELETE: api/ApiWithActions/5

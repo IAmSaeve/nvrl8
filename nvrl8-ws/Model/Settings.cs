@@ -10,14 +10,14 @@ namespace nvrl8_ws.Model
         public int Id { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
-        public string Time { get; set; }
+        public string GoTime { get; set; }
 
-        public Settings(int id, string origin, string destination, string time)
+        public Settings(int id, string origin, string destination, string goTime)
         {
             Id = id;
             Origin = origin;
             Destination = destination;
-            Time = time;
+            GoTime = goTime;
         }
 
         public Settings()
