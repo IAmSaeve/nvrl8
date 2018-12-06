@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,12 +15,6 @@ namespace nvrl8_ws.Controllers
     {
         private static string ConnectionString =
             "Server=tcp:nvrl8.database.windows.net,1433;Initial CataLog=nvrl8;Persist Security Info=False;User ID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-    // GET api/values
-    [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/values/5
         [HttpGet("{email}")]
@@ -45,22 +40,34 @@ namespace nvrl8_ws.Controllers
 
         // POST api/values
         [HttpPost]
-        public int AddUser([FromBody] User u)
+        public int AddUser([FromBody] User u, Settings set)
         {
+            //string SqlQuerySettings = "INSERT INTO Settings(Origin, Destination, OriginX, OriginX, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginX, @UseBus, @GoTime, @AwakeTime)";
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string SqlQuery = "INSERT INTO Users(Email, Name, ImageURL) VALUES (@Email, @Name, @ImageURL)";
+                string SqlQuery = "INSERT INTO Users(Email, Name, ImageURL, SettingsID, LogID) VALUES(@Email, @Name, @ImageURL, @SettingsID, @LogID)";
                 using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
                 {
+                    //cmd.CommandText = SqlQueryUsers;
                     cmd.Parameters.AddWithValue("@Email", u.Email);
                     cmd.Parameters.AddWithValue("@Name", u.Name);
                     cmd.Parameters.AddWithValue("@ImageURL", u.ImageURL);
+                    cmd.Parameters.AddWithValue("@SettingsID", u.SettingsID);
+                    cmd.Parameters.AddWithValue("@LogID", u.LogID);
 
+                    /*
+                    cmd.CommandText = SqlQuerySettings;
+                    cmd.Parameters.AddWithValue("@Origin", set.Origin);
+                    cmd.Parameters.AddWithValue("@Destination", set.Destination);
+                    cmd.Parameters.AddWithValue("@OriginX", set.OriginX);
+                    cmd.Parameters.AddWithValue("@OriginY", set.OriginY);
+                    cmd.Parameters.AddWithValue("@UseBus", set.UseBus);
+                    cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
+                    cmd.Parameters.AddWithValue("@AwakeTime", set.AwakeTime);
+                    */
                     int RowsAffected = cmd.ExecuteNonQuery();
-                    
                     return RowsAffected;
-
                 }
             }
         }
