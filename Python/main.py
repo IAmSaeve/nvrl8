@@ -6,12 +6,11 @@ import requests
 import asyncio
 from time import sleep, strftime, localtime
 from sense_hat import SenseHat
+from collections import OrderedDict
+from multiprocessing import Process
+from threading import Thread
 
 sense = SenseHat()
-
-# https://www.pythonforbeginners.com/requests/using-requests-in-python
-# response = requests.get("https://jsonplaceholder.typicode.com/todos") # fetch json fra api
-# todos = json.loads(response.text) # json object
 
 # Data der skal læses fra databasen
 # : alarmTime, tripTime, tripDelay, canceledBool
@@ -23,36 +22,53 @@ sense = SenseHat()
 
 # format 2018-07-29 09:17:13.812189 for klokken
 
-response = requests.get("https://nvrl8-ws.azurewebsites.net/api/setting/")
-realAlarmTime = json.loads(response.text.index(2))
-print(realAlarmTime)
-
 currentTime = datetime.datetime.now()  # Nuværende tid
+Hours = 00  # Prevents exception
+Minutes = 00  # Prevents exception
+alarmTime = datetime.time(Hours, Minutes, 0, 0)
 
-alarmTime = datetime.time(14, 34, 0, 0)
 
-
-async def update_time():
+def update_time():
 	while True:
+		print("Updating time.")
 		global currentTime
 		currentTime = datetime.datetime.now()
-		await asyncio.sleep(1)
-		if MazeGame.GetGameState():  # Returnerer game_over
-			print(localtime())
-			print(currentTime)
-			sense.show_message(strftime("%H:%M", localtime()), scroll_speed=0.06)
+		if not MazeGame.GetGameState():  # Returnerer game_over
+			#print(localtime())
+			print(str(currentTime) + "\n")
+			t = Thread(sense.show_message(strftime("%H:%M", localtime()), scroll_speed=0.06))
+			if not t.isAlive():
+				t.run()
 
 
-async def alarm_start():
+def update_alarm():
 	while True:
-		# print(currentTime.hour)
-		# print(alarmTime.hour)
+		print("Updating alarm.\n")
+		global Hours, Minutes
+		#response = requests.get("https://nvrl8-ws.azurewebsites.net/api/setting/")  # API kald
+		#dataArray = json.loads(response.text, object_pairs_hook=OrderedDict)  # Gemmer json data som OrderedDict
+		#timeArray = str(dataArray["goTime"]).split(":")  # goTime er nøglen i arrayet
+		#Hours = int(timeArray[0])
+		#Minutes = int(timeArray[1])
+		#print("New time is: " + dataArray["goTime"])
+		sleep(10)
+	# sleep(60)
+
+
+def alarm_start():
+	print("Alarm started\n")
+	while True:
 		if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute:
 			loop = asyncio.get_event_loop()  # Async loop
 			cors = asyncio.wait([MazeGame.game_start()])  # Tilføj flere funktioner med komma
 			loop.run_until_complete(cors)
 
 
-loop = asyncio.get_event_loop()  # Async loop
-cors = asyncio.wait([update_time(), alarm_start()])  # Tilføj flere funktioner med komma
-loop.run_until_complete(cors)
+processes = [
+	update_alarm,
+	update_time,
+	alarm_start
+]
+
+for process in processes:
+	Process(target=process).start()
