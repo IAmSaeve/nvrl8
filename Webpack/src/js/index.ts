@@ -8,6 +8,7 @@ import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
+import { IUser } from "./Interface/IUser";
 
 const stopArray: IStop[] = data.default as IStop[];
 
@@ -131,6 +132,29 @@ if (destInput !== null) {
             }
         }
     });
+}
+
+function GetUserAxios():void {
+    const userName:HTMLParagraphElement = <HTMLParagraphElement>document.getElementById("name");
+    const userImg:HTMLParagraphElement = <HTMLParagraphElement>document.getElementById("image");
+    const userMail:HTMLParagraphElement = <HTMLParagraphElement>document.getElementById("email");
+    const UserUri = "https://nvrl8-ws.azurewebsites.net/api/user/1";
+    axios.get<IUser>(UserUri)
+    .then((response:AxiosResponse<IUser>) => {
+        const users = response.data as IUser;
+        userName.appendChild(document.createTextNode(`Navn: ${users.name}`));
+        userImg.appendChild(document.createTextNode(`Img: ${users.imageurl}`));
+        userMail.appendChild(document.createTextNode(`Email: ${users.email}`));
+        console.log(users);
+    })
+    .catch((error)=> {
+        console.log(error);
+    })
+}
+
+if(location.href=="profile.htm")
+{
+    GetUserAxios();
 }
 
 function GetSettingsAxios(): void {

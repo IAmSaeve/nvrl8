@@ -40,7 +40,7 @@ namespace nvrl8_ws.Controllers
 
         // POST api/values
         [HttpPost]
-        public int AddUser([FromBody] User u, Settings set)
+        public int AddUser([FromBody] User u)
         {
             //string SqlQuerySettings = "INSERT INTO Settings(Origin, Destination, OriginX, OriginX, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginX, @UseBus, @GoTime, @AwakeTime)";
             using (SqlConnection con = new SqlConnection(ConnectionString))
