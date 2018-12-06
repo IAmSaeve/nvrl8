@@ -6,9 +6,20 @@ import { ILocationList } from "./Interface/ILocationList";
 import { ISettings } from "./Interface/ISettings";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
+import { IUser } from "./Interface/IUser";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
-import { IUser } from "./Interface/IUser";
+
+/*let nameStr = document.getElementById("nameDiv");
+let imageStr = document.getElementById("imageDiv");
+let emailStr = document.getElementById("emailDiv");
+let nameP = document.getElementById("name");
+let imageP = document.getElementById("image");
+let emailP = document.getElementById("email");
+
+nameStr.innerText = nameP.textContent;
+imageStr.textContent = imageP.textContent;
+emailStr.textContent = emailP.textContent;*/ // bugs out on afgang.htm
 
 const stopArray: IStop[] = data.default as IStop[];
 
@@ -134,7 +145,7 @@ if (destInput !== null) {
     });
 }
 
-function GetUserAxios():void {
+function GetUserAxios(): void {
     const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
     axios.get<IUser>(UserUri)
     .then((response:AxiosResponse<IUser>) => {
@@ -149,9 +160,41 @@ function GetUserAxios():void {
     })
 }
 
-if (document.getElementById("UsersList") == null) 
-{
+if (document.getElementById("UsersList") !== null) {
     GetUserAxios();
+}
+
+if ( document.getElementById("putSettings") !== null) {
+    document.getElementById("putSettings").addEventListener("click", () => {
+        PutSettingsAxios();
+    });
+}
+
+function PutSettingsAxios(): void {
+    const sId: number = 1;
+    const sOrigin: string = address;
+    const sDestination: string = destId;
+    const sOriginY: string = originY;
+    const sOriginX: string = originX;
+    const sUseBus = +(document.getElementById("useBus") as HTMLSelectElement).value;
+    const sGoTime: string = selectedTrip.Leg[0].Origin.time;
+    const sAwakeTime: string = (document.getElementById("beforeDepartureTime") as HTMLInputElement).value;
+    const settingsData = { ID: sId, Origin: sOrigin, Destination: sDestination,
+        OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime, AwakeTime: sAwakeTime };
+    const settingsUri: string = "https://nvrl8.azurewebsites.net/api/setting/1";
+    axios.put(settingsUri, settingsData).then(() => { // uses .then to update list after post is done
+            // document.getElementById("CustomerList").innerHTML = "";
+            // GetAllCustomers();
+            console.log("updated settings");
+            console.log(settingsData);
+        })
+        .catch((error) => {
+            // handle error
+            console.log(error);
+        })
+        .then(() => {
+            // always executed
+        });
 }
 
 function GetSettingsAxios(): void {
@@ -178,16 +221,17 @@ function GetSettingsAxios(): void {
 }
 
 if (document.getElementById("GetSettings") !== null) {
-    document.getElementById("GetSettings").addEventListener("click", () => {
+   // document.getElementById("GetSettings").addEventListener("click", () => {
         console.log("getting settings");
         GetSettingsAxios();
-    });
+   // });
 }
 
 let tripCount = 0;
 
 let tripArray: Trip[] = new Array();
 let selectedTrip: Trip;
+let alarmString: string = "";
 
 function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
@@ -282,7 +326,6 @@ function GetTripsAxios(): void {
                             const goTimeMin = selectedTrip.Leg[0].Origin.time.split(":")[1];
                             let alarmHour = +goTimeHr;
                             let alarmMinute = +goTimeMin;
-                            let alarmString: string = "";
                             // Logik til at regne alarmtid ud...
                             for (let hour = 0; hour < +beforeGoHr; hour++) {
                                 if (+alarmHour === 0) {
