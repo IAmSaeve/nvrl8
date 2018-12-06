@@ -151,16 +151,21 @@ function GetUserAxios(): void {
     .then((response:AxiosResponse<IUser>) => {
         const users = response.data as IUser;
         const node = document.createElement("li");
-        node.appendChild(document.createTextNode(`Navn: ${users.name}, Image: ${users.imageurl}, Email: ${users.email}`));
+        node.appendChild(document.createTextNode(`Navn: ${users.name}, 
+        Image: ${users.imageurl}, Email: ${users.email}`));
         document.getElementById("UsersList").append(node);
         console.log(users);
     })
     .catch((error)=> {
         console.log(error);
     })
+    .then(() => {
+
+    })
 }
 
-if (document.getElementById("UsersList") !== null) {
+if (document.getElementById("GetUser") !== null) {
+    console.log("getting user");
     GetUserAxios();
 }
 
