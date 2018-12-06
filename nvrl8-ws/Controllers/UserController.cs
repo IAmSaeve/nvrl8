@@ -45,8 +45,24 @@ namespace nvrl8_ws.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public int AddUser([FromBody] User u)
         {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                string SqlQuery = "INSERT INTO Users(Email, Name, ImageURL) VALUES (@Email, @Name, @ImageURL)";
+                using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@Email", u.Email);
+                    cmd.Parameters.AddWithValue("@Name", u.Name);
+                    cmd.Parameters.AddWithValue("@ImageURL", u.ImageURL);
+
+                    int RowsAffected = cmd.ExecuteNonQuery();
+                    
+                    return RowsAffected;
+
+                }
+            }
         }
 
         // PUT api/values/5
