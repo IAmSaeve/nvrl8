@@ -133,6 +133,30 @@ destInput.addEventListener("keyup", () => {
     }
 });
 
+function GetSettingsAxios(): void {
+    uri = ""; // WS Get all
+    axios.get<ISettings[]>(uri)
+        .then((response: AxiosResponse<ISettings[]>) => {
+            // handle success
+            response.data.forEach((element) => {
+                const node = document.createElement("li");
+                node.appendChild(document.createTextNode(`ID: ${element.Id},
+                 Origin: ${element.Origin}, Destination: ${element.Destination},
+                 OriginX: ${element.OriginX}, OriginY: ${element.OriginY}, UseBus: ${element.UseBus},
+                 GoTime: ${element.GoTime}, AwakeTime: ${element.AwakeTime}`));
+                document.getElementById("SettingsList").append(node);
+                // console.log(element);
+            });
+        })
+        .catch((error) => {
+            // handle error
+            // console.log(error);
+        })
+        .then(() => {
+            // always executed
+        });
+}
+
 let tripCount = 0;
 
 let tripArray: Trip[] = new Array();
