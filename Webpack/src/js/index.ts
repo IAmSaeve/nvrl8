@@ -3,6 +3,7 @@ import * as data from "../Data/stops.json";
 import { autocomplete } from "./autocomplete";
 import { ICoordLocation } from "./Interface/ICoordLocation";
 import { ILocationList } from "./Interface/ILocationList";
+import { ISettings } from "./Interface/ISettings";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
@@ -18,7 +19,6 @@ let emailP = document.getElementById("email");
 nameStr.innerText = nameP.textContent;
 imageStr.textContent = imageP.textContent;
 emailStr.textContent = emailP.textContent;*/ // bugs out on afgang.htm
-
 
 const stopArray: IStop[] = data.default as IStop[];
 
@@ -275,4 +275,3 @@ function GetTripsAxios(): void {
             console.log(error);
         });
 }
-
