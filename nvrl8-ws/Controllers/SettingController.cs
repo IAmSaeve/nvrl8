@@ -69,8 +69,6 @@ namespace nvrl8_ws.Controllers
 
                     int RowsAffected = cmd.ExecuteNonQuery();
 
-
-
                     return RowsAffected;
 
                 }

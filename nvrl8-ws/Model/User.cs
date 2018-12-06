@@ -12,13 +12,15 @@ namespace nvrl8_ws.Model
         public string ImageURL { get; set; }
         public int SettingsID { get; set; }
         public int LogID { get; set; }
-        public User(string email, string name, string imageUrl, int settingsId, int LogId)
+        public User(string email, string name, string imageUrl, int settingsId, int logId)
         {
             Email = email;
             Name = name;
             ImageURL = imageUrl;
             SettingsID = settingsId;
-            LogID = LogId;
+            settingsId++;
+            LogID = logId;
+            logId++;
         }
        
 

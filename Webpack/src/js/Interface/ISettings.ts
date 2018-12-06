@@ -1,10 +1,10 @@
 export interface ISettings {
-        Id: number;
-        Origin: string;
-        Destination: string;
-        GoTime: string;
-        AwakeTime: string;
-        OriginX: string;
-        OriginY: string;
-        UseBus: number;
+        id: number;
+        origin: string;
+        destination: string;
+        originY: string;
+        originX: string;
+        useBus: number;
+        goTime: string;
+        awakeTime: string;
 }

@@ -6,6 +6,7 @@ import { ILocationList } from "./Interface/ILocationList";
 import { ISettings } from "./Interface/ISettings";
 import { IStop } from "./Interface/IStop";
 import { ITripList } from "./Interface/ITripList";
+import { IUser } from "./Interface/IUser";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
@@ -43,7 +44,9 @@ const originInput = document.getElementById("OriginInput") as HTMLInputElement;
 const destInput = document.getElementById("DestinationInput") as HTMLInputElement;
 
 const departureTime = document.getElementById("beforeDepartureTime") as HTMLInputElement;
+if (departureTime !== null) {
 departureTime.value = "01:00";
+}
 
 let destArray: string[] = new Array();
 let origArray: string[] = new Array();
@@ -54,19 +57,26 @@ let originY: string;
 let destId: string;
 
 console.log(time);
-(document.getElementById("ankomstTime") as HTMLInputElement).value = time; // Sætter et starttidspunkt på inputfielded
+if ((document.getElementById("ankomstTime") as HTMLInputElement) !== null ) {
+    (document.getElementById("ankomstTime") as HTMLInputElement).value = time; // Sætter et starttidspunkt
+}
 
 let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
     "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
     "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=1&format=json";
-(document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
 
-originInput.addEventListener("change", () => {
-    address = (document.getElementById("OriginInput") as HTMLInputElement).value;
-    if (address.length > 5) {
-        GetLatLongAxios();
-    }
-});
+if ( (document.getElementById("TripButton") as HTMLButtonElement) !== null ) {
+    (document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
+}
+
+if (originInput !== null) {
+    originInput.addEventListener("change", () => {
+        address = (document.getElementById("OriginInput") as HTMLInputElement).value;
+        if (address.length > 5) {
+            GetLatLongAxios();
+        }
+    });
+}
 
 function GetLatLongAxios(): void {
     const addressUri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/location?input="
@@ -112,55 +122,116 @@ function GetLatLongAxios(): void {
         });
 }
 
-destInput.addEventListener("keyup", () => {
-    destArray = new Array();
-    document.getElementById("DestinationStations").innerHTML = "";
-    if (destInput.value.length > 3) {
-        stringArray.filter((item: string) => {
-            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
-                destArray.push(item);
-            }
-        });
-        destArray.forEach((e) => {
-            const node = document.createElement("li");
-            const txt = document.createTextNode(e);
-            node.appendChild(txt);
-            document.getElementById("DestinationStations").appendChild(node);
-        });
-        if (destArray !== undefined) {
-            destId = destArray[0].split(",")[1];
-        }
-    }
-});
-
-function GetSettingsAxios(): void {
-    uri = ""; // WS Get all
-    axios.get<ISettings[]>(uri)
-        .then((response: AxiosResponse<ISettings[]>) => {
-            // handle success
-            response.data.forEach((element) => {
-                const node = document.createElement("li");
-                node.appendChild(document.createTextNode(`ID: ${element.Id},
-                 Origin: ${element.Origin}, Destination: ${element.Destination},
-                 OriginX: ${element.OriginX}, OriginY: ${element.OriginY}, UseBus: ${element.UseBus},
-                 GoTime: ${element.GoTime}, AwakeTime: ${element.AwakeTime}`));
-                document.getElementById("SettingsList").append(node);
-                // console.log(element);
+if (destInput !== null) {
+    destInput.addEventListener("keyup", () => {
+        destArray = new Array();
+        document.getElementById("DestinationStations").innerHTML = "";
+        if (destInput.value.length > 3) {
+            stringArray.filter((item: string) => {
+                if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
+                    destArray.push(item);
+                }
             });
+            destArray.forEach((e) => {
+                const node = document.createElement("li");
+                const txt = document.createTextNode(e);
+                node.appendChild(txt);
+                document.getElementById("DestinationStations").appendChild(node);
+            });
+            if (destArray !== undefined) {
+                destId = destArray[0].split(",")[1];
+            }
+        }
+    });
+}
+
+function GetUserAxios(): void {
+    const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
+    axios.get<IUser>(UserUri)
+    .then((response:AxiosResponse<IUser>) => {
+        const users = response.data as IUser;
+        const node = document.createElement("li");
+        node.appendChild(document.createTextNode(`Navn: ${users.name}, Image: ${users.imageurl}, Email: ${users.email}`));
+        document.getElementById("UsersList").append(node);
+        console.log(users);
+    })
+    .catch((error)=> {
+        console.log(error);
+    })
+}
+
+if (document.getElementById("UsersList") !== null) {
+    GetUserAxios();
+}
+
+if ( document.getElementById("putSettings") !== null) {
+    document.getElementById("putSettings").addEventListener("click", () => {
+        PutSettingsAxios();
+    });
+}
+
+function PutSettingsAxios(): void {
+    const sId: number = 1;
+    const sOrigin: string = address;
+    const sDestination: string = destId;
+    const sOriginY: string = originY;
+    const sOriginX: string = originX;
+    const sUseBus = +(document.getElementById("useBus") as HTMLSelectElement).value;
+    const sGoTime: string = selectedTrip.Leg[0].Origin.time;
+    const sAwakeTime: string = (document.getElementById("beforeDepartureTime") as HTMLInputElement).value;
+    const settingsData = { ID: sId, Origin: sOrigin, Destination: sDestination,
+        OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime, AwakeTime: sAwakeTime };
+    const settingsUri: string = "https://nvrl8.azurewebsites.net/api/setting/1";
+    axios.put(settingsUri, settingsData).then(() => { // uses .then to update list after post is done
+            // document.getElementById("CustomerList").innerHTML = "";
+            // GetAllCustomers();
+            console.log("updated settings");
+            console.log(settingsData);
         })
         .catch((error) => {
             // handle error
-            // console.log(error);
+            console.log(error);
         })
         .then(() => {
             // always executed
         });
 }
 
+function GetSettingsAxios(): void {
+    const SettingsUri = "https://nvrl8.azurewebsites.net/api/setting"; // WS Get all
+    axios.get<ISettings>(SettingsUri)
+        .then((response: AxiosResponse<ISettings>) => {
+            // handle success
+            const settings = response.data as ISettings;
+            const node = document.createElement("li");
+            node.appendChild(document.createTextNode(`ID: ${settings.id},
+                 Origin: ${settings.origin}, Destination: ${settings.destination},
+                 OriginX: ${settings.originX}, OriginY: ${settings.originY}, UseBus: ${settings.useBus},
+                 GoTime: ${settings.goTime}, AwakeTime: ${settings.awakeTime}`));
+            document.getElementById("SettingsList").append(node);
+            console.log(settings);
+        })
+        .catch((error) => {
+            // handle error
+            console.log(error);
+        })
+        .then(() => {
+            // always executed
+        });
+}
+
+if (document.getElementById("GetSettings") !== null) {
+   // document.getElementById("GetSettings").addEventListener("click", () => {
+        console.log("getting settings");
+        GetSettingsAxios();
+   // });
+}
+
 let tripCount = 0;
 
 let tripArray: Trip[] = new Array();
 let selectedTrip: Trip;
+let alarmString: string = "";
 
 function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
@@ -255,7 +326,6 @@ function GetTripsAxios(): void {
                             const goTimeMin = selectedTrip.Leg[0].Origin.time.split(":")[1];
                             let alarmHour = +goTimeHr;
                             let alarmMinute = +goTimeMin;
-                            let alarmString: string = "";
                             // Logik til at regne alarmtid ud...
                             for (let hour = 0; hour < +beforeGoHr; hour++) {
                                 if (+alarmHour === 0) {
