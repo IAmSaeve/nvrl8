@@ -167,10 +167,12 @@ function GetSettingsAxios(): void {
         });
 }
 
-document.getElementById("GetSettings").addEventListener("click", () => {
-    console.log("getting settings");
-    GetSettingsAxios();
-});
+if (document.getElementById("GetSettings") !== null) {
+    document.getElementById("GetSettings").addEventListener("click", () => {
+        console.log("getting settings");
+        GetSettingsAxios();
+    });
+}
 
 let tripCount = 0;
 
