@@ -22,6 +22,11 @@ sense = SenseHat()
 # subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 
 # format 2018-07-29 09:17:13.812189 for klokken
+
+response = requests.get("https://nvrl8-ws.azurewebsites.net/api/setting/")
+realAlarmTime = json.loads(response.text.index(2))
+print(realAlarmTime)
+
 currentTime = datetime.datetime.now()  # Nuværende tid
 
 alarmTime = datetime.time(14, 34, 0, 0)

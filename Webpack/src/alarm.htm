@@ -16,7 +16,9 @@
                     </div>
                 </div>
             </header>
-    <ul class="nav flex-column col-lg-1" id="navbackground">
+            <div class="container-fluid col-lg-12 float_left padding_none">
+
+    <ul class="nav flex-column col-lg-1 float_left" id="navbackground">
         <li class="nav-item">
             <a href="profile.htm" class="nav-link navitemcolor"><b>Profil</b></a>
         </li>
@@ -30,6 +32,10 @@
             <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
         </li>
     </ul>
+    <div class="col-lg-10 offset-lg-2">
+    <button id="GetSettings">Get Settings</button>
+    <ul id="SettingsList"></ul>
+</div> </div>
     <script>
         function signOut() {
             gapi.auth2.init();
@@ -45,6 +51,7 @@
               });
             }
     </script>
+    <script src="bundle.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <meta name="google-signin-client_id" content="280043263121-cnpj4knrjbr2h3vgochfcd5l73u7gqmv.apps.googleusercontent.com">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"

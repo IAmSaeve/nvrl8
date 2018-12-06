@@ -31,7 +31,7 @@ namespace nvrl8_ws.Controllers
                         while (reader.Read())
                         {
                             return new Settings(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
-                                reader.GetBoolean(5), reader.GetString(6), reader.GetString(7));
+                                reader.GetByte(5), reader.GetString(6), reader.GetString(7));
                         }
                     }
                 }
@@ -77,15 +77,16 @@ namespace nvrl8_ws.Controllers
 
         // PUT: api/Setting/5
         [HttpPut("{id}")]
-        public int UpdateSettings(int id, [FromBody]Settings set)
+        public void UpdateSettings(int id, [FromBody]Settings set)
         {
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string SqlQuery = "UPDATE Settings SET Origin=@Origin, Destination=@Destination, OriginX=@OriginX, OriginY=@OriginY, UseBus=@UseBus, GoTime=@GoTime, AwakeTime=@AwakeTime WHERE ID=@Id;";
+                string SqlQuery = "UPDATE Settings SET ID=@ID, Origin=@Origin, Destination=@Destination, OriginX=@OriginX, OriginY=@OriginY, UseBus=@UseBus, GoTime=@GoTime, AwakeTime=@AwakeTime WHERE ID=@Id;";
                 using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
                 {
+                    cmd.Parameters.AddWithValue("@ID", set.Id);
                     cmd.Parameters.AddWithValue("@Origin", set.Origin);
                     cmd.Parameters.AddWithValue("@Destination", set.Destination);
                     cmd.Parameters.AddWithValue("@OriginX", set.OriginX);
@@ -93,14 +94,7 @@ namespace nvrl8_ws.Controllers
                     cmd.Parameters.AddWithValue("@UseBus", set.UseBus);
                     cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
                     cmd.Parameters.AddWithValue("@AwakeTime", set.AwakeTime);
-
-                    int RowsAffected = cmd.ExecuteNonQuery();
-
-
-
-                    return RowsAffected;
-
-
+                  
                 }
             }
 
