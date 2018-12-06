@@ -16,7 +16,9 @@
                     </div>
                 </div>
             </header>
-    <ul class="nav flex-column col-lg-1" id="navbackground">
+            <div class="container-fluid col-lg-12 float_left padding_none">
+
+    <ul class="nav flex-column col-lg-1 float_left" id="navbackground">
         <li class="nav-item">
             <a href="profile.htm" class="nav-link navitemcolor"><b>Profil</b></a>
         </li>
@@ -30,7 +32,10 @@
             <a href="log.htm" class="nav-link navitemcolor"><b>Rejse Dagbog</b></a>
         </li>
     </ul>
+    <div class="col-lg-10 offset-lg-2">
     <button id="GetSettings">Get Settings</button>
+    <ul id="SettingsList"></ul>
+</div> </div>
     <script>
         function signOut() {
             gapi.auth2.init();

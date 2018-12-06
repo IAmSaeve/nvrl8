@@ -146,23 +146,21 @@ if (destInput !== null) {
 
 function GetSettingsAxios(): void {
     const SettingsUri = "https://nvrl8-ws.azurewebsites.net/api/setting"; // WS Get all
-    axios.get<ISettings[]>(SettingsUri)
-        .then((response: AxiosResponse<ISettings[]>) => {
+    axios.get<ISettings>(SettingsUri)
+        .then((response: AxiosResponse<ISettings>) => {
             // handle success
-            response.data.forEach((element) => {
-                const node = document.createElement("li");
-                node.appendChild(document.createTextNode(`ID: ${element.Id},
-                 Origin: ${element.Origin}, Destination: ${element.Destination},
-                 OriginX: ${element.OriginX}, OriginY: ${element.OriginY}, UseBus: ${element.UseBus},
-                 GoTime: ${element.GoTime}, AwakeTime: ${element.AwakeTime}`));
-                document.getElementById("SettingsList").append(node);
-                console.log(element);
-            });
-            console.log("settings data" + response.data);
+            const settings = response.data as ISettings;
+            const node = document.createElement("li");
+            node.appendChild(document.createTextNode(`ID: ${settings.id},
+                 Origin: ${settings.origin}, Destination: ${settings.destination},
+                 OriginX: ${settings.originX}, OriginY: ${settings.originY}, UseBus: ${settings.useBus},
+                 GoTime: ${settings.goTime}, AwakeTime: ${settings.awakeTime}`));
+            document.getElementById("SettingsList").append(node);
+            console.log(settings);
         })
         .catch((error) => {
             // handle error
-            // console.log(error);
+            console.log(error);
         })
         .then(() => {
             // always executed
