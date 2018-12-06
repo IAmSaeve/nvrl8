@@ -14,18 +14,18 @@ namespace nvrl8_ws.Model
         public string AwakeTime { get; set; }
         public string OriginX { get; set; }
         public string OriginY { get; set; }
-        public string UseBus { get; set; }
+        public bool UseBus { get; set; }
 
-        public Settings(int id, string origin, string destination, string goTime, string awakeTime, string originX, string originY, string useBus)
+        public Settings(int id, string origin, string destination, string originX, string originY, bool useBus, string goTime, string awakeTime)
         {
             Id = id;
             Origin = origin;
             Destination = destination;
-            GoTime = goTime;
-            AwakeTime = awakeTime;
             OriginX = originX;
             OriginY = originY;
             UseBus = useBus;
+            GoTime = goTime;
+            AwakeTime = awakeTime;
         }
 
         public Settings()
