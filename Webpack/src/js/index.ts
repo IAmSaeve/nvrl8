@@ -150,10 +150,16 @@ function GetUserAxios(): void {
     axios.get<IUser>(UserUri)
     .then((response:AxiosResponse<IUser>) => {
         const users = response.data as IUser;
-        const node = document.createElement("li");
-        node.appendChild(document.createTextNode(`Navn: ${users.name}, 
-        Image: ${users.imageurl}, Email: ${users.email}`));
-        document.getElementById("UsersList").append(node);
+        const nodeName = document.createElement("li");
+        const nodeMail = document.createElement("li");
+        const nodeImg = document.createElement("IMG");
+        const nodeStr:string = `${(users.imageurl as string)}`;
+        console.log(nodeStr);
+        nodeImg.setAttribute("src", users.imageurl);
+        console.log(users.imageurl);
+        nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`)); 
+        nodeMail.appendChild(document.createTextNode(`Email: ${users.email}`));
+        document.getElementById("UsersList").append(nodeName,nodeMail,nodeImg);
         console.log(users);
     })
     .catch((error)=> {
