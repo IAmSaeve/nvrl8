@@ -8,6 +8,17 @@ import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
+/*let nameStr = document.getElementById("nameDiv");
+let imageStr = document.getElementById("imageDiv");
+let emailStr = document.getElementById("emailDiv");
+let nameP = document.getElementById("name");
+let imageP = document.getElementById("image");
+let emailP = document.getElementById("email");
+
+nameStr.innerText = nameP.textContent;
+imageStr.textContent = imageP.textContent;
+emailStr.textContent = emailP.textContent;*/ // bugs out on afgang.htm
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
@@ -60,7 +71,7 @@ function GetLatLongAxios(): void {
     const addressUri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/rest.exe/location?input="
         + address + "&format=json";
     origArray = new Array();
-    document.getElementById("OriginStations").innerHTML = "";
+    document.getElementById("OriginStations").innerHTML = "Indlæser...";
     axios.get<ILocationList[]>(addressUri, {
         headers: {
             "Access-Control-Allow-Methods": "*",
@@ -69,13 +80,14 @@ function GetLatLongAxios(): void {
         },
     })
         .then((response: AxiosResponse<any>) => {
+            document.getElementById("OriginStations").innerHTML = "";
             let listCount = 0;
             const mList: any = response.data;
             const mapData: ILocationList = mList.LocationList as ILocationList;
             console.log(mapData);
             if (Array.isArray(mapData.CoordLocation)) {
-                mapData.CoordLocation.forEach((e) => {
-                    if (listCount < 10) {
+                mapData.CoordLocation.forEach((e: ICoordLocation) => {
+                    if (listCount < 3) {
                         const item: ICoordLocation = e as ICoordLocation;
                         const node = document.createElement("li");
                         const txt = document.createTextNode(item.name);
@@ -84,15 +96,17 @@ function GetLatLongAxios(): void {
                         listCount++;
                     }
                 });
+                originX = mapData.CoordLocation[0].x;
+                originY = mapData.CoordLocation[0].y;
             } else {
                 const item: ICoordLocation = mapData.CoordLocation as ICoordLocation;
                 const node = document.createElement("li");
                 const txt = document.createTextNode(item.name);
                 node.appendChild(txt);
                 document.getElementById("OriginStations").appendChild(node);
+                originX = mapData.CoordLocation.x;
+                originY = mapData.CoordLocation.y;
             }
-            originX = mapData.CoordLocation.x;
-            originY = mapData.CoordLocation.y;
             console.log(originX + " " + originY);
         });
 }
@@ -102,7 +116,7 @@ destInput.addEventListener("keyup", () => {
     document.getElementById("DestinationStations").innerHTML = "";
     if (destInput.value.length > 3) {
         stringArray.filter((item: string) => {
-            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 10) {
+            if (item.toLowerCase().match(destInput.value.toLowerCase()) && destArray.length < 3) {
                 destArray.push(item);
             }
         });
@@ -118,6 +132,11 @@ destInput.addEventListener("keyup", () => {
     }
 });
 
+let tripCount = 0;
+
+let tripArray: Trip[] = new Array();
+let selectedTrip: Trip;
+
 function GetTripsAxios(): void {
     time = (document.getElementById("ankomstTime") as HTMLInputElement).value;
     const useBus = (document.getElementById("useBus") as HTMLSelectElement).value;
@@ -125,7 +144,7 @@ function GetTripsAxios(): void {
         "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
         "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=" +
         useBus + "&format=json";
-    console.log(useBus);
+    // console.log(uri);
     document.getElementById("TripList").innerHTML = "";
     axios.get<ITripList[]>(uri, {
         headers: {
@@ -136,17 +155,26 @@ function GetTripsAxios(): void {
     })
         .then((response: AxiosResponse<any>) => {
             const tlist: any = response.data;
-            const array: Trip[] = tlist.TripList.Trip as Trip[];
-            array.forEach((element: Trip) => {
+            tripArray = tlist.TripList.Trip as Trip[];
+            tripCount = 0;
+            tripArray.forEach((element: Trip) => {
                 const node = document.createElement("li");
                 const legArray: Leg[] = element.Leg as Leg[];
+                console.log(tripCount);
                 if (Array.isArray(element.Leg)) {
                     element.Leg.forEach((e) => {
                         const legNode = document.createElement("li");
                         if (e === element.Leg[0]) { // Viser linjeskift ved ny rejse
                             const newLine = document.createElement("li");
                             newLine.appendChild(document.createTextNode("---------------------"));
+                            const selectTrip = document.createElement("input");
+                            selectTrip.type = "checkbox";
+                            selectTrip.id = "trip";
+                            selectTrip.id += tripCount; // trip1, trip2 etc
+                            console.log(selectTrip.id);
                             node.appendChild(newLine);
+                            node.appendChild(selectTrip);
+                            node.appendChild(document.createTextNode(" Vælg rejse"));
                         }
                         legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
                                       Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
@@ -179,7 +207,68 @@ function GetTripsAxios(): void {
                 const txtNode = document.createTextNode(txt);
                 node.appendChild(txtNode);
                 document.getElementById("TripList").append(node);
+                tripCount++;
             });
+            // Logik der sørger for man kun kan vælge 1 rejse
+            // Gemmer rejsen i selectedTrip.
+            let amountChecked = 0;
+            for (let i = 0; i < tripCount; i++) {
+                const id = "trip" + i;
+                const checkbox = (document.getElementById(id) as HTMLInputElement);
+                checkbox.addEventListener("change", () => {
+                    if (checkbox.checked) {
+                        amountChecked++;
+                        if (amountChecked === 1) {
+                            console.log(id);
+                            selectedTrip = tripArray[i];
+                            console.log(selectedTrip);
+                            const beforeGoTime = document.getElementById("beforeDepartureTime") as HTMLInputElement;
+
+                            const beforeGoHr = beforeGoTime.value.split(":")[0];
+                            const beforeGoMin = beforeGoTime.value.split(":")[1];
+                            const goTimeHr = selectedTrip.Leg[0].Origin.time.split(":")[0];
+                            const goTimeMin = selectedTrip.Leg[0].Origin.time.split(":")[1];
+                            let alarmHour = +goTimeHr;
+                            let alarmMinute = +goTimeMin;
+                            let alarmString: string = "";
+                            // Logik til at regne alarmtid ud...
+                            for (let hour = 0; hour < +beforeGoHr; hour++) {
+                                if (+alarmHour === 0) {
+                                    alarmHour = 24;
+                                }
+                                alarmHour--;
+                            }
+                            for (let minute = 0; minute < +beforeGoMin; minute++) {
+                                if (+alarmMinute === 0) {
+                                    if (alarmHour === 0) {
+                                        alarmHour = 23;
+                                    } else {
+                                        alarmHour -= 1;
+                                    }
+                                    alarmMinute = 60;
+                                }
+                                alarmMinute--;
+                            }
+                            if (alarmHour < 10) {
+                                alarmString += "0";
+                            }
+                            alarmString += alarmHour + ":";
+                            if (alarmMinute < 10) {
+                                alarmString += "0";
+                            }
+                            alarmString += alarmMinute;
+                            const displayAlarmStr = "Alarmen ringer kl : " + alarmString;
+                            document.getElementById("alarmTime").innerHTML = displayAlarmStr;
+                        }
+                    } else {
+                        amountChecked--;
+                    }
+                    if (amountChecked > 1) {
+                        checkbox.checked = false;
+                        amountChecked--;
+                    }
+                });
+            }
         })
         .catch((error) => {
             console.log(error);

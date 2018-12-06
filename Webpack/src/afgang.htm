@@ -46,8 +46,10 @@
     <button id="TripButton" class="btn btn-primary">Vis rejser</button>
     <div>Hvor lang tid før afgang skal alarmen ringe?
         <input type="time" id="beforeDepartureTime"></div>
-    </div>
+        <div id="alarmTime">Alarmen ringer kl : </div>
 </div>
+    </div>
+    
     <script>
         function signOut() {
             gapi.auth2.init();
