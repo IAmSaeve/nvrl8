@@ -10,25 +10,15 @@
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     
-    var nameDiv = document.createElement("p");
-    nameDiv.id = "name";
-    nameDiv.innerText = profile.getName();
-    console.log(nameDiv.innerText);
     console.log('Name: ' + profile.getName());
 
-    var imageDiv = document.createElement("p");
-    imageDiv.id= "image";
-    imageDiv.innerText = profile.getImageUrl();    
     console.log('Image URL: ' + profile.getImageUrl());
 
-    var emailDiv = document.createElement("p");
-    emailDiv.id = "email";
-    emailDiv.innerText = profile.getEmail();
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     
     location.href="profile.htm";
 }
-</script>
+</script>-->
 <body>
   <header class="container fluid col-lg-12">
     <div class="col-lg-6">

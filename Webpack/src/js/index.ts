@@ -8,17 +8,6 @@ import { ITripList } from "./Interface/ITripList";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
-let nameStr = document.getElementById("nameDiv");
-let imageStr = document.getElementById("imageDiv");
-let emailStr = document.getElementById("emailDiv");
-let nameP = document.getElementById("name");
-let imageP = document.getElementById("image");
-let emailP = document.getElementById("email");
-
-nameStr.textContent = nameP.textContent;
-imageStr.textContent = imageP.textContent;
-emailStr.textContent = emailP.textContent;
-
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
