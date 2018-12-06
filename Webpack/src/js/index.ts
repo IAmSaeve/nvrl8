@@ -19,6 +19,7 @@ nameStr.innerText = nameP.textContent;
 imageStr.textContent = imageP.textContent;
 emailStr.textContent = emailP.textContent;*/ // bugs out on afgang.htm
 
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
