@@ -135,7 +135,7 @@ if (destInput !== null) {
 }
 
 function GetUserAxios():void {
-    const UserUri = "https://nvrl8-ws.azurewebsites.net/api/user/sebastian@gmail.com";
+    const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
     axios.get<IUser>(UserUri)
     .then((response:AxiosResponse<IUser>) => {
         const users = response.data as IUser;
@@ -155,7 +155,7 @@ if (document.getElementById("UsersList") == null)
 }
 
 function GetSettingsAxios(): void {
-    const SettingsUri = "https://nvrl8-ws.azurewebsites.net/api/setting"; // WS Get all
+    const SettingsUri = "https://nvrl8.azurewebsites.net/api/setting"; // WS Get all
     axios.get<ISettings>(SettingsUri)
         .then((response: AxiosResponse<ISettings>) => {
             // handle success
