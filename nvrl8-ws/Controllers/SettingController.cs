@@ -79,16 +79,16 @@ namespace nvrl8_ws.Controllers
 
         // PUT: api/Setting/5
         [HttpPut("{id}")]
-        public void UpdateSettings(int id, [FromBody]Settings set)
+        public int UpdateSettings(int id, [FromBody]Settings set)
         {
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string SqlQuery = "UPDATE Settings SET ID=@ID, Origin=@Origin, Destination=@Destination, OriginX=@OriginX, OriginY=@OriginY, UseBus=@UseBus, GoTime=@GoTime, AwakeTime=@AwakeTime WHERE ID=@Id;";
+                string SqlQuery = "UPDATE Settings SET Origin=@Origin, Destination=@Destination, OriginX=@OriginX, OriginY=@OriginY, UseBus=@UseBus, GoTime=@GoTime, AwakeTime=@AwakeTime WHERE ID=@ID;";
                 using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
                 {
-                    cmd.Parameters.AddWithValue("@ID", set.Id);
+                    cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@Origin", set.Origin);
                     cmd.Parameters.AddWithValue("@Destination", set.Destination);
                     cmd.Parameters.AddWithValue("@OriginX", set.OriginX);
@@ -96,7 +96,16 @@ namespace nvrl8_ws.Controllers
                     cmd.Parameters.AddWithValue("@UseBus", set.UseBus);
                     cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
                     cmd.Parameters.AddWithValue("@AwakeTime", set.AwakeTime);
-                  
+
+
+                    int RowsAffected = cmd.ExecuteNonQuery();
+
+
+
+                    return RowsAffected;
+
+
+
                 }
             }
 
