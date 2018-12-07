@@ -33,22 +33,28 @@
         </ul>
         <div class="col-lg-10 offset-lg-2">
             <h2>Afgang & Ankomst</h2>
-        <ul id="TripList"></ul>
-    <input id="OriginInput" class="col-lg-4g" type="text" placeholder="Fra">
-    <ul id="OriginStations"></ul>
-    <input id="DestinationInput" class="col-lg-4g" type="text" placeholder="Til">
-    <ul id="DestinationStations"></ul>
-    <select id="useBus">
+        <ul class="TripListStyle" id="TripList"></ul>
+        <div class="input-group">
+    <input id="OriginInput" class="col-lg-4g offset-lg-0 form-control" type="text" placeholder="Fra">
+    <input id="DestinationInput" class="col-lg-4g offset-lg-0 form-control" type="text" placeholder="Til">
+    </div>
+    <div class="input-group">
+    <ul id="OriginStations" class="col-lg-4g offset-lg-0"></ul>
+    <ul id="DestinationStations" class="col-lg-4g offset-lg-2"></ul>
+</div>
+<div  class="input-group" >
+    <select id="useBus" class="btn btn-primary blar offset-lg-0">
         <option value="1">Use bus</option>
         <option value="0">No bus</option>
     </select>
-    Ankomst : 
-    <input type="time" id="ankomstTime">
-    <button id="TripButton" class="btn btn-primary">Vis rejser</button>
-    <div>Hvor lang tid før afgang skal alarmen ringe?
-        <input type="time" id="beforeDepartureTime"></div>
-        <div id="alarmTime">Alarmen ringer kl : </div>
-        <button id="putSettings">Gem valgte rejse</button>
+    <p class="blar">Hvor lang tid før afgang skal alarmen ringe?</p>
+    <input type="time" id="beforeDepartureTime" class="blar"/>
+    <p class="blar">Alarm tid:</p>
+    <input type="time" id="ankomstTime" class="blar"/>
+    <button id="TripButton" class="btn btn-primary blar">Vis rejser</button>
+    <button class="blar btn btn-primary" id="putSettings">Gem valgte rejse</button>
+</div>  
+        <div class="blar" id="alarmTime">Alarmen ringer kl : </div>
 </div>
     </div>
     

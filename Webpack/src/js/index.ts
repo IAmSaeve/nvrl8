@@ -277,33 +277,35 @@ function GetTripsAxios(): void {
             tripCount = 0;
             tripArray.forEach((element: Trip) => {
                 const node = document.createElement("li");
+                node.className="TripStyling";
                 const legArray: Leg[] = element.Leg as Leg[];
                 console.log(tripCount);
                 if (Array.isArray(element.Leg)) {
                     element.Leg.forEach((e) => {
                         const legNode = document.createElement("li");
                         if (e === element.Leg[0]) { // Viser linjeskift ved ny rejse
-                            const newLine = document.createElement("li");
-                            newLine.appendChild(document.createTextNode("---------------------"));
+                            //const newLine = document.createElement("li");
                             const selectTrip = document.createElement("input");
                             selectTrip.type = "checkbox";
                             selectTrip.id = "trip";
                             selectTrip.id += tripCount; // trip1, trip2 etc
                             console.log(selectTrip.id);
-                            node.appendChild(newLine);
+                           // node.appendChild(newLine);
                             node.appendChild(selectTrip);
                             node.appendChild(document.createTextNode(" Vælg rejse"));
                         }
+                        
                         legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
                                       Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
                                        Destination : ${e.Destination.name},
                                       Kl : ${e.Destination.time}`));
+                                     
                         node.appendChild(legNode);
                     });
                 } else {
                     const legNode = document.createElement("li");
                     const newLine = document.createElement("li");
-                    newLine.appendChild(document.createTextNode("---------------------"));
+                    //newLine.appendChild(document.createTextNode("---------------------"));
                     node.appendChild(newLine);
                     const newLeg: Leg = element.Leg as Leg;
                     legNode.appendChild(document.createTextNode(`Name : ${newLeg.name}, Type : ${newLeg.type},
@@ -335,6 +337,7 @@ function GetTripsAxios(): void {
                 const checkbox = (document.getElementById(id) as HTMLInputElement);
                 checkbox.addEventListener("change", () => {
                     if (checkbox.checked) {
+                        alarmString = "";
                         amountChecked++;
                         if (amountChecked === 1) {
                             console.log(id);
