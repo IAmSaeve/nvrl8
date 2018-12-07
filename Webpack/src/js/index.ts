@@ -162,7 +162,7 @@ function GetUserAxios(): void {
         document.getElementById("UsersList").append(nodeName, nodeMail, nodeImg);
         console.log(users);
     })
-    .catch((error)=> {
+    .catch((error) => {
         console.log(error);
     })
     .then(() => {
