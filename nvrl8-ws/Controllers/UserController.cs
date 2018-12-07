@@ -69,26 +69,26 @@ namespace nvrl8_ws.Controllers
         [HttpPost]
         public int AddUser([FromBody] User u)
         {
-            
-            //string SqlQuerySettings = "INSERT INTO Settings(Origin, Destination, OriginX, OriginX, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginX, @UseBus, @GoTime, @AwakeTime)";
+            string SqlQueryUsers = "INSERT INTO Users(Email, Name, ImageURL, SettingsID, LogID) VALUES(@Email, @Name, @ImageURL, @SettingsID, @LogID)";
+            string SqlQuerySettings = "INSERT INTO Settings(Origin, Destination, OriginX, OriginX, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginX, @UseBus, @GoTime, @AwakeTime)";
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-                string SqlQueryUsers = "INSERT INTO Users(Email, Name, ImageURL, SettingsID, LogID) VALUES(@Email, @Name, @ImageURL, @SettingsID, @LogID)";
+                
                 con.Open();
                 
-                using (SqlCommand cmd = new SqlCommand(SqlQueryUsers, con))
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    //cmd.Connection = con;
-                    //cmd.CommandType = CommandType.Text;
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.Text;
 
-                    //cmd.CommandText = SqlQueryUsers;
+                    cmd.CommandText = SqlQueryUsers;
                     cmd.Parameters.AddWithValue("@Email", u.Email);
                     cmd.Parameters.AddWithValue("@Name", u.Name);
                     cmd.Parameters.AddWithValue("@ImageURL", u.ImageURL);
                     cmd.Parameters.AddWithValue("@SettingsID", u.SettingsID);
                     cmd.Parameters.AddWithValue("@LogID", u.LogID);
                     
-                    /*cmd.CommandText = SqlQuerySettings;
+                    cmd.CommandText = SqlQuerySettings;
                     cmd.Parameters.AddWithValue("@Origin", "default");
                     cmd.Parameters.AddWithValue("@Destination", "default");
                     cmd.Parameters.AddWithValue("@OriginX", "default");
@@ -96,7 +96,7 @@ namespace nvrl8_ws.Controllers
                     cmd.Parameters.AddWithValue("@UseBus", 1);
                     cmd.Parameters.AddWithValue("@GoTime", "default");
                     cmd.Parameters.AddWithValue("@AwakeTime", "default");
-                    */
+                    
                     int RowsAffected = cmd.ExecuteNonQuery();
                     return RowsAffected;
                 }
