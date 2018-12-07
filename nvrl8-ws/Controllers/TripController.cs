@@ -15,6 +15,11 @@ using Newtonsoft.Json.Linq;
 
 namespace nvrl8_ws.Controllers
 {
+    public class TList
+    {
+        public Triplist Triplist { get; set; }
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class TripController : ControllerBase
@@ -23,7 +28,7 @@ namespace nvrl8_ws.Controllers
 
         // GET: api/Trip
         [HttpGet]
-        public async Task<Triplist> Gettrip()
+        public async Task<TList> GetTrip()
 
         {
             string SettingsURI = "https://nvrl8.azurewebsites.net/api/setting";
@@ -32,19 +37,25 @@ namespace nvrl8_ws.Controllers
             string uri;
             using (HttpClient client = new HttpClient())
             {
-                var tripLis = new Triplist();
-                string content = await client.GetStringAsync(SettingsURI);
-                Settings setting = JsonConvert.DeserializeObject<Settings>(content);
-
+                string contents = await client.GetStringAsync(SettingsURI);
+                Settings setting = JsonConvert.DeserializeObject<Settings>(contents);
                 uri = "http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-                          "trip?originCoordX=" + setting.OriginY + "&originCoordY=" + setting.OriginX + "&originCoordName=" + setting.Origin +
-                          "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.GoTime + "&searchForArrival=1&useBus=1&format=json";
+                      "trip?originCoordX=" + setting.OriginY + "&originCoordY=" + setting.OriginX + "&originCoordName=" + setting.Origin +
+                      "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.GoTime + "&searchForArrival=1&useBus=1&format=json";
+
+                string content = await client.GetStringAsync(uri);
+                TList tList = JsonConvert.DeserializeObject<TList>(content);
+                return tList;
+
+                //var tripList = new Triplist();
+                
+
+              
 
 
-
-                string tripContent = await client.GetStringAsync(uri);
-                var t = new Triplist(JsonConvert.DeserializeObject<List<Trip>>(tripContent));
-                Debug.WriteLine("\n \n" + t.TripListe[0].Legs[0] + "\n \n");
+                //string tripContent = await client.GetStringAsync(uri);
+                //var t = new Triplist(JsonConvert.DeserializeObject<List<Trip>>(tripContent));
+                //Debug.WriteLine("\n \n" + t.TripListe[0].Legs[0] + "\n \n");
 
                 //Console.WriteLine($"{tripLis.TripListe.Alternative}, {tripLis.TripListe.Valid}, {tripLis.TripListe.Cancelled}");
                 //foreach (var tripLeg in tripLis.TripListe?.Legs)
@@ -53,7 +64,7 @@ namespace nvrl8_ws.Controllers
                     //Console.WriteLine(tripLeg);
                     // Console.WriteLine($"{TripLeg.Origin}, {TripLeg.Destination}, {TripLeg.Name}, {TripLeg.Type}");
                 //}
-                return tripLis;
+                //return tripList;
             }
             // return tripLis;
         }
