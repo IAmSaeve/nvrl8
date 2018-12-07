@@ -10,6 +10,7 @@ import { IUser } from "./Interface/IUser";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
@@ -294,6 +295,14 @@ function GetTripsAxios(): void {
                             node.appendChild(selectTrip);
                             node.appendChild(document.createTextNode(" Vælg rejse"));
                         }
+                        //if (e.type === "WALK") {
+                           
+                        //    const nodeImg = document.createElement("IMG");
+                        //    nodeImg.setAttribute("src", "./image.png");
+                        //    nodeImg.setAttribute("width", "20px");
+                        //    nodeImg.setAttribute("Height", "20px");
+                        //  legNode.append(nodeImg)
+                        //}
                         
                         legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
                                       Origin : ${e.Origin.name}, Kl : ${e.Origin.time},

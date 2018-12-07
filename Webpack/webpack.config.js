@@ -52,7 +52,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.scss' ]
+    extensions: [ '.tsx', '.ts', '.js', '.scss','.png' ]
   },
   output: {
     publicPath: '/dist/',
