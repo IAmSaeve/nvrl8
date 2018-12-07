@@ -164,6 +164,15 @@ if (document.getElementById("GetUser") !== null) {
     GetUserAxios();
 }
 
+function DeleteUserAxios():void{
+    const delUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
+
+    axios.delete(delUri).then(()=>{
+        let delMsg = document.createElement("p");
+        delMsg.innerText = "Brugeren er slettet";
+    })
+}
+
 if (document.getElementById("putSettings") !== null) {
     document.getElementById("putSettings").addEventListener("click", () => {
         PutSettingsAxios();
