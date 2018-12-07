@@ -148,7 +148,7 @@ if (destInput !== null) {
 function GetUserAxios(): void {
     const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
     axios.get<IUser>(UserUri)
-    .then((response:AxiosResponse<IUser>) => {
+    .then((response: AxiosResponse<IUser>) => {
         const users = response.data as IUser;
         const nodeName = document.createElement("li");
         const nodeMail = document.createElement("li");
@@ -156,18 +156,18 @@ function GetUserAxios(): void {
         const nodeStr: string = users.imageURL;
         console.log(nodeStr);
         nodeImg.setAttribute("src", users.imageURL);
-        console.log(users.imageurl);
-        nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`)); 
+        console.log(users.imageURL);
+        nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`));
         nodeMail.appendChild(document.createTextNode(`Email: ${users.email}`));
-        document.getElementById("UsersList").append(nodeName,nodeMail,nodeImg);
+        document.getElementById("UsersList").append(nodeName, nodeMail, nodeImg);
         console.log(users);
     })
     .catch((error)=> {
         console.log(error);
     })
     .then(() => {
-
-    })
+        // console.log
+    });
 }
 
 if (document.getElementById("GetUser") !== null) {
