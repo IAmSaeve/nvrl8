@@ -14,7 +14,7 @@ namespace nvrl8_ws.Controllers
     public class UserController : ControllerBase
     {
         private static string ConnectionString =
-            "Server=tcp:nvrl8.database.windows.net,1433;InitialCataLog=nvrl8;PersistSecurityInfo=False;UserID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;";
+            "Server=tcp:nvrl8.database.windows.net,1433;Initial CataLog=nvrl8;Persist Security Info=False;User ID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         // GET api/values/5
         [HttpGet("{email}")]

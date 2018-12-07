@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace RejseplanAPI.Model
+namespace nvrl8_ws.Model
 {
     public class Trip
     {
+        [JsonProperty("Alternative")]
         public bool Alternative { get; set; }
+        [JsonProperty("Valid")]
         public bool Valid { get; set; }
+        [JsonProperty("Cancelled")]
         public bool Cancelled { get; set; }
+        [JsonProperty("Leg")]
         public List<Leg> Legs { get; set; }
 
 
