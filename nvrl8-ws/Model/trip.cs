@@ -13,7 +13,7 @@ namespace RejseplanAPI.Model
         public List<Leg> Legs { get; set; }
 
 
-        public Trip(List<Leg> legs, bool alternative=false, bool valid=true, bool cancelled=true)
+        public Trip(List<Leg> legs, bool alternative=false, bool valid=true, bool cancelled=false)
         {
             Alternative = alternative;
             Valid = valid;
