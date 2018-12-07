@@ -45,7 +45,7 @@ const destInput = document.getElementById("DestinationInput") as HTMLInputElemen
 
 const departureTime = document.getElementById("beforeDepartureTime") as HTMLInputElement;
 if (departureTime !== null) {
-departureTime.value = "01:00";
+    departureTime.value = "01:00";
 }
 
 let destArray: string[] = new Array();
@@ -57,7 +57,7 @@ let originY: string;
 let destId: string;
 
 console.log(time);
-if ((document.getElementById("ankomstTime") as HTMLInputElement) !== null ) {
+if ((document.getElementById("ankomstTime") as HTMLInputElement) !== null) {
     (document.getElementById("ankomstTime") as HTMLInputElement).value = time; // Sætter et starttidspunkt
 }
 
@@ -65,7 +65,7 @@ let uri = "http://cors-anywhere.herokuapp.com/http://xmlopen.rejseplanen.dk/bin/
     "trip?originCoordX=" + originX + "&originCoordY=" + originY + "&originCoordName=" + address +
     "&destId=" + destId + "&date=" + today + "&time=" + time + "&searchForArrival=1&useBus=1&format=json";
 
-if ( (document.getElementById("TripButton") as HTMLButtonElement) !== null ) {
+if ((document.getElementById("TripButton") as HTMLButtonElement) !== null) {
     (document.getElementById("TripButton") as HTMLButtonElement).addEventListener("click", GetTripsAxios);
 }
 
@@ -148,26 +148,26 @@ if (destInput !== null) {
 function GetUserAxios(): void {
     const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
     axios.get<IUser>(UserUri)
-    .then((response:AxiosResponse<IUser>) => {
-        const users = response.data as IUser;
-        const nodeName = document.createElement("li");
-        const nodeMail = document.createElement("li");
-        const nodeImg = document.createElement("IMG");
-        const nodeStr: string = users.imageURL;
-        console.log(nodeStr);
-        nodeImg.setAttribute("src", users.imageURL);
-        console.log(users.imageurl);
-        nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`)); 
-        nodeMail.appendChild(document.createTextNode(`Email: ${users.email}`));
-        document.getElementById("UsersList").append(nodeName,nodeMail,nodeImg);
-        console.log(users);
-    })
-    .catch((error)=> {
-        console.log(error);
-    })
-    .then(() => {
+        .then((response: AxiosResponse<IUser>) => {
+            const users = response.data as IUser;
+            const nodeName = document.createElement("li");
+            const nodeMail = document.createElement("li");
+            nodeMail.className = "topmargin";
+            const nodeImg = document.createElement("IMG");
+            nodeImg.setAttribute("src", users.imageURL);
+            nodeImg.setAttribute("width", "200px");
+            nodeImg.className = "topmargin";
+            nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`));
+            nodeMail.appendChild(document.createTextNode(`Email: ${users.email}`));
+            document.getElementById("UsersList").append(nodeName, nodeMail, nodeImg);
+            console.log(users);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .then(() => {
 
-    })
+        })
 }
 
 if (document.getElementById("GetUser") !== null) {
@@ -175,7 +175,7 @@ if (document.getElementById("GetUser") !== null) {
     GetUserAxios();
 }
 
-if ( document.getElementById("putSettings") !== null) {
+if (document.getElementById("putSettings") !== null) {
     document.getElementById("putSettings").addEventListener("click", () => {
         PutSettingsAxios();
     });
@@ -190,15 +190,17 @@ function PutSettingsAxios(): void {
     const sUseBus = +(document.getElementById("useBus") as HTMLSelectElement).value;
     const sGoTime: string = selectedTrip.Leg[0].Origin.time;
     const sAwakeTime: string = (document.getElementById("beforeDepartureTime") as HTMLInputElement).value;
-    const settingsData = { ID: sId, Origin: sOrigin, Destination: sDestination,
-        OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime, AwakeTime: sAwakeTime };
+    const settingsData = {
+        ID: sId, Origin: sOrigin, Destination: sDestination,
+        OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime, AwakeTime: sAwakeTime
+    };
     const settingsUri: string = "https://nvrl8.azurewebsites.net/api/setting/1";
     axios.put(settingsUri, settingsData).then(() => { // uses .then to update list after post is done
-            // document.getElementById("CustomerList").innerHTML = "";
-            // GetAllCustomers();
-            console.log("updated settings");
-            console.log(settingsData);
-        })
+        // document.getElementById("CustomerList").innerHTML = "";
+        // GetAllCustomers();
+        console.log("updated settings");
+        console.log(settingsData);
+    })
         .catch((error) => {
             // handle error
             console.log(error);
@@ -214,12 +216,23 @@ function GetSettingsAxios(): void {
         .then((response: AxiosResponse<ISettings>) => {
             // handle success
             const settings = response.data as ISettings;
-            const node = document.createElement("li");
-            node.appendChild(document.createTextNode(`ID: ${settings.id},
-                 Origin: ${settings.origin}, Destination: ${settings.destination},
-                 OriginX: ${settings.originX}, OriginY: ${settings.originY}, UseBus: ${settings.useBus},
-                 GoTime: ${settings.goTime}, AwakeTime: ${settings.awakeTime}`));
-            document.getElementById("SettingsList").append(node);
+            const nodeOrigin = document.createElement("li");
+            const nodeDest = document.createElement("li");
+            const nodeX = document.createElement("li");
+            const nodeY = document.createElement("li");
+            const nodeBus = document.createElement("li");
+            const nodeGo = document.createElement("li");
+            const nodeAwake = document.createElement("li");
+
+            nodeOrigin.appendChild(document.createTextNode(`Origin: ${settings.origin}`));
+            nodeDest.appendChild(document.createTextNode(`Destination: ${settings.destination}`));
+            nodeX.appendChild(document.createTextNode(`OriginX: ${settings.originX}`));
+            nodeY.appendChild(document.createTextNode(`OriginY: ${settings.originY}`));
+            nodeBus.appendChild(document.createTextNode(`UseBus: ${settings.useBus}`));
+            nodeGo.appendChild(document.createTextNode(`GoTime: ${settings.goTime}`));
+            nodeAwake.appendChild(document.createTextNode(`AwakeTime: ${settings.awakeTime}`));
+
+            document.getElementById("SettingsList").append(nodeOrigin,nodeDest,nodeX,nodeY,nodeBus,nodeGo,nodeAwake);
             console.log(settings);
         })
         .catch((error) => {
@@ -232,10 +245,10 @@ function GetSettingsAxios(): void {
 }
 
 if (document.getElementById("GetSettings") !== null) {
-   // document.getElementById("GetSettings").addEventListener("click", () => {
-        console.log("getting settings");
-        GetSettingsAxios();
-   // });
+    // document.getElementById("GetSettings").addEventListener("click", () => {
+    console.log("getting settings");
+    GetSettingsAxios();
+    // });
 }
 
 let tripCount = 0;
