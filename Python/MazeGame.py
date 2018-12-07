@@ -50,11 +50,18 @@ maze3 = [[r, r, r, r, r, r, r, r],
          [r, r, r, r, r, r, g, r]]
 		 
 
-game_over = False
+game_over = True
 
 def GetGameState():
 	global game_over
 	return game_over
+
+def setGameState():
+	global game_over
+	if game_over:
+		game_over = False
+	elif not game_over:
+		game_over = True
 
 mazes = [maze,maze2,maze3]
 
@@ -92,8 +99,9 @@ def move_marble(pitch, roll, x, y):
     return new_x, new_y
 
 
-async def game_start():
+def game_start():
 	global game_over, x_pos, y_pos, maze, maze2, maze3, currentMaze
+	setGameState()
 	while not game_over:
 		for event in sense.stick.get_events():
 			if event.action == "released":
@@ -125,5 +133,5 @@ async def game_start():
 def game_stop():
 	global game_over
 	#sense.show_message("Game stopped", scroll_speed = 0.03)
-	game_over = True
+	setGameState()
 	maze[y_pos][x_pos] = b
