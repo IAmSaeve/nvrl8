@@ -131,7 +131,7 @@ h2 {
 }
 
 .TripStyling:nth-child(even) {
-    background-color: lightblue;
+    background-color: rgb(149, 192, 212);
 }
   .TripStyling:nth-child(odd) {
     background-color: lightsteelblue;
@@ -157,4 +157,7 @@ ul{
 .blar{
     margin: 10px;
     padding: 10px;
+}
+.Radius{
+    border-radius: 10px;
 }
