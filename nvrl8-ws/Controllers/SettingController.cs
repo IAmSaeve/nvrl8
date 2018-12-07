@@ -13,12 +13,13 @@ namespace nvrl8_ws.Controllers
     [ApiController]
     public class SettingController : ControllerBase
     {
-        private static string ConnectionString =
+        private string ConnectionString =
             "Server=tcp:nvrl8.database.windows.net,1433;Initial CataLog=nvrl8;Persist Security Info=False;User ID=nvrl8admin;Password=p@$$W0RD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         // GET: api/Setting
         [HttpGet]
-        public Settings GetAllSettings()
+        public List<Settings> GetAllSettings()
         {
+            List<Settings> s = new List<Settings>();
             using (SqlConnection dbConnection = new SqlConnection(ConnectionString))
             {
                 dbConnection.Open();
@@ -30,25 +31,19 @@ namespace nvrl8_ws.Controllers
                     {
                         while (reader.Read())
                         {
-                            return new Settings(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
-                                reader.GetByte(5), reader.GetString(6), reader.GetString(7));
+                            s.Add(new Settings(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
+                                reader.GetByte(5), reader.GetString(6), reader.GetString(7)));
                         }
                     }
                 }
 
                 dbConnection.Close();
 
-                return null;
+                return s;
             }
         }
 
-        // GET: api/Setting/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+        
         // POST: api/Setting
         [HttpPost]
         public int AddSettings([FromBody] Settings set)
