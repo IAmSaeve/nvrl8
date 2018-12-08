@@ -9,7 +9,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
  
 module.exports = {
   // which files should webpack watch and transpile
-  entry: ['./src/index.htm', './src/profile.htm', './src/afgang.htm', './src/alarm.htm','./src/log.htm', './src/scss/styles.scss', './src/js/index.ts', './src/login.js'],
+  entry: ['./src/images/tog.png','./src/images/bus.png', './src/images/image.png','./src/index.htm', './src/profile.htm', './src/afgang.htm', './src/alarm.htm','./src/log.htm', './src/scss/styles.scss', './src/js/index.ts', './src/login.js'],
   module: {
     // rules webpack should follow when watching...
     rules: [
@@ -18,6 +18,20 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
+    },
+    {
+      test: /\.png$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images/',
+            publicPath: 'images/'
+          }
+        }
+      ]
+    
     },
     {
         //(s)css files wil be handled by the scss-loader and then send to the css-loader and fuinally saved as a bundle
@@ -52,7 +66,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.scss','.png' ]
+    extensions: [ '.tsx', '.ts', '.js', '.scss', '.png' ]
   },
   output: {
     publicPath: '/dist/',

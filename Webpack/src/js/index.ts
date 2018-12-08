@@ -11,6 +11,7 @@ import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
 
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
@@ -295,16 +296,35 @@ function GetTripsAxios(): void {
                             node.appendChild(selectTrip);
                             node.appendChild(document.createTextNode(" Vælg rejse"));
                         }
-                        //if (e.type === "WALK") {
-                           
-                        //    const nodeImg = document.createElement("IMG");
-                        //    nodeImg.setAttribute("src", "./image.png");
-                        //    nodeImg.setAttribute("width", "20px");
-                        //    nodeImg.setAttribute("Height", "20px");
-                        //  legNode.append(nodeImg)
-                        //}
+                        if (e.type === "WALK") {
+                           //import { image } from "../images/image.png";
+                            const nodeImg = document.createElement("IMG");
+                            nodeImg.setAttribute("alt","Webpack")
+                            nodeImg.setAttribute("src", "images/image.png");
+                            nodeImg.setAttribute("width", "30px");
+                            nodeImg.setAttribute("Height", "30px");
+                          legNode.append(nodeImg)
+                        }
+                        else if (e.type === "BUS") {
+                            //import { image } from "../images/image.png";
+                             const nodeImg = document.createElement("IMG");
+                             nodeImg.setAttribute("alt","Webpack")
+                             nodeImg.setAttribute("src", "images/bus.png");
+                             nodeImg.setAttribute("width", "30px");
+                             nodeImg.setAttribute("Height", "30px");
+                           legNode.append(nodeImg)
+                         }
+                         else if ( e.type === "IC"||e.type === "LYN"||e.type === "REG"||e.type === "S"||e.type === "TOG" ) {
+                            //import { image } from "../images/image.png";
+                             const nodeImg = document.createElement("IMG");
+                             nodeImg.setAttribute("alt","Webpack")
+                             nodeImg.setAttribute("src", "images/tog.png");
+                             nodeImg.setAttribute("width", "30px");
+                             nodeImg.setAttribute("Height", "30px");
+                           legNode.append(nodeImg)
+                         }
                         
-                        legNode.appendChild(document.createTextNode(`Name : ${e.name}, Type : ${e.type},
+                        legNode.appendChild(document.createTextNode(`  Name : ${e.name},
                                       Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
                                        Destination : ${e.Destination.name},
                                       Kl : ${e.Destination.time}`));
@@ -312,12 +332,38 @@ function GetTripsAxios(): void {
                         node.appendChild(legNode);
                     });
                 } else {
-                    const legNode = document.createElement("li");
-                    const newLine = document.createElement("li");
-                    //newLine.appendChild(document.createTextNode("---------------------"));
-                    node.appendChild(newLine);
+                    const legNode = document.createElement("li");                   
                     const newLeg: Leg = element.Leg as Leg;
-                    legNode.appendChild(document.createTextNode(`Name : ${newLeg.name}, Type : ${newLeg.type},
+                    if (newLeg.type === "WALK") {
+                        //import { image } from "../images/image.png";
+                         const nodeImg = document.createElement("IMG");
+                         nodeImg.setAttribute("alt","Webpack")
+                         nodeImg.setAttribute("src", "images/image.png");
+                         nodeImg.setAttribute("width", "30px");
+                         nodeImg.setAttribute("Height", "30px");
+                       legNode.append(nodeImg)
+                     }
+                     else if (newLeg.type === "BUS") {
+                         //import { image } from "../images/image.png";
+                          const nodeImg = document.createElement("IMG");
+                          nodeImg.setAttribute("alt","Webpack")
+                          nodeImg.setAttribute("src", "images/bus.png");
+                          nodeImg.setAttribute("width", "30px");
+                          nodeImg.setAttribute("Height", "30px");
+                        legNode.append(nodeImg)
+                      }
+                      else if ( newLeg.type === "IC"||newLeg.type === "LYN"||newLeg.type === "REG"||newLeg.type === "S"||newLeg.type === "TOG" ) {
+                         //import { image } from "../images/image.png";
+                          const nodeImg = document.createElement("IMG");
+                          nodeImg.setAttribute("alt","Webpack")
+                          nodeImg.setAttribute("src", "images/tog.png");
+                          nodeImg.setAttribute("width", "30px");
+                          nodeImg.setAttribute("Height", "30px");
+                        legNode.append(nodeImg)
+                      }
+
+
+                    legNode.appendChild(document.createTextNode(` Name : ${newLeg.name},
                                   Origin : ${newLeg.Origin.name}, Kl : ${newLeg.Origin.time},
                                    Destination : ${newLeg.Destination.name},
                                   Kl : ${newLeg.Destination.time}`));
