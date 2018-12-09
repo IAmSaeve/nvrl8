@@ -29,23 +29,34 @@ namespace nvrl8_ws.Controllers
         {
             while (true) // Loop til at tjekke 
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     TripController tc = new TripController();
                     Trip shortestTrip = null;
-                    TimeSpan shortestTravel = new TimeSpan(10, 0, 0);
                     List<Trip> de = tc.GetTrip().Result.TripListe; // Get TripListe med nuværende settings
                     Trip pickedTrip = null;
+                    int matchCount = 0;
+                    using (HttpClient client = new HttpClient())
+                    {
+
+                        string contents = await client.GetStringAsync(SettingsURI);
+                        List<Settings> settings = new List<Settings>();
+                        settings = JsonConvert.DeserializeObject<List<Settings>>(contents);
+                        setting = settings.First();
+                    }
+
                     foreach (var trip in de)
                     {
-                        Debug.WriteLine("list count where time match : " + trip.Legs.Count(y => y.Origin.Time == setting.GoTime));
-                        if (trip.Legs.Count(y => y.Origin.Time == setting.GoTime)>0)
+                        foreach (var l in trip.Legs)
                         {
-                            pickedTrip = trip;
+                            if (l.Origin.Time == setting.GoTime) // Hvis GoTime matcher første Origins GoTime er det det rigtige trip
+                            {
+                                matchCount++;
+                                pickedTrip = trip;
+                            }
                         }
                     }
-                    Debug.WriteLine("picked trip : " + pickedTrip.ToString());
-                    if (pickedTrip != null && pickedTrip.Cancelled)
+                    if (pickedTrip != null && pickedTrip.Cancelled) // Hvis dit trip er aflyst
                     {
                         //de.Find(x => x. x.Legs.Find(y => y.Origin.Time == setting.GoTime);
                         if (de != null)
@@ -54,18 +65,15 @@ namespace nvrl8_ws.Controllers
                                 Debug.WriteLine("travel time : " + t.GetTravelTime().ToString());
                                 if (shortestTrip == null)
                                 {
-                                    shortestTravel = t.GetTravelTime();
                                     shortestTrip = t;
                                 }
 
                                 if (t.GetTravelTime() < shortestTrip.GetTravelTime())
                                 {
-                                    shortestTravel = t.GetTravelTime();
                                     shortestTrip = t;
                                 }
                             }
 
-                        Debug.WriteLine("shortest travel " + shortestTravel);
                         SettingController sc = new SettingController();
                         setting = sc.GetAllSettings().First();
                         if (shortestTrip != null && (setting.GoTime != shortestTrip.Legs.First().Origin.Time || // Opdaterer GoTime med ny rejse
@@ -81,7 +89,7 @@ namespace nvrl8_ws.Controllers
             }
         }
 
-        string SettingsURI = "https://nvrl8.azurewebsites.net/api/setting";
+        string SettingsURI = "https://nvrl8-wskev.azurewebsites.net/api/setting";
         public Settings setting = new Settings();
 
         // GET: api/Trip
@@ -95,11 +103,15 @@ namespace nvrl8_ws.Controllers
             {
 
                 string contents = await client.GetStringAsync(SettingsURI);
-                setting = JsonConvert.DeserializeObject<Settings>(contents);
+                List<Settings> settings = new List<Settings>();
+                settings = JsonConvert.DeserializeObject<List<Settings>>(contents);
+                setting = settings.First();
                 uri = "http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-                      "trip?originCoordX=" + setting.OriginY + "&originCoordY=" + setting.OriginX + "&originCoordName=" + setting.Origin +
+                      "trip?originCoordX=" + setting.OriginX + "&originCoordY=" + setting.OriginY + "&originCoordName=" + setting.Origin +
                       "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.ArrivalTime + "&searchForArrival=1&useBus=1&format=json";
-
+                Debug.WriteLine(uri);
+                Debug.WriteLine(setting.ArrivalTime);
+                Debug.WriteLine(setting.GoTime);
                 string content = await client.GetStringAsync(uri);
                 TList tList = JsonConvert.DeserializeObject<TList>(content);
                 return tList.Triplist;

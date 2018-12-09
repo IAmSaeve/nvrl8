@@ -20,7 +20,7 @@ namespace nvrl8_ws
         {
             Configuration = configuration;
             TripController tc = new TripController();
-            // tc.CheckTrip();
+            tc.CheckTrip();
         }
 
         public IConfiguration Configuration { get; }

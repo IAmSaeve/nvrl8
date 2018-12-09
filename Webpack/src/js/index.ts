@@ -194,7 +194,7 @@ function PutSettingsAxios(): void {
         OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime,
         AwakeTime: sAwakeTime, ArrivalTime: sArrivalTime,
     };
-    const settingsUri: string = "https://nvrl8.azurewebsites.net/api/setting/1";
+    const settingsUri: string = "https://nvrl8-wskev.azurewebsites.net/api/setting/1";
     axios.put(settingsUri, settingsData).then(() => { // uses .then to update list after post is done
         // document.getElementById("CustomerList").innerHTML = "";
         // GetAllCustomers();
