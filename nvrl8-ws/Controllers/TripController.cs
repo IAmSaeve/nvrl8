@@ -88,7 +88,7 @@ namespace nvrl8_ws.Controllers
                         }
                     }
                 });
-                Thread.Sleep(6000);
+                Thread.Sleep(60000);
             }
         }
 
