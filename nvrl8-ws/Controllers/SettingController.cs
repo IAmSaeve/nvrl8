@@ -51,7 +51,7 @@ namespace nvrl8_ws.Controllers
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string SqlQuery = "INSERT INTO Settings(Origin, Destination, OriginX, OriginX, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginX, @UseBus, @GoTime, @AwakeTime)";
+                string SqlQuery = "INSERT INTO Settings(Origin, Destination, OriginX, OriginY, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginY, @UseBus, @GoTime, @AwakeTime)";
                 using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@Origin", set.Origin);

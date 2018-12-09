@@ -16,7 +16,7 @@ namespace nvrl8_ws.Model
         public string OriginY { get; set; }
         public int UseBus { get; set; }
 
-        public Settings(int id, string origin, string destination, string originX, string originY, int useBus, string goTime, string awakeTime)
+        public Settings(int id, string origin, string destination, string originY, string originX, int useBus, string goTime, string awakeTime)
         {
             Id = id;
             Origin = origin;
