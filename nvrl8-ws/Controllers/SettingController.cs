@@ -32,7 +32,7 @@ namespace nvrl8_ws.Controllers
                         while (reader.Read())
                         {
                             s.Add(new Settings(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
-                                reader.GetByte(5), reader.GetString(6), reader.GetString(7)));
+                                reader.GetByte(5), reader.GetString(6), reader.GetString(7), reader.GetString(8)));
                         }
                     }
                 }
@@ -51,7 +51,7 @@ namespace nvrl8_ws.Controllers
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string SqlQuery = "INSERT INTO Settings(Origin, Destination, OriginX, OriginY, UseBus, GoTime, AwakeTime) VALUES (@Origin, @Destination, @OriginX, @OriginY, @UseBus, @GoTime, @AwakeTime)";
+                string SqlQuery = "INSERT INTO Settings(Origin, Destination, OriginX, OriginY, UseBus, GoTime, AwakeTime, ArrivalTime) VALUES (@Origin, @Destination, @OriginX, @OriginY, @UseBus, @GoTime, @AwakeTime, @ArrivalTime)";
                 using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@Origin", set.Origin);
@@ -61,6 +61,7 @@ namespace nvrl8_ws.Controllers
                     cmd.Parameters.AddWithValue("@UseBus",set.UseBus);
                     cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
                     cmd.Parameters.AddWithValue("@AwakeTime", set.AwakeTime);
+                    cmd.Parameters.AddWithValue("@ArrivalTime", set.ArrivalTime);
 
                     int RowsAffected = cmd.ExecuteNonQuery();
 
@@ -78,7 +79,7 @@ namespace nvrl8_ws.Controllers
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string SqlQuery = "UPDATE Settings SET Origin=@Origin, Destination=@Destination, OriginX=@OriginX, OriginY=@OriginY, UseBus=@UseBus, GoTime=@GoTime, AwakeTime=@AwakeTime WHERE ID=@ID;";
+                string SqlQuery = "UPDATE Settings SET Origin=@Origin, Destination=@Destination, OriginX=@OriginX, OriginY=@OriginY, UseBus=@UseBus, GoTime=@GoTime, AwakeTime=@AwakeTime, ArrivalTime=@ArrivalTime WHERE ID=@ID;";
                 using (SqlCommand cmd = new SqlCommand(SqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@ID", id);
@@ -89,6 +90,7 @@ namespace nvrl8_ws.Controllers
                     cmd.Parameters.AddWithValue("@UseBus", set.UseBus);
                     cmd.Parameters.AddWithValue("@GoTime", set.GoTime);
                     cmd.Parameters.AddWithValue("@AwakeTime", set.AwakeTime);
+                    cmd.Parameters.AddWithValue("@ArrivalTime", set.ArrivalTime);
 
 
                     int RowsAffected = cmd.ExecuteNonQuery();

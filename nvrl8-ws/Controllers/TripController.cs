@@ -98,7 +98,7 @@ namespace nvrl8_ws.Controllers
                 setting = JsonConvert.DeserializeObject<Settings>(contents);
                 uri = "http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
                       "trip?originCoordX=" + setting.OriginY + "&originCoordY=" + setting.OriginX + "&originCoordName=" + setting.Origin +
-                      "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.GoTime + "&searchForArrival=0&useBus=1&format=json";
+                      "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.ArrivalTime + "&searchForArrival=1&useBus=1&format=json";
 
                 string content = await client.GetStringAsync(uri);
                 TList tList = JsonConvert.DeserializeObject<TList>(content);
