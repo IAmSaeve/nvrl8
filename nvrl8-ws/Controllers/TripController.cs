@@ -62,15 +62,18 @@ namespace nvrl8_ws.Controllers
                         if (de != null)
                             foreach (var t in de) // Tjekker om der er et Trip med kortere travel-time
                             {
-                                Debug.WriteLine("travel time : " + t.GetTravelTime().ToString());
-                                if (shortestTrip == null)
+                                if (!t.Cancelled)
                                 {
-                                    shortestTrip = t;
-                                }
+                                    Debug.WriteLine("travel time : " + t.GetTravelTime().ToString());
+                                    if (shortestTrip == null)
+                                    {
+                                        shortestTrip = t;
+                                    }
 
-                                if (t.GetTravelTime() < shortestTrip.GetTravelTime())
-                                {
-                                    shortestTrip = t;
+                                    if (t.GetTravelTime() < shortestTrip.GetTravelTime())
+                                    {
+                                        shortestTrip = t;
+                                    }
                                 }
                             }
 
