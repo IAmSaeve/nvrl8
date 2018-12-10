@@ -325,10 +325,10 @@ function GetTripsAxios(): void {
                             legNode.append(nodeImg);
                         }
 
-                        legNode.appendChild(document.createTextNode(`  Name : ${e.name},
-                                      Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
-                                       Destination : ${e.Destination.name},
-                                      Kl : ${e.Destination.time}`));
+                        legNode.appendChild(document.createTextNode(`   ${e.name},
+                                      Fra: ${e.Origin.name}, Kl: ${e.Origin.time},
+                                       Til: ${e.Destination.name},
+                                      Kl: ${e.Destination.time}`));
 
                         node.appendChild(legNode);
                     });
@@ -362,9 +362,9 @@ function GetTripsAxios(): void {
                         legNode.append(nodeImg);
                     }
 
-                    legNode.appendChild(document.createTextNode(` Name : ${newLeg.name},
-                                  Origin : ${newLeg.Origin.name}, Kl : ${newLeg.Origin.time},
-                                   Destination : ${newLeg.Destination.name},
+                    legNode.appendChild(document.createTextNode(`  ${newLeg.name},
+                                  Fra : ${newLeg.Origin.name}, Kl : ${newLeg.Origin.time},
+                                   Til : ${newLeg.Destination.name},
                                   Kl : ${newLeg.Destination.time}`));
                     node.appendChild(legNode);
                 }
