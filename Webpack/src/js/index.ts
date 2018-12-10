@@ -145,10 +145,10 @@ function GetUserAxios(): void {
             const nodeImg = document.createElement("IMG");
             nodeImg.setAttribute("src", users.imageURL);
             nodeImg.setAttribute("width", "200px");
-            nodeImg.className = "topmargin";
+            nodeImg.className = "topmargin bottommargin";
             nodeName.appendChild(document.createTextNode(`Navn: ${users.name}`));
             nodeMail.appendChild(document.createTextNode(`Email: ${users.email}`));
-            document.getElementById("UsersList").append(nodeName, nodeMail, nodeImg);
+            document.getElementById("UsersList").append(nodeImg, nodeName, nodeMail);
             console.log(users);
         })
         .catch((error) => {
@@ -224,13 +224,22 @@ function GetSettingsAxios(): void {
             const nodeGo = document.createElement("li");
             const nodeAwake = document.createElement("li");
 
-            nodeOrigin.appendChild(document.createTextNode(`Origin: ${settings.origin}`));
-            nodeDest.appendChild(document.createTextNode(`Destination: ${settings.destination}`));
-            nodeX.appendChild(document.createTextNode(`OriginX: ${settings.originX}`));
-            nodeY.appendChild(document.createTextNode(`OriginY: ${settings.originY}`));
-            nodeBus.appendChild(document.createTextNode(`UseBus: ${settings.useBus}`));
-            nodeGo.appendChild(document.createTextNode(`GoTime: ${settings.goTime}`));
-            nodeAwake.appendChild(document.createTextNode(`AwakeTime: ${settings.awakeTime}`));
+            
+            nodeOrigin.appendChild(document.createTextNode(`Fra: ${settings.origin}`));
+            nodeDest.appendChild(document.createTextNode(`Til: ${settings.destination}`));
+            nodeX.appendChild(document.createTextNode(`Koordinat x: ${settings.originX}`));
+            nodeY.appendChild(document.createTextNode(`Koordinat y: ${settings.originY}`));
+            if(settings.useBus===1)
+            {
+                nodeBus.appendChild(document.createTextNode(`Bus: Ja`));
+            }
+            else if(settings.useBus===0)
+            {
+                nodeBus.appendChild(document.createTextNode(`Bus: Nej`));
+            }
+            //nodeBus.appendChild(document.createTextNode(`Bus: ${settings.useBus}`));
+            nodeGo.appendChild(document.createTextNode(`Afgangstid: ${settings.goTime}`));
+            nodeAwake.appendChild(document.createTextNode(`Alarmtid: ${settings.awakeTime}`));
 
             document.getElementById("SettingsList").append(nodeOrigin, nodeDest,
                  nodeX, nodeY, nodeBus, nodeGo, nodeAwake);
