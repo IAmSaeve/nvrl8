@@ -37,15 +37,25 @@ button a {
 body{
     display: block;
 }
-.broo{position: relative;
-    height: 250px;
-    width: 450px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 2px solid #008CBA;
-    overflow-y: scroll;
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
     border-radius: 5px;
-    
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background:darkgray; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: darkgray; 
 }
 
   input {
@@ -134,7 +144,7 @@ ul{
     list-style-type: none;
 }
 
-.blar{
+.PostioningMP{
     margin: 10px;
     padding: 10px;
 }
@@ -142,7 +152,7 @@ ul{
     border-radius: 10px;
 }
 
-.stein{
+.borderR{
     border-radius: 5px;
     background-color: lightsteelblue;
 }
@@ -151,6 +161,6 @@ ul{
     float: left;
     margin-top: 10px;
 }
-.halo{
+.ColorBody{
     background-color: lightgray;
 }
