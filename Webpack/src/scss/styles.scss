@@ -11,7 +11,9 @@ header{
         color: rgb(204, 204, 11);
     }
 }
-
+button{
+    height: 40px;
+}
 
 button a {
     color: white;
@@ -50,7 +52,7 @@ body{
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background:darkgray; 
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 /* Handle on hover */
@@ -64,11 +66,15 @@ body{
     border: 2px solid lightsteelblue;
     padding: 10px;
     font-size: 16px;
+    height: 40px;
   }
   input[type=text] {
     background-color: whitesmoke;
     border: 2px solid lightsteelblue;
     width: 100%;
+  }
+  select{
+    height: 40px;
   }
 
 .float_left {
@@ -112,7 +118,7 @@ h2 {
 .TripStyling{
     //display: flex;
     padding: 10px 20px;
-    color: #fff;
+    color:whitesmoke;
     font-weight: 450;
     margin: 5px 0;
     transition: 0.5s;
@@ -130,7 +136,7 @@ h2 {
 
 .TripListStyle{
     position: relative;
-    height: 200px;
+    height: 300px;
     background-color: whitesmoke;
     padding: 10px;
     box-sizing: border-box;
