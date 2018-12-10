@@ -49,6 +49,15 @@ maze3 = [[r, r, r, r, r, r, r, r],
          [r, r, b, b, b, b, b, r],
          [r, r, r, r, r, r, g, r]]
 		 
+maze4 = [[b, r, b, b, r, r, r, r],
+         [b, b, b, r, r, r, b, r],
+         [r, r, b, b, b, b, b, b],
+         [b, b, b, r, r, b, r, b],
+         [r, r, r, r, r, b, r, b],
+         [b, b, b, b, b, b, b, b],
+         [b, r, r, r, b, r, b, r],
+         [b, g, r, r, b, r, r, r]]
+		 
 
 game_over = True
 
@@ -63,7 +72,7 @@ def setGameState():
 	elif not game_over:
 		game_over = True
 
-mazes = [maze,maze2,maze3]
+mazes = [maze,maze2,maze3,maze4]
 
 mazeCount = len(mazes)-1
 maze = mazes[random.randint(0,mazeCount)]
