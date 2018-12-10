@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="bundle.css">
 </head>
 
-<body>
+<body class="ColorBody">
     <header class="container fluid col-lg-12">
         <div class="col-lg-12">
             <h1 class="color float_left">Profil</span></h1>
@@ -24,18 +24,19 @@
             <li class="nav-item">
                 <a href="afgang.htm" class="nav-link navitemcolor"><b>Afgang & Ankomst</b></a>
             </li>
-            <li class="nav-item">
-                <a href="alarm.htm" class="nav-link navitemcolor"><b>Indstillinger</b></a>
-            </li>
-            <li class="nav-item">
-                <a href="log.htm" class="nav-link navitemcolor"><b>Statistik</b></a>
-            </li>
         </ul>
         <div class="col-lg-10 offset-lg-1 float_left">
-            <h2>Din profil</h2>
-            <div id="GetUser"></div>
-            <ul id="UsersList"></ul>
-            <button class="btn btn-outline-danger btn_style">Slet</button>
+            <div class="col-lg-3 float_left">
+                <h2 class="h2_profile">Din profil</h2>
+                <div id="GetUser"></div>
+                <ul id="UsersList"></ul>
+                <button class="btn btn-outline-danger btn_style">Slet</button>
+            </div>
+            <div class="col-lg-5 offset-lg-1 float_left">
+                <h2 class="h2_profile">Dine indstillinger</h2>
+                <div id="GetSettings"></div>
+                <ul id="SettingsList"></ul>
+            </div>
         </div>
     </div>
 
