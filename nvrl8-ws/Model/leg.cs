@@ -19,5 +19,10 @@ namespace nvrl8_ws.Model
             Origin = origin;
             Destination = destination;
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(Name)}: {Name}, {nameof(Type)}: {Type}, {nameof(Origin)}: {Origin}, {nameof(Destination)}: {Destination}";
+        }
     }
 }

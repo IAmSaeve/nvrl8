@@ -7,4 +7,5 @@ export interface ISettings {
         useBus: number;
         goTime: string;
         awakeTime: string;
+        arrivalTime: string;
 }

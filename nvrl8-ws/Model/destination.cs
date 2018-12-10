@@ -30,5 +30,9 @@ namespace nvrl8_ws.Model
             Track = track;
         }
 
+        public override string ToString()
+        {
+            return $"{nameof(Name)}: {Name}, {nameof(Type)}: {Type}, {nameof(RouteIdx)}: {RouteIdx}, {nameof(Time)}: {Time}, {nameof(RtTime)}: {RtTime}, {nameof(Date)}: {Date}, {nameof(RtDate)}: {RtDate}, {nameof(RtTrack)}: {RtTrack}, {nameof(Track)}: {Track}";
+        }
     }
 }

@@ -10,8 +10,6 @@ import { IUser } from "./Interface/IUser";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
-
-
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
@@ -157,8 +155,8 @@ function GetUserAxios(): void {
             console.log(error);
         })
         .then(() => {
-
-        })
+            // after
+        });
 }
 
 if (document.getElementById("GetUser") !== null) {
@@ -166,13 +164,13 @@ if (document.getElementById("GetUser") !== null) {
     GetUserAxios();
 }
 
-function DeleteUserAxios():void{
+function DeleteUserAxios(): void {
     const delUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
 
-    axios.delete(delUri).then(()=>{
-        let delMsg = document.createElement("p");
+    axios.delete(delUri).then(() => {
+        const delMsg = document.createElement("p");
         delMsg.innerText = "Brugeren er slettet";
-    })
+    });
 }
 
 if (document.getElementById("putSettings") !== null) {
@@ -190,11 +188,13 @@ function PutSettingsAxios(): void {
     const sUseBus = +(document.getElementById("useBus") as HTMLSelectElement).value;
     const sGoTime: string = selectedTrip.Leg[0].Origin.time;
     const sAwakeTime: string = (document.getElementById("beforeDepartureTime") as HTMLInputElement).value;
+    const sArrivalTime: string = (document.getElementById("ankomstTime") as HTMLInputElement).value;
     const settingsData = {
         ID: sId, Origin: sOrigin, Destination: sDestination,
-        OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime, AwakeTime: sAwakeTime
+        OriginX: sOriginX, OriginY: sOriginY, UseBus: sUseBus, GoTime: sGoTime,
+        AwakeTime: sAwakeTime, ArrivalTime: sArrivalTime,
     };
-    const settingsUri: string = "https://nvrl8.azurewebsites.net/api/setting/1";
+    const settingsUri: string = "https://nvrl8-wskev.azurewebsites.net/api/setting/1";
     axios.put(settingsUri, settingsData).then(() => { // uses .then to update list after post is done
         // document.getElementById("CustomerList").innerHTML = "";
         // GetAllCustomers();
@@ -232,7 +232,8 @@ function GetSettingsAxios(): void {
             nodeGo.appendChild(document.createTextNode(`GoTime: ${settings.goTime}`));
             nodeAwake.appendChild(document.createTextNode(`AwakeTime: ${settings.awakeTime}`));
 
-            document.getElementById("SettingsList").append(nodeOrigin,nodeDest,nodeX,nodeY,nodeBus,nodeGo,nodeAwake);
+            document.getElementById("SettingsList").append(nodeOrigin, nodeDest,
+                 nodeX, nodeY, nodeBus, nodeGo, nodeAwake);
             console.log(settings);
         })
         .catch((error) => {
@@ -279,14 +280,14 @@ function GetTripsAxios(): void {
             tripCount = 0;
             tripArray.forEach((element: Trip) => {
                 const node = document.createElement("li");
-                node.className="TripStyling";
+                node.className = "TripStyling";
                 const legArray: Leg[] = element.Leg as Leg[];
                 console.log(tripCount);
                 if (Array.isArray(element.Leg)) {
                     element.Leg.forEach((e) => {
                         const legNode = document.createElement("li");
                         if (e === element.Leg[0]) { // Viser linjeskift ved ny rejse
-                            //const newLine = document.createElement("li");
+                            // const newLine = document.createElement("li");
                             const selectTrip = document.createElement("input");
                             selectTrip.type = "checkbox";
                             selectTrip.id = "trip";
@@ -298,71 +299,68 @@ function GetTripsAxios(): void {
                             node.appendChild(document.createTextNode("  Vælg rejse"));
                         }
                         if (e.type === "WALK") {
-                           //import { image } from "../images/image.png";
+                            // import { image } from "../images/image.png";
                             const nodeImg = document.createElement("IMG");
-                            nodeImg.setAttribute("alt","Webpack")
+                            nodeImg.setAttribute("alt", "Webpack");
                             nodeImg.setAttribute("src", "images/image.png");
                             nodeImg.setAttribute("width", "30px");
                             nodeImg.setAttribute("Height", "30px");
-                          legNode.append(nodeImg)
+                            legNode.append(nodeImg);
+                        } else if (e.type === "BUS") {
+                            // import { image } from "../images/image.png";
+                            const nodeImg = document.createElement("IMG");
+                            nodeImg.setAttribute("alt", "Webpack");
+                            nodeImg.setAttribute("src", "images/bus.png");
+                            nodeImg.setAttribute("width", "30px");
+                            nodeImg.setAttribute("Height", "30px");
+                            legNode.append(nodeImg);
+                        } else if (e.type === "IC" || e.type === "LYN" ||
+                        e.type === "REG" || e.type === "S" || e.type === "TOG") {
+                            // import { image } from "../images/image.png";
+                            const nodeImg = document.createElement("IMG");
+                            nodeImg.setAttribute("alt", "Webpack");
+                            nodeImg.setAttribute("src", "images/tog.png");
+                            nodeImg.setAttribute("width", "30px");
+                            nodeImg.setAttribute("Height", "30px");
+                            legNode.append(nodeImg);
                         }
-                        else if (e.type === "BUS") {
-                            //import { image } from "../images/image.png";
-                             const nodeImg = document.createElement("IMG");
-                             nodeImg.setAttribute("alt","Webpack")
-                             nodeImg.setAttribute("src", "images/bus.png");
-                             nodeImg.setAttribute("width", "30px");
-                             nodeImg.setAttribute("Height", "30px");
-                           legNode.append(nodeImg)
-                         }
-                         else if ( e.type === "IC"||e.type === "LYN"||e.type === "REG"||e.type === "S"||e.type === "TOG" ) {
-                            //import { image } from "../images/image.png";
-                             const nodeImg = document.createElement("IMG");
-                             nodeImg.setAttribute("alt","Webpack")
-                             nodeImg.setAttribute("src", "images/tog.png");
-                             nodeImg.setAttribute("width", "30px");
-                             nodeImg.setAttribute("Height", "30px");
-                           legNode.append(nodeImg)
-                         }
-                        
+
                         legNode.appendChild(document.createTextNode(`  Name : ${e.name},
                                       Origin : ${e.Origin.name}, Kl : ${e.Origin.time},
                                        Destination : ${e.Destination.name},
                                       Kl : ${e.Destination.time}`));
-                                     
+
                         node.appendChild(legNode);
                     });
                 } else {
-                    const legNode = document.createElement("li");                   
+                    const legNode = document.createElement("li");
                     const newLeg: Leg = element.Leg as Leg;
                     if (newLeg.type === "WALK") {
-                        //import { image } from "../images/image.png";
-                         const nodeImg = document.createElement("IMG");
-                         nodeImg.setAttribute("alt","Webpack")
-                         nodeImg.setAttribute("src", "images/image.png");
-                         nodeImg.setAttribute("width", "30px");
-                         nodeImg.setAttribute("Height", "30px");
-                       legNode.append(nodeImg)
-                     }
-                     else if (newLeg.type === "BUS") {
-                         //import { image } from "../images/image.png";
-                          const nodeImg = document.createElement("IMG");
-                          nodeImg.setAttribute("alt","Webpack")
-                          nodeImg.setAttribute("src", "images/bus.png");
-                          nodeImg.setAttribute("width", "30px");
-                          nodeImg.setAttribute("Height", "30px");
-                        legNode.append(nodeImg)
-                      }
-                      else if ( newLeg.type === "IC"||newLeg.type === "LYN"||newLeg.type === "REG"||newLeg.type === "S"||newLeg.type === "TOG" ) {
-                         //import { image } from "../images/image.png";
-                          const nodeImg = document.createElement("IMG");
-                          nodeImg.setAttribute("alt","Webpack")
-                          nodeImg.setAttribute("src", "images/tog.png");
-                          nodeImg.setAttribute("width", "30px");
-                          nodeImg.setAttribute("Height", "30px");
-                        legNode.append(nodeImg)
-                      }
-
+                        // import { image } from "../images/image.png";
+                        const nodeImg = document.createElement("IMG");
+                        nodeImg.setAttribute("alt", "Webpack");
+                        nodeImg.setAttribute("src", "images/image.png");
+                        nodeImg.setAttribute("width", "30px");
+                        nodeImg.setAttribute("Height", "30px");
+                        legNode.append(nodeImg);
+                    } else if (newLeg.type === "BUS") {
+                        // import { image } from "../images/image.png";
+                        const nodeImg = document.createElement("IMG");
+                        nodeImg.setAttribute("alt", "Webpack");
+                        nodeImg.setAttribute("src", "images/bus.png");
+                        nodeImg.setAttribute("width", "30px");
+                        nodeImg.setAttribute("Height", "30px");
+                        legNode.append(nodeImg);
+                    } else if (newLeg.type === "IC" || newLeg.type === "LYN" ||
+                     newLeg.type === "REG" || newLeg.type === "S" || newLeg.type === "TOG") {
+                        // import { image } from "../images/image.png";
+                        const nodeImg = document.createElement("IMG");
+                        nodeImg.setAttribute("alt", "Webpack");
+                        nodeImg.setAttribute("src", "images/tog.png");
+                        nodeImg.setAttribute("width", "30px");
+                        nodeImg.setAttribute("Height", "30px");
+                        legNode.append(nodeImg);
+                    }
 
                     legNode.appendChild(document.createTextNode(` Name : ${newLeg.name},
                                   Origin : ${newLeg.Origin.name}, Kl : ${newLeg.Origin.time},

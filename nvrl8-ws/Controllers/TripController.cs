@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,28 +25,99 @@ namespace nvrl8_ws.Controllers
     [ApiController]
     public class TripController : ControllerBase
     {
-        public Triplist Hej { get; set; }
+        public async void CheckTrip()
+        {
+            while (true) // Loop til at tjekke 
+            {
+                await Task.Run(async () =>
+                {
+                    TripController tc = new TripController();
+                    Trip shortestTrip = null;
+                    List<Trip> de = tc.GetTrip().Result.TripListe; // Get TripListe med nuværende settings
+                    Trip pickedTrip = null;
+                    int matchCount = 0;
+                    using (HttpClient client = new HttpClient())
+                    {
+
+                        string contents = await client.GetStringAsync(SettingsURI);
+                        List<Settings> settings = new List<Settings>();
+                        settings = JsonConvert.DeserializeObject<List<Settings>>(contents);
+                        setting = settings.First();
+                    }
+
+                    foreach (var trip in de)
+                    {
+                        foreach (var l in trip.Legs)
+                        {
+                            if (l.Origin.Time == setting.GoTime) // Hvis GoTime matcher første Origins GoTime er det det rigtige trip
+                            {
+                                matchCount++;
+                                pickedTrip = trip;
+                            }
+                        }
+                    }
+                    if (pickedTrip != null && pickedTrip.Cancelled) // Hvis dit trip er aflyst
+                    {
+                        //de.Find(x => x. x.Legs.Find(y => y.Origin.Time == setting.GoTime);
+                        if (de != null)
+                            foreach (var t in de) // Tjekker om der er et Trip med kortere travel-time
+                            {
+                                if (!t.Cancelled)
+                                {
+                                    Debug.WriteLine("travel time : " + t.GetTravelTime().ToString());
+                                    if (shortestTrip == null)
+                                    {
+                                        shortestTrip = t;
+                                    }
+
+                                    if (t.GetTravelTime() < shortestTrip.GetTravelTime())
+                                    {
+                                        shortestTrip = t;
+                                    }
+                                }
+                            }
+
+                        SettingController sc = new SettingController();
+                        setting = sc.GetAllSettings().First();
+                        if (shortestTrip != null && (setting.GoTime != shortestTrip.Legs.First().Origin.Time || // Opdaterer GoTime med ny rejse
+                                                     setting.Origin != shortestTrip.Legs.First().Name))
+                        {
+                            setting.GoTime = shortestTrip.Legs.First().Origin.Time;
+                            sc.UpdateSettings(1, setting);
+                            Debug.WriteLine("trip cancelled, settings updated");
+                        }
+                    }
+                });
+                Thread.Sleep(60000);
+            }
+        }
+
+        string SettingsURI = "https://nvrl8-wskev.azurewebsites.net/api/setting";
+        public Settings setting = new Settings();
 
         // GET: api/Trip
         [HttpGet]
-        public async Task<TList> GetTrip()
+        public async Task<Triplist> GetTrip()
 
         {
-            string SettingsURI = "https://nvrl8.azurewebsites.net/api/setting";
-
             
             string uri;
             using (HttpClient client = new HttpClient())
             {
-                string contents = await client.GetStringAsync(SettingsURI);
-                Settings setting = JsonConvert.DeserializeObject<Settings>(contents);
-                uri = "http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
-                      "trip?originCoordX=" + setting.OriginY + "&originCoordY=" + setting.OriginX + "&originCoordName=" + setting.Origin +
-                      "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.GoTime + "&searchForArrival=1&useBus=1&format=json";
 
+                string contents = await client.GetStringAsync(SettingsURI);
+                List<Settings> settings = new List<Settings>();
+                settings = JsonConvert.DeserializeObject<List<Settings>>(contents);
+                setting = settings.First();
+                uri = "http://xmlopen.rejseplanen.dk/bin/rest.exe/" +
+                      "trip?originCoordX=" + setting.OriginX + "&originCoordY=" + setting.OriginY + "&originCoordName=" + setting.Origin +
+                      "&destId=" + setting.Destination + "&date=" + DateTime.Now.ToString("dd/MM/yy").Replace("-", ".") + "&time=" + setting.ArrivalTime + "&searchForArrival=1&useBus=1&format=json";
+                Debug.WriteLine(uri);
+                Debug.WriteLine(setting.ArrivalTime);
+                Debug.WriteLine(setting.GoTime);
                 string content = await client.GetStringAsync(uri);
                 TList tList = JsonConvert.DeserializeObject<TList>(content);
-                return tList;
+                return tList.Triplist;
 
                 //var tripList = new Triplist();
                 
