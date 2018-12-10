@@ -6,19 +6,29 @@
   <title>NvrL8</title>
   <link rel="stylesheet" type="text/css" href="bundle.css">
 </head>
-<script src="login.js"></script>
-<!--<script>
+<script>
 function onSignIn(googleUser) {
+    var httpRequest;
     var profile = googleUser.getBasicProfile();
-    
+    var data = { name: profile.getName, email: profile.getEmail, imageURL: profile.getImageUrl};
+    httpRequest = new XMLHttpRequest();
+    var uri = "https://localhost:5001/api/user";
+    httpRequest.open("POST", uri);
+    httpRequest.setRequestHeader("Content-Type","application/json");
+    httpRequest.setRequestHeader("Access-Control-Allow-Methods","*");
+    httpRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
+    httpRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    httpRequest.send(JSON.stringify(data));
+
     console.log('Name: ' + profile.getName());
 
     console.log('Image URL: ' + profile.getImageUrl());
 
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    
-   location.href="profile.htm";
-}</script>-->
+
+    //location.href = "profile.htm";
+}
+</script>
 <body>
   <header class="container fluid col-lg-12">
     <div class="col-lg-6">
