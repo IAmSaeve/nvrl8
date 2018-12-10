@@ -23,7 +23,7 @@ namespace Nvrl8TEST
         {
             // Arrange
             User u = new User("louis@gmail.com", "Louis", "http://i.imgur.com/LhwqYVS.jpg", 2, 2);
-            string uri = "https://localhost:44374/api/user";
+            string uri = "https://nvrl8-wskev.azurewebsites.net/api/user";
             List<User> us = new List<User>();
             // Action
             using (HttpClient client = new HttpClient())
