@@ -59,7 +59,7 @@ maze4 = [[b, r, b, b, r, r, r, r],
          [b, g, r, r, b, r, r, r]]
 		 
 
-game_over = True
+game_over = [True]
 mazes = [maze,maze2,maze3,maze4]
 
 mazeCount = len(mazes)-1
