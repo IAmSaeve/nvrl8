@@ -9,3 +9,12 @@ function onSignIn(googleUser) {
     
    location.href="profile.htm";
 }
+
+var uri = "https://nvrl8.azurewebsites.net/api/user";
+var data = {name:profile.getName, email:profile.getEmail, imageURL:profile.getImageUrl};
+
+axios.post(uri,data).then(()=> {
+
+})
+.catch((error) => {console.log(error);})
+

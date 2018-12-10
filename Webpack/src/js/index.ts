@@ -306,6 +306,7 @@ function GetTripsAxios(): void {
                            
                             
                             node.appendChild(document.createTextNode("  Vælg rejse"));
+                            
                         }
                         if (e.type === "WALK") {
                             // import { image } from "../images/image.png";
