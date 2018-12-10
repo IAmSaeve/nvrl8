@@ -292,9 +292,10 @@ function GetTripsAxios(): void {
                             selectTrip.id = "trip";
                             selectTrip.id += tripCount; // trip1, trip2 etc
                             console.log(selectTrip.id);
-                           // node.appendChild(newLine);
                             node.appendChild(selectTrip);
-                            node.appendChild(document.createTextNode(" Vælg rejse"));
+                           
+                            
+                            node.appendChild(document.createTextNode("  Vælg rejse"));
                         }
                         if (e.type === "WALK") {
                            //import { image } from "../images/image.png";
