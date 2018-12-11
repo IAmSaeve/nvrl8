@@ -119,7 +119,7 @@ maze11 = [[r, b, r, b, r, b, r, r],
          [r, b, r, r, r, r, b, b],
          [b, b, r, b, r, b, b, r],
          [r, b, b, b, b, b, b, r],
-         [r, r, rb r, b, r, r, r]]
+         [r, r, b, r, b, r, r, r]]
 
 maze12 = [[b, b, r, r, r, r, r, r],
          [r, b, r, r, r, b, b, r],
