@@ -27,10 +27,6 @@ try:
 			currentTime = datetime.datetime.now()
 			if game.game_over[0]:  # Returnerer game_over
 				print(str(currentTime) + "\n")
-				# t = Thread(sense.show_message(
-				# 	strftime("%H:%M", localtime()), scroll_speed=0.06))
-				# if not t.isAlive():
-				# 	t.run()
 				t = Process(target=sense.show_message(
 					strftime("%H:%M", localtime()), scroll_speed=0.06))
 				if not t.is_alive():
@@ -62,7 +58,7 @@ try:
 			sleep(10)
 
 
-	def checkWinWthinMinute(alarmTime):
+	def checkWinWithinMinute(alarmTime):
 		global hasWon
 		currentTime = datetime.datetime.now()
 		if hasWon and ((alarmTime.minute > currentTime.minute) or (
@@ -70,46 +66,54 @@ try:
 			hasWon = False
 
 
-	def alarm_start(q, conn):
+	def alarm_start(q, conn0):
 		print("Alarm started\n")
 		while True:
 			print("Checking time and alarm time")
-			global hasWon, thread0, thread1, thread2
+			global hasWon
 			alarmTime = q.get()
 			currentTime = datetime.datetime.now()
-			checkWinWthinMinute(alarmTime)
+			checkWinWithinMinute(alarmTime)
 			if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute and not hasWon:
 				print("Running maze game")
-				thread0.terminate()
+				conn0.send("playing")
+				#thread0.terminate()
 				game.game_over[0] = False
 				subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 				game.game_start()
 				hasWon = True
-				conn.send(hasWon)
-				conn.close()
+				conn0.send(hasWon)
 				sense.clear()
+			conn0.send(hasWon)
 			q.put(alarmTime)
 			sleep(3)
 
 	print("Staring threads...")
 	queue = Queue()
-	parent_conn, child_conn = Pipe()
+	parent_conn0, child_conn0 = Pipe()
 	thread0 = Process(target=update_time, args=(queue,))
 	thread1 = Process(target=update_alarm, args=(queue,))
-	thread2 = Process(target=alarm_start, args=(queue,child_conn))
+	thread2 = Process(target=alarm_start, args=(queue, child_conn0))
 	thread0.start()
 	thread1.start()
 	thread2.start()
 	queue.put(alarmTime)
 
+
 	while True:
-		global hasWon, parent_conn
-		hasWon = parent_conn.recv()
+		if parent_conn0.recv() == "playing":
+			print("Killing thread0")
+			thread0.terminate()
+			hasWon = False
+
+		if type(parent_conn0.recv()) is bool:
+			hasWon = parent_conn0.recv()
+		else:
+			hasWon = False
 		print("HasWon is: " + str(hasWon))
 		if not thread0.is_alive() and hasWon:
 			print("Starting thread0 with pid: " + str(thread0.pid))
-			#thread0.run()
-			thread0.start()
+			thread0.run()
 		elif thread0.is_alive():
 			print("Thread0 is alive with pid: " + str(thread0.pid))
 		if not thread1.is_alive() and hasWon:
@@ -122,7 +126,7 @@ try:
 			thread2.run()
 		elif thread2.is_alive():
 			print("Thread2 is alive with pid: " + str(thread2.pid))
-		sleep(5)
+
 
 except KeyboardInterrupt:
 	sys.exit()
@@ -130,4 +134,5 @@ except Exception as e:
 	print("Der opstod en uventet fejl med beskeden:\n" + str(e))
 
 if __name__ == "__main__":
+	print("Stuck in main")
 	pass
