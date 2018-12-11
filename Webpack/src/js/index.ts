@@ -10,6 +10,16 @@ import { IUser } from "./Interface/IUser";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
+// stopper scroll når du sætter fokus på et element
+var cursorFocus = function(elem:any) {
+    var x = window.scrollX, y = window.scrollY;
+    elem.focus();
+    window.scrollTo(x, y);
+  }
+
+//starter i OriginInput
+cursorFocus(document.getElementById("OriginInput"));
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
