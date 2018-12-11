@@ -56,8 +56,13 @@ namespace nvrl8_ws.Controllers
                             }
                         }
                     }
+
+                    // pickedTrip.Cancelled = true; // Sættest til true for at simulere at din rejse er aflyst
                     if (pickedTrip != null && pickedTrip.Cancelled) // Hvis dit trip er aflyst
                     {
+                        Debug.WriteLine("Trip cancelled - picking new");
+                        SettingController sc = new SettingController();
+                        setting = sc.GetAllSettings().First();
                         //de.Find(x => x. x.Legs.Find(y => y.Origin.Time == setting.GoTime);
                         if (de != null)
                             foreach (var t in de) // Tjekker om der er et Trip med kortere travel-time
@@ -70,15 +75,26 @@ namespace nvrl8_ws.Controllers
                                         shortestTrip = t;
                                     }
 
-                                    if (t.GetTravelTime() < shortestTrip.GetTravelTime())
+                                    TimeSpan duration = new TimeSpan();
+                                    // int TravelHours = Convert.ToInt32(Legs.Last().Destination.Time.Split(':')[0]) - Convert.ToInt32(Legs.First().Origin.Time.Split(':')[0]);
+                                    duration = DateTime.Parse(t.Legs.Last().Destination.Time).Subtract(DateTime.Parse(setting.ArrivalTime));
+                                    Debug.WriteLine("time diff from arrival: " + duration);
+                                    Debug.WriteLine("current time diff: " + DateTime.Parse(shortestTrip.Legs.Last().Destination.Time)
+                                        .Subtract(DateTime.Parse(setting.ArrivalTime)));
+                                    if (duration > DateTime.Parse(shortestTrip.Legs.Last().Destination.Time) // Vælger det trip med destinationTime tættest på ArrivalTime
+                                            .Subtract(DateTime.Parse(setting.ArrivalTime)))
                                     {
                                         shortestTrip = t;
                                     }
+
+                                    //if (t.GetTravelTime() < shortestTrip.GetTravelTime()) // Vælger det trip med kortest total travel time
+                                    //{
+                                    //    shortestTrip = t;
+                                    //}
                                 }
                             }
 
-                        SettingController sc = new SettingController();
-                        setting = sc.GetAllSettings().First();
+                        
                         if (shortestTrip != null && (setting.GoTime != shortestTrip.Legs.First().Origin.Time || // Opdaterer GoTime med ny rejse
                                                      setting.Origin != shortestTrip.Legs.First().Name))
                         {
