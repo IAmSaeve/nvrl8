@@ -41,11 +41,29 @@ try:
 				"http://nvrl8.azurewebsites.net/api/setting/")  # API kald
 			# Gemmer json data som OrderedDict
 			dataArray = json.loads(response.text, object_pairs_hook=OrderedDict)
-			timeArray = str(dataArray["goTime"]).split(
+			goTimeArray = str(dataArray["goTime"]).split(
 				":")  # goTime er nøglen i arrayet
-			Hours = int(timeArray[0])
-			Minutes = int(timeArray[1])
-			alarmTime = alarmTime.replace(hour=Hours, minute=Minutes)
+			awakeTimeArray = str(dataArray["awakeTime"]).split(
+				":")  # awakeTime er nøglen i arrayet
+			goTime = datetime.time(int(goTimeArray[0]), int(goTimeArray[1]), 0, 0)
+			awakeTime = datetime.time(int(awakeTimeArray[0]), int(awakeTimeArray[1]), 0, 0)
+
+			hour = goTime.hour
+			minute = goTime.minute
+			for _ in range(0, awakeTime.hour):
+				if hour == 0:
+					hour = 24
+				hour -= 1
+			for _ in range(0, awakeTime.minute):
+				if minute == 0:
+					if hour == 0:
+						hour = 23
+					else:
+						hour -= 1
+					minute = 60
+				minute -= 1
+			alarmTime = alarmTime.replace(hour=hour, minute=minute)
+			print("New time is: " + str(alarmTime))
 		except Exception as e:
 			print("Fejl i forbindelse til webservicen\n" + str(e))
 

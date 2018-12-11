@@ -18,6 +18,15 @@ y_pos = 1
 
 m1x = 1
 m1y = 1
+clearmaze = [[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b],
+		[b, b, b, b, b, b, b, b]]
+
 maze = [[r, r, r, r, r, r, r, r],
 		[r, b, b, b, b, b, b, r],
 		[r, r, r, b, r, b, b, r],
@@ -202,14 +211,16 @@ def game_start():
 	while not game_over[0]:
 		for event in sense.stick.get_events():
 			if event.action == "released":
-				game_stop()
 				print("Game forcefully stopped")
+				game_stop()
+				subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
 		pitch = sense.get_orientation()['pitch']
 		roll = sense.get_orientation()['roll']
 		x_pos, y_pos = move_marble(pitch, roll, x_pos, y_pos)
 		if maze[y_pos][x_pos] == g and currentMaze == "maze":
 			subprocess.Popen(["ps aux | grep omxplayer | grep -v grep | awk '{print $2}' | xargs kill"], shell=True)
 			sense.show_message("Maze win - alarm stopped", scroll_speed=0.03)
+			maze = clearmaze
 			game_stop()
 		maze[y_pos][x_pos] = w
 		sense.set_pixels(sum(maze, []))
