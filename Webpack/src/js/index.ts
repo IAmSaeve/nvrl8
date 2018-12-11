@@ -11,14 +11,15 @@ import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
 // stopper scroll når du sætter fokus på et element
-var cursorFocus = function(elem:any) {
-    var x = window.scrollX, y = window.scrollY;
-    elem.focus();
-    window.scrollTo(x, y);
-  }
-
-//starter i OriginInput
+if ((document.getElementById("ankomstTime") as HTMLInputElement) !== null) {
+        var cursorFocus = function(elem:any) {
+        var x = window.scrollX, y = window.scrollY;
+        elem.focus();
+        window.scrollTo(x, y);
+    }
+    //starter i OriginInput
 cursorFocus(document.getElementById("OriginInput"));
+}
 
 const stopArray: IStop[] = data.default as IStop[];
 
