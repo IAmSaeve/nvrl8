@@ -79,7 +79,7 @@ try:
 			hasWon = False
 		return hasWon
 
-
+	@threadpool
 	def alarm_start(q, conn):
 		print("Alarm started\n")
 		while True:

@@ -57,9 +57,108 @@ maze4 = [[b, r, b, b, r, r, r, r],
          [b, b, b, b, b, b, b, b],
          [b, r, r, r, b, r, b, r],
          [b, g, r, r, b, r, r, r]]
+		 
+maze5 = [[r, r, b, r, b, r, b, r],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, r, b, r, b, r],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, r, b, r, b, r],
+         [b, b, r, r, b, r, b, g],
+         [r, b, b, b, b, b, b, r],
+         [r, b, r, b, r, b, r, r]]
+
+maze6 = [[b, r, r, r, r, r, r, r],
+         [b, b, r, r, b, r, b, r],
+         [r, b, b, b, b, b, b, r],
+         [r, b, r, b, b, r, b, r],
+         [r, b, r, b, b, r, b, r],
+         [r, b, r, r, b, b, b, r],
+         [r, b, b, b, b, b, b, r],
+         [r, r, b, r, g, r, b, r]]
+
+maze7 = [[r, r, r, r, r, r, r, r],
+         [r, b, b, b, b, b, b, r],
+         [r, r, b, r, b, r, b, r],
+         [r, r, b, b, b, r, b, r],
+         [r, r, b, r, b, b, b, r],
+         [r, r, b, r, b, r, b, r],
+         [r, r, b, r, b, r, b, r],
+         [r, r, b, r, g, r, b, r]]
+
+maze8 = [[r, r, r, r, r, r, r, r],
+         [r, b, b, b, b, b, b, r],
+         [r, r, b, r, r, r, r, r],
+         [r, b, b, r, b, b, b, r],
+         [r, r, b, r, g, r, b, r],
+         [r, b, b, r, r, r, b, r],
+         [r, r, b, b, b, b, b, r],
+         [r, r, r, r, r, r, r, r]]
+
+maze9 = [[r, b, r, b, r, b, r, b],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, b, r, b, r, b],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, b, r, b, r, b],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, b, r, g, r, b],
+         [b, b, b, b, b, b, b, b]]
+
+maze10 = [[r, r, r, r, r, r, r, r],
+         [r, b, b, b, b, b, b, r],
+         [r, b, r, r, b, r, r, r],
+         [r, b, r, b, b, b, b, r],
+         [r, b, r, b, r, b, r, r],
+         [r, b, b, b, r, b, b, r],
+         [r, b, r, b, r, g, r, r],
+         [r, r, r, r, r, r, r, r]]
+
+maze11 = [[r, b, r, b, r, b, r, r],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, r, b, r, b, r],
+         [b, b, b, r, r, b, b, r],
+         [r, b, r, r, r, r, b, b],
+         [b, b, r, b, r, b, b, r],
+         [r, b, b, b, b, b, b, r],
+         [r, r, rb r, b, r, r, r]]
+
+maze12 = [[b, b, r, r, r, r, r, r],
+         [r, b, r, r, r, b, b, r],
+         [r, b, r, b, b, b, r, r],
+         [r, b, r, b, r, b, b, r],
+         [r, b, b, b, r, b, r, r],
+         [r, b, r, b, r, b, b, r],
+         [r, b, b, b, r, r, g, r],
+         [r, r, r, r, r, r, r, r]]
+
+maze13 = [[r, r, r, r, r, r, r, r],
+         [r, b, b, b, b, b, b, r],
+         [r, b, r, b, r, b, r, r],
+         [r, b, r, b, r, b, r, r],
+         [r, b, r, b, b, b, b, r],
+         [r, b, r, b, r, r, r, r],
+         [r, b, b, b, b, b, b, b],
+         [r, b, r, r, b, r, g, r]]
+
+maze14 = [[r, b, r, r, r, r, r, r],
+         [r, b, r, r, b, r, b, r],
+         [r, b, r, r, b, r, b, r],
+         [r, b, b, b, b, b, b, b],
+         [r, b, r, b, r, b, r, b],
+         [r, b, b, b, r, b, r, b],
+         [r, r, r, r, r, g, r, b],
+         [r, r, r, r, r, r, r, r]]
+
+maze15 = [[r, r, r, r, r, r, r, r],
+         [r, b, b, b, b, b, b, b],
+         [r, r, r, r, r, r, r, b],
+         [b, b, b, b, b, b, b, b],
+         [b, r, r, r, r, r, r, r],
+         [b, b, b, b, b, b, b, b],
+         [r, b, r, b, r, r, b, r],
+         [r, r, r, r, r, r, g, r]]
 
 game_over = [True]
-mazes = [maze,maze2,maze3,maze4]
+mazes = [maze,maze2,maze3,maze4,maze5,maze6,maze7,maze8,maze9,maze10,maze11,maze12,maze13,maze14,maze15]
 mazeCount = len(mazes)-1
 maze = mazes[random.randint(0,mazeCount)]
 
