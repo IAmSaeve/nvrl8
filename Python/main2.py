@@ -10,6 +10,15 @@ from collections import OrderedDict
 from multiprocessing import Process, Queue, Pipe
 from threading import Thread
 
+_DEFAULT_POOL = ThreadPoolExecutor()
+
+def threadpool(f, executor=None):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        return (executor or _DEFAULT_POOL).submit(f, *args, **kwargs)
+
+    return wrap
+
 # Data der skal læses fra databasen
 # : maze.alarmTime, tripTime, tripDelay, canceledBool
 # Data der skal sendes til databasen
@@ -61,13 +70,14 @@ try:
 				print("Fejl i forbindelse til webservicen\n" + str(e))
 			sleep(10)
 
-
+	@threadpool
 	def checkWinWthinMinute(alarmTime):
 		global hasWon
 		currentTime = datetime.datetime.now()
 		if hasWon and ((alarmTime.minute > currentTime.minute) or (
 				alarmTime.hour > currentTime.hour and alarmTime.minute < currentTime.minute)):
 			hasWon = False
+		return hasWon
 
 
 	def alarm_start(q, conn):
@@ -77,7 +87,7 @@ try:
 			global hasWon, thread0, thread1, thread2
 			alarmTime = q.get()
 			currentTime = datetime.datetime.now()
-			checkWinWthinMinute(alarmTime)
+			hasWon = checkWinWthinMinute(alarmTime).result()
 			if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute and not hasWon:
 				print("Running maze game")
 				thread0.terminate()

@@ -10,6 +10,17 @@ import { IUser } from "./Interface/IUser";
 import { Leg } from "./Model/Leg";
 import { Trip } from "./Model/Trip";
 
+// stopper scroll når du sætter fokus på et element
+if ((document.getElementById("ankomstTime") as HTMLInputElement) !== null) {
+        var cursorFocus = function(elem:any) {
+        var x = window.scrollX, y = window.scrollY;
+        elem.focus();
+        window.scrollTo(x, y);
+    }
+    //starter i OriginInput
+cursorFocus(document.getElementById("OriginInput"));
+}
+
 const stopArray: IStop[] = data.default as IStop[];
 
 const stringArray: string[] = new Array();
@@ -223,17 +234,23 @@ function GetSettingsAxios(): void {
             const nodeBus = document.createElement("li");
             const nodeGo = document.createElement("li");
             const nodeAwake = document.createElement("li");
-
             
             nodeOrigin.appendChild(document.createTextNode(`Fra: ${settings.origin}`));
             nodeOrigin.className= "topmargin";
-            nodeDest.appendChild(document.createTextNode(`Til: ${settings.destination}`));
-            nodeDest.className= "topmargin";
+            let destName = "";
+            console.log(settings.destination);
+            stopArray.forEach((e) => {
+                if (+e.stop_id === +settings.destination) {
+                    destName = e.stop_name;
+                }
+            });
+            nodeDest.appendChild(document.createTextNode(`Til: ${destName}`));
+            nodeDest.className = "topmargin";
             nodeX.appendChild(document.createTextNode(`Koordinat x: ${settings.originX}`));
-            nodeX.className= "topmargin";
+            nodeX.className = "topmargin";
             nodeY.appendChild(document.createTextNode(`Koordinat y: ${settings.originY}`));
-            nodeY.className= "topmargin";
-            if(settings.useBus===1)
+            nodeY.className = "topmargin";
+            if(settings.useBus === 1)
             {
                 nodeBus.appendChild(document.createTextNode(`Bus: Ja`));
                 nodeBus.className= "topmargin";
