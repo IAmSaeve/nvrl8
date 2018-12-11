@@ -7,28 +7,31 @@
   <link rel="stylesheet" type="text/css" href="bundle.css">
 </head>
 <script>
-function onSignIn(googleUser) {
-    var httpRequest;
+  function onSignIn(googleUser) {
+    //var httpRequest;
     var profile = googleUser.getBasicProfile();
-    var IUser = { name: profile.getName, email: profile.getEmail, imageURL: profile.getImageUrl, settingsid:2, logid: 2};
-    httpRequest = new XMLHttpRequest();
+    var id_token = googleUser.getAuthResponse().id_token;
+    var data = { name: profile.getName, email: profile.getEmail, imageURL: profile.getImageUrl, logid: id_token};
+    //httpRequest = new XMLHttpRequest();
     const addressUri = "http://nvrl8-wskev.azurewebsites.net/api/user";
-    httpRequest.open("POST", addressUri);
-    httpRequest.setRequestHeader("Access-Control-Allow-Methods","*");
-    httpRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
-    httpRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    httpRequest.setRequestHeader("Content-Type","application/json");
-    httpRequest.send(JSON.stringify(IUser));
-
-    console.log('Name: ' + profile.getName());
-
-    console.log('Image URL: ' + profile.getImageUrl());
-
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    //httpRequest.open("POST", addressUri);
+    //httpRequest.setRequestHeader("Access-Control-Allow-Methods","*");
+    //httpRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
+    //httpRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    //httpRequest.setRequestHeader("Content-Type","application/json");
+    //httpRequest.send(JSON.stringify(IUser));
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", addressUri);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+      console.log('Signed in as: ' + xhr.getEmail);
+    };
+    xhr.send('idtoken=' + data);
 
     location.href = "profile.htm";
-}
+  }
 </script>
+
 <body>
   <header class="container fluid col-lg-12">
     <div class="col-lg-6">
