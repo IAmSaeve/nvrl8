@@ -7,7 +7,7 @@ import requests
 from time import sleep, strftime, localtime
 from sense_hat import SenseHat
 from collections import OrderedDict
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Pipe
 from threading import Thread
 
 # Data der skal læses fra databasen
@@ -27,10 +27,19 @@ try:
 			currentTime = datetime.datetime.now()
 			if game.game_over[0]:  # Returnerer game_over
 				print(str(currentTime) + "\n")
-				t = Thread(sense.show_message(
+				# t = Thread(sense.show_message(
+				# 	strftime("%H:%M", localtime()), scroll_speed=0.06))
+				# if not t.isAlive():
+				# 	t.run()
+				t = Process(target=sense.show_message(
 					strftime("%H:%M", localtime()), scroll_speed=0.06))
-				if not t.isAlive():
-					t.run()
+				if not t.is_alive():
+					t.start()
+				elif not game.game_over[0]:
+					t.terminate()
+			if not game.game_over[0]:
+				break
+		print("Ending update time process")
 
 
 	def update_alarm(q):
@@ -46,34 +55,29 @@ try:
 					":")  # goTime er nøglen i arrayet
 				Hours = int(timeArray[0])
 				Minutes = int(timeArray[1])
-				#alarmTime = datetime.time(Hours, Minutes, 0, 0)
 				alarmTime = alarmTime.replace(hour=Hours, minute=Minutes)
 				q.put(alarmTime)
-
-				#print("New time is: " + str(alarmTime.hour) + ":" + str(alarmTime.minute))
-			except:
-				print("Fejl i forbindelse til webservicen")
+			except Exception as e:
+				print("Fejl i forbindelse til webservicen\n" + str(e))
 			sleep(10)
 
 
-	def checkWinWthinMinute(alarmTime, hasWon):
-		#global hasWon
-		#print("time is: " + str(alarmTime.hour) + ":" + str(alarmTime.minute))
+	def checkWinWthinMinute(alarmTime):
+		global hasWon
 		currentTime = datetime.datetime.now()
 		if hasWon and ((alarmTime.minute > currentTime.minute) or (
 				alarmTime.hour > currentTime.hour and alarmTime.minute < currentTime.minute)):
-			return False
+			hasWon = False
 
 
-	def alarm_start(q):
+	def alarm_start(q, conn):
 		print("Alarm started\n")
 		while True:
+			print("Checking time and alarm time")
 			global hasWon, thread0, thread1, thread2
 			alarmTime = q.get()
-			hasWon = q.get()
 			currentTime = datetime.datetime.now()
-			#print("\nConditions:\nCurrent time: " + str(currentTime) + "\nHas won: " + str(hasWon) + "\nAlarm time: " + str(alarmTime.hour) + str(alarmTime.minute) + "\n")
-			hasWon = checkWinWthinMinute(alarmTime, hasWon)
+			checkWinWthinMinute(alarmTime)
 			if currentTime.hour == alarmTime.hour and currentTime.minute == alarmTime.minute and not hasWon:
 				print("Running maze game")
 				thread0.terminate()
@@ -81,26 +85,31 @@ try:
 				subprocess.Popen(["omxplayer ~/Documents/sæve/Project/CrazyFrog.mp3 -o alsa"], shell=True)
 				game.game_start()
 				hasWon = True
+				conn.send(hasWon)
+				conn.close()
 				sense.clear()
 			q.put(alarmTime)
-			q.put(hasWon)
 			sleep(3)
 
 	print("Staring threads...")
 	queue = Queue()
+	parent_conn, child_conn = Pipe()
 	thread0 = Process(target=update_time, args=(queue,))
 	thread1 = Process(target=update_alarm, args=(queue,))
-	thread2 = Process(target=alarm_start, args=(queue,))
+	thread2 = Process(target=alarm_start, args=(queue,child_conn))
 	thread0.start()
 	thread1.start()
 	thread2.start()
 	queue.put(alarmTime)
-	queue.put(hasWon)
 
 	while True:
+		global hasWon, parent_conn
+		hasWon = parent_conn.recv()
+		print("HasWon is: " + str(hasWon))
 		if not thread0.is_alive() and hasWon:
 			print("Starting thread0 with pid: " + str(thread0.pid))
-			thread0.run()
+			#thread0.run()
+			thread0.start()
 		elif thread0.is_alive():
 			print("Thread0 is alive with pid: " + str(thread0.pid))
 		if not thread1.is_alive() and hasWon:
@@ -113,7 +122,7 @@ try:
 			thread2.run()
 		elif thread2.is_alive():
 			print("Thread2 is alive with pid: " + str(thread2.pid))
-		sleep(1)
+		sleep(5)
 
 except KeyboardInterrupt:
 	sys.exit()
