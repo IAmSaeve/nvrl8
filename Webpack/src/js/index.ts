@@ -246,9 +246,9 @@ function GetSettingsAxios(): void {
             });
             nodeDest.appendChild(document.createTextNode(`Til: ${destName}`));
             nodeDest.className = "topmargin";
-            nodeX.appendChild(document.createTextNode(`Koordinat x: ${settings.originX}`));
+           // nodeX.appendChild(document.createTextNode(`Koordinat x: ${settings.originX}`));
             nodeX.className = "topmargin";
-            nodeY.appendChild(document.createTextNode(`Koordinat y: ${settings.originY}`));
+           // nodeY.appendChild(document.createTextNode(`Koordinat y: ${settings.originY}`));
             nodeY.className = "topmargin";
             if(settings.useBus === 1)
             {
@@ -263,7 +263,7 @@ function GetSettingsAxios(): void {
             //nodeBus.appendChild(document.createTextNode(`Bus: ${settings.useBus}`));
             nodeGo.appendChild(document.createTextNode(`Afgangstid: ${settings.goTime}`));
             nodeGo.className= "topmargin";
-            nodeAwake.appendChild(document.createTextNode(`Alarmtid: ${settings.awakeTime}`));
+            nodeAwake.appendChild(document.createTextNode(`tid før afgang: ${settings.awakeTime}`));
             nodeAwake.className="topmargin";
 
             document.getElementById("SettingsList").append(nodeOrigin, nodeDest,
