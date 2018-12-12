@@ -223,7 +223,7 @@ function PutSettingsAxios(): void {
 
 function GetSettingsAxios(): void {
     const SettingsUri = "https://nvrl8-wskev.azurewebsites.net/api/setting"; // WS Get all
-    axios.get<ISettings>(SettingsUri)
+    axios.get<ISettings[]>(SettingsUri)
         .then((response: AxiosResponse<ISettings[]>) => {
             // handle success
             const settingsList = response.data as ISettings[];
@@ -237,7 +237,7 @@ function GetSettingsAxios(): void {
             const nodeAwake = document.createElement("li");
             
             nodeOrigin.appendChild(document.createTextNode(`Fra: ${settings.origin}`));
-            nodeOrigin.className= "topmargin";
+            nodeOrigin.className = "topmargin";
             let destName = "";
             console.log(settings.destination);
             stopArray.forEach((e) => {

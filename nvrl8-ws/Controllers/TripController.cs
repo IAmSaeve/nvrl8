@@ -58,8 +58,11 @@ namespace nvrl8_ws.Controllers
                     }
 
                     // pickedTrip.Cancelled = true; // Sættest til true for at simulere at din rejse er aflyst
+                    pickedTrip.Legs.Last().Destination.RtTime = "10:40";
                     var RtTimeDif = DateTime.Parse(pickedTrip.Legs.Last().Destination.RtTime)
-                        .Subtract(DateTime.Parse(setting.ArrivalTime));
+                        .Subtract(DateTime.Parse(setting.ArrivalTime)); // Hvor meget tid over ArrivalTime RTTime går, den skal være 0 eller under
+                    Debug.WriteLine("rttimedif: " + RtTimeDif);
+
                     if (pickedTrip != null && (pickedTrip.Cancelled)) // Hvis dit trip er aflyst
                     {
                         Debug.WriteLine("Trip cancelled - picking new");
