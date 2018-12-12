@@ -58,7 +58,9 @@ namespace nvrl8_ws.Controllers
                     }
 
                     // pickedTrip.Cancelled = true; // Sættest til true for at simulere at din rejse er aflyst
-                    if (pickedTrip != null && pickedTrip.Cancelled) // Hvis dit trip er aflyst
+                    var RtTimeDif = DateTime.Parse(pickedTrip.Legs.Last().Destination.RtTime)
+                        .Subtract(DateTime.Parse(setting.ArrivalTime));
+                    if (pickedTrip != null && (pickedTrip.Cancelled)) // Hvis dit trip er aflyst
                     {
                         Debug.WriteLine("Trip cancelled - picking new");
                         SettingController sc = new SettingController();
@@ -74,7 +76,6 @@ namespace nvrl8_ws.Controllers
                                     {
                                         shortestTrip = t;
                                     }
-
                                     TimeSpan duration = new TimeSpan();
                                     // int TravelHours = Convert.ToInt32(Legs.Last().Destination.Time.Split(':')[0]) - Convert.ToInt32(Legs.First().Origin.Time.Split(':')[0]);
                                     duration = DateTime.Parse(t.Legs.Last().Destination.Time).Subtract(DateTime.Parse(setting.ArrivalTime));
@@ -86,14 +87,12 @@ namespace nvrl8_ws.Controllers
                                     {
                                         shortestTrip = t;
                                     }
-
                                     //if (t.GetTravelTime() < shortestTrip.GetTravelTime()) // Vælger det trip med kortest total travel time
                                     //{
                                     //    shortestTrip = t;
                                     //}
                                 }
                             }
-
                         
                         if (shortestTrip != null && (setting.GoTime != shortestTrip.Legs.First().Origin.Time || // Opdaterer GoTime med ny rejse
                                                      setting.Origin != shortestTrip.Legs.First().Name))

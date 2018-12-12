@@ -222,11 +222,12 @@ function PutSettingsAxios(): void {
 }
 
 function GetSettingsAxios(): void {
-    const SettingsUri = "https://nvrl8.azurewebsites.net/api/setting"; // WS Get all
+    const SettingsUri = "https://nvrl8-wskev.azurewebsites.net/api/setting"; // WS Get all
     axios.get<ISettings>(SettingsUri)
-        .then((response: AxiosResponse<ISettings>) => {
+        .then((response: AxiosResponse<ISettings[]>) => {
             // handle success
-            const settings = response.data as ISettings;
+            const settingsList = response.data as ISettings[];
+            const settings = settingsList[0];
             const nodeOrigin = document.createElement("li");
             const nodeDest = document.createElement("li");
             const nodeX = document.createElement("li");
@@ -341,7 +342,7 @@ function GetTripsAxios(): void {
                             nodeImg.setAttribute("width", "30px");
                             nodeImg.setAttribute("Height", "30px");
                             legNode.append(nodeImg);
-                        } else if (e.type === "BUS") {
+                        } else if (e.type === "BUS" || e.type === "EXB") {
                             // import { image } from "../images/image.png";
                             const nodeImg = document.createElement("IMG");
                             nodeImg.setAttribute("alt", "Webpack");
