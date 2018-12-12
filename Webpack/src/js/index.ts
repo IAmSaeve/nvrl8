@@ -1,6 +1,5 @@
-import axios, { AxiosError, AxiosResponse } from "../../node_modules/axios/index";
+import axios, { AxiosResponse } from "../../node_modules/axios/index";
 import * as data from "../Data/stops.json";
-import { autocomplete } from "./autocomplete";
 import { ICoordLocation } from "./Interface/ICoordLocation";
 import { ILocationList } from "./Interface/ILocationList";
 import { ISettings } from "./Interface/ISettings";
@@ -12,13 +11,14 @@ import { Trip } from "./Model/Trip";
 
 // stopper scroll når du sætter fokus på et element
 if ((document.getElementById("ankomstTime") as HTMLInputElement) !== null) {
-        var cursorFocus = function(elem:any) {
-        var x = window.scrollX, y = window.scrollY;
+    const cursorFocus = (elem: any) => {
+        const x = window.scrollX;
+        const y = window.scrollY;
         elem.focus();
         window.scrollTo(x, y);
-    }
-    //starter i OriginInput
-cursorFocus(document.getElementById("OriginInput"));
+    };
+    // starter i OriginInput
+    cursorFocus(document.getElementById("OriginInput"));
 }
 
 const stopArray: IStop[] = data.default as IStop[];
@@ -235,7 +235,7 @@ function GetSettingsAxios(): void {
             const nodeBus = document.createElement("li");
             const nodeGo = document.createElement("li");
             const nodeAwake = document.createElement("li");
-            
+
             nodeOrigin.appendChild(document.createTextNode(`Fra: ${settings.origin}`));
             nodeOrigin.className = "topmargin";
             let destName = "";
@@ -247,28 +247,25 @@ function GetSettingsAxios(): void {
             });
             nodeDest.appendChild(document.createTextNode(`Til: ${destName}`));
             nodeDest.className = "topmargin";
-           // nodeX.appendChild(document.createTextNode(`Koordinat x: ${settings.originX}`));
+            // nodeX.appendChild(document.createTextNode(`Koordinat x: ${settings.originX}`));
             nodeX.className = "topmargin";
-           // nodeY.appendChild(document.createTextNode(`Koordinat y: ${settings.originY}`));
+            // nodeY.appendChild(document.createTextNode(`Koordinat y: ${settings.originY}`));
             nodeY.className = "topmargin";
-            if(settings.useBus === 1)
-            {
+            if (settings.useBus === 1) {
                 nodeBus.appendChild(document.createTextNode(`Bus: Ja`));
-                nodeBus.className= "topmargin";
-            }
-            else if(settings.useBus===0)
-            {
+                nodeBus.className = "topmargin";
+            } else if (settings.useBus === 0) {
                 nodeBus.appendChild(document.createTextNode(`Bus: Nej`));
-                nodeBus.className= "topmargin";
+                nodeBus.className = "topmargin";
             }
-            //nodeBus.appendChild(document.createTextNode(`Bus: ${settings.useBus}`));
+            // nodeBus.appendChild(document.createTextNode(`Bus: ${settings.useBus}`));
             nodeGo.appendChild(document.createTextNode(`Afgangstid: ${settings.goTime}`));
-            nodeGo.className= "topmargin";
+            nodeGo.className = "topmargin";
             nodeAwake.appendChild(document.createTextNode(`tid før afgang: ${settings.awakeTime}`));
-            nodeAwake.className="topmargin";
+            nodeAwake.className = "topmargin";
 
             document.getElementById("SettingsList").append(nodeOrigin, nodeDest,
-                 nodeX, nodeY, nodeBus, nodeGo, nodeAwake);
+                nodeX, nodeY, nodeBus, nodeGo, nodeAwake);
             console.log(settings);
         })
         .catch((error) => {
@@ -348,7 +345,7 @@ function GetTripsAxios(): void {
                             nodeImg.setAttribute("Height", "30px");
                             legNode.append(nodeImg);
                         } else if (e.type === "IC" || e.type === "LYN" ||
-                        e.type === "REG" || e.type === "S" || e.type === "TOG") {
+                            e.type === "REG" || e.type === "S" || e.type === "TOG") {
                             // import { image } from "../images/image.png";
                             const nodeImg = document.createElement("IMG");
                             nodeImg.setAttribute("alt", "Webpack");
@@ -385,7 +382,7 @@ function GetTripsAxios(): void {
                         nodeImg.setAttribute("Height", "30px");
                         legNode.append(nodeImg);
                     } else if (newLeg.type === "IC" || newLeg.type === "LYN" ||
-                     newLeg.type === "REG" || newLeg.type === "S" || newLeg.type === "TOG") {
+                        newLeg.type === "REG" || newLeg.type === "S" || newLeg.type === "TOG") {
                         // import { image } from "../images/image.png";
                         const nodeImg = document.createElement("IMG");
                         nodeImg.setAttribute("alt", "Webpack");
