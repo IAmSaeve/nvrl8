@@ -146,7 +146,7 @@ if (destInput !== null) {
 }
 
 function GetUserAxios(): void {
-    const UserUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
+    const UserUri = "https://nvrl8-wskev.azurewebsites.net/api/user/sebastian@gmail.com";
     axios.get<IUser>(UserUri)
         .then((response: AxiosResponse<IUser>) => {
             const users = response.data as IUser;
@@ -176,7 +176,7 @@ if (document.getElementById("GetUser") !== null) {
 }
 
 function DeleteUserAxios(): void {
-    const delUri = "https://nvrl8.azurewebsites.net/api/user/sebastian@gmail.com";
+    const delUri = "https://nvrl8-wskev.azurewebsites.net/api/user/sebastian@gmail.com";
 
     axios.delete(delUri).then(() => {
         const delMsg = document.createElement("p");
